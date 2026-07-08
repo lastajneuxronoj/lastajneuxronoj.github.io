@@ -237,6 +237,9 @@ function setupProgressBar() {
 async function updateLanguageDependentLinks(userInitiated = false) {
 	const lang = getCurrentLang();
 
+	document.documentElement.lang = lang;
+	localStorage.setItem("lang", lang);
+
 	const links = {
 		"header-about": "about"
 	};
@@ -244,7 +247,7 @@ async function updateLanguageDependentLinks(userInitiated = false) {
 	for (const [id, page] of Object.entries(links)) {
 		const el = document.getElementById(id);
 		if (el) {
-			el.href = `/${page}_${lang}.html`;
+			el.href = `/${page}-${lang}.html`;
 		}
 	}
 
@@ -265,7 +268,7 @@ async function updateLanguageDependentLinks(userInitiated = false) {
 
 		targetUrl = `/blog/${postNumber}-${lang}.html`;
 	} else if (page === "about") {
-		targetUrl = `/about_${lang}.html`;
+		targetUrl = `/about-${lang}.html`;
 	}
 
 	// Solo redirigir si el usuario lo pidió explícitamente

@@ -15,7 +15,8 @@
 		"about": {
 			"section_bg": "ABOUT_ME",
 			"section_title": "> SOBRE_MI",
-			"page_title": "Sobre mí"
+			"page_title": "Sobre mí",
+			"description": "Blog sobre divulgación científica, textos personales y traducciones."
 		},
 		"post": {
 			"notFound": "Post no encontrado.",
@@ -59,7 +60,8 @@
 		"about": {
 			"section_bg": "ABOUT_ME",
 			"section_title": "> PRI_MI",
-			"page_title": "Pri mi"
+			"page_title": "Pri mi",
+			"description": "Blogo pri sciencdisvastigo, personaj tekstoj kaj tradukoj."
 		},
 		"post": {
 			"notFound": "Blogaĵo ne trovita.",

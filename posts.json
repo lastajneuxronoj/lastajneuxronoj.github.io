@@ -10,13 +10,15 @@
 		"type": {
 			"es": "Prueba 3"
 		},
+		"author_id": "tomas",
 		"author": {
 			"es": "Autor"
 		},
 		"date": "2025-07-14",
 		"excerpt": {
-			"eo": "Ĉi tio estas prova artikolo en Español."
-		}
+			"es": "Este es un post de prueba en español."
+		},
+		"image": "images/posts/003.png"
 	},
 	{
 		"number": "002",
@@ -29,6 +31,7 @@
 		"type": {
 			"eo": "Provo"
 		},
+		"author_id": "tomas",
 		"author": {
 			"eo": "Aŭtoro"
 		},
@@ -48,6 +51,7 @@
 		"type": {
 			"eo": "Provo"
 		},
+		"author_id": "tomas",
 		"author": {
 			"eo": "Aŭtoro"
 		},
@@ -70,6 +74,7 @@
 			"es": "Prueba",
 			"eo": "Provo"
 		},
+		"author_id": "tomas",
 		"author": {
 			"es": "",
 			"eo": "Aŭtoro"

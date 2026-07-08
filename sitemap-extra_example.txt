@@ -1,0 +1,10 @@
+[
+	{
+		"path": "/paginaejemplo.html",
+		"lastmod": "2026-07-08"
+	},
+	{
+		"path": "/retpagxoekzempla.html",
+		"lastmod": "2026-07-08"
+	}
+]

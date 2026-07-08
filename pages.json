@@ -1,0 +1,26 @@
+[
+	{
+	    "id": "about",
+	    "template": "page",
+	    "title": {
+	    	"eo": "Pri mi",
+	    	"es": "Sobre mí"
+	    },
+	    "description": {
+	    	"eo": "Informoj pri la aŭtoro.",
+	    	"es": "Información sobre el autor."
+	    },
+	    "file": {
+	    	"eo": "about_eo.md",
+	    	"es": "about_es.md"
+	    },
+	    "section_title": {
+	    	"eo": "Pri mi",
+	    	"es": "Sobre mí"
+	    },
+	    "section_bg": {
+	    	"eo": "ABOUT",
+	    	"es": "ABOUT"
+	    }
+    }
+]

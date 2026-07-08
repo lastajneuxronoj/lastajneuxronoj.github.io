@@ -1,9 +1,30 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="{{lang}}">
     <head>
     	<meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    	<title>Sobre mí | Lastaj Neŭronoj</title>
+		<title>{{title}}</title>
+
+		<meta name="description" content="{{description}}">
+		<meta name="robots" content="index, follow">
+			
+		<link rel="canonical" href="{{url}}">
+			
+		{{hreflang}}
+			
+		<meta property="og:title" content="{{ogtitle}}">
+		<meta property="og:description" content="{{ogdescription}}">
+		<meta property="og:type" content="{{ogType}}">
+		<meta property="og:url" content="{{ogUrl}}">
+		<meta property="og:locale" content="{{ogLocale}}">
+		<meta name="twitter:image" content="{{ogImage}}">
+		<meta name="twitter:card" content="{{twitterCard}}">
+		<meta name="twitter:title" content="{{ogTitle}}">
+		<meta name="twitter:description" content="{{ogDescription}}">
+			
+		<script type="application/ld+json">
+			{{jsonLD}}
+		</script>
         <script>
     			// Aplicar el tema almacenado al cargar la página
     			(function () {
@@ -12,7 +33,7 @@
     					document.documentElement.classList.add("dark");
     				}
     			})();
-    		</script>
+    	</script>
         <!-- Styles -->
     	<link rel="stylesheet" href="/style.css" />
     	<link rel="stylesheet" href="/post.css" />
@@ -25,7 +46,7 @@
     	<!-- Google Fonts -->
     	<link rel="preconnect" href="https://fonts.googleapis.com">
     	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..800;1,400..800&display=swap" rel="stylesheet">>
+		<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..800;1,400..800&display=swap" rel="stylesheet">
     	<link href="https://fonts.googleapis.com/css2?family=Hubot+Sans:ital,wght@0,200..900;1,200..900&family=Vollkorn:ital,wght@0,400..900;1,400..900display=swap"    rel="stylesheet">
     </head>
 
@@ -40,25 +61,24 @@
 					<img id="back-icon"
 					     src="./svg/left_arrow_b.svg"
 					     alt="Flecha hacia atrás">
-					<a href="./index.html">VOLVER AL INICIO</a>
+					<a href="./index.html">{{backToHome}}</a>
 				</div>
 			
 				<div class="post-section-header">
 					<div class="section-title-bg">
-						ABOUT_ME
+						{{section_bg}}
 					</div>
 				
 					<h1 class="post-section-title"
 					    id="about-section-title">
-						> SOBRE_MI
+						{{section_title}}
 					</h1>
 				</div>
 			
 				<hr class="rect-line">
 			
 				<div class="post-content">
-					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec orci mauris, dapibus quis lacus vitae, molestie malesuada libero. Maecenas nisi dui, porttitor sit amet egestas non, bibendum nec lorem. Mauris placerat at est et facilisis. Nulla ac lacus est. Vivamus aliquam odio vel tortor euismod vehicula. Vestibulum at ante in tortor viverra pretium. Morbi et gravida justo, eget auctor elit. Aenean ut elit sit amet mauris cursus ornare. Nunc nec euismod massa, vitae dignissim libero. Integer at nisi mattis, sodales dolor et, ultrices turpis. </p>
-
+					{{body}}
 				</div>
 			
 			</article>
