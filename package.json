@@ -1,13 +1,14 @@
 {
 	"name": "lastajneuxronoj",
 	"version": "1.0.0",
-	"description": "",
+	"description": "Generador estático para el blog Lastaj Neŭronoj.",
 	"main": "scripts/build-posts.js",
 	"scripts": {
 		"build": "node scripts/build-posts.js",
 		"sitemap": "node scripts/build-sitemap.js",
 		"stats": "node scripts/build-stats.js",
-		"all": "npm run build && npm run sitemap && npm run stats",
+		"fetch:goatcounter": "node scripts/fetch-goatcounter.js",
+		"all": " npm run build && npm run sitemap && npm run stats",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"repository": {
@@ -23,7 +24,12 @@
 	},
 	"homepage": "https://github.com/lastajneuxronoj/lastajneuxronoj#readme",
 	"dependencies": {
+		"@twemoji/api": "^17.0.3",
+		"dotenv": "^16.6.1",
 		"katex": "^0.17.0",
 		"marked": "^18.0.5"
+	},
+	"directories": {
+		"doc": "docs"
 	}
 }

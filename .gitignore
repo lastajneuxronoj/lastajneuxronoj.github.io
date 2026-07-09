@@ -24,6 +24,8 @@ stats/
 stats-report.txt
 .Rhistory
 .RData
+*.Rproj
 .Rproj.user/
 *.xlsx
 *.xls
+data/goatcounter/
