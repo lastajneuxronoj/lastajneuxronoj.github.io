@@ -1,7 +1,12 @@
 #!/usr/bin/env node
 /**
  * build-posts.js
- * Genera páginas HTML estáticas para cada entrada del blog, en cada idioma disponible.
+ * Genera las páginas HTML del sitio a partir de los
+ * archivos Markdown y los metadatos definidos en posts.json
+ * y pages.json.
+ *
+ * Salida:
+ * - blog/*.html
  *
  * Requiere: npm install marked
  * Uso: node build-posts.js
@@ -12,19 +17,16 @@ const path = require("path");
 const { marked } = require("marked");
 const katex = require("katex");
 
-const ROOT = path.resolve(__dirname);
+const ROOT = path.resolve(__dirname, "..");
 
-const { generateStatistics } = require("./stats");
+const {generateStatistics} = require("./stats");
+const {POSTS_JSON_PATH, PAGES_JSON_PATH, OUTPUT_DIR} = require("./config");
 
-const POSTS_JSON_PATH = path.join(ROOT, "posts.json");
-const PAGES_JSON_PATH = path.join(ROOT, "pages.json");
 const TRANSLATIONS_JSON_PATH = path.join(ROOT, "translations.json");
 
 const POSTS_MD_DIR = path.join(ROOT, "posts");
-const OUTPUT_DIR = path.join(ROOT, "blog");
-
 const ABOUT_MD_DIR = path.join(ROOT, "posts");
-const ABOUT_OUTPUT_DIR = ROOT;
+
 const SITEMAP_PATH = path.join(ROOT, "sitemap.xml");
 const SITEMAP_EXTRA_PATH = path.join(ROOT, "sitemap-extra.json");
 
@@ -430,7 +432,6 @@ async function main() {
 		translations
 	);
 
-	console.log("\n--- Otros archivos ---");
 	await buildSitemap(posts);
 
 	generateStatistics(

@@ -20,4 +20,10 @@ tmp/
 *.tmp
 
 # Estadísticas
+stats/
 stats-report.txt
+.Rhistory
+.RData
+.Rproj.user/
+*.xlsx
+*.xls

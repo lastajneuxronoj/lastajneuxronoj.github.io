@@ -1,4 +1,14 @@
-// stats.js
+/**
+ * stats.js
+ * Utilidades para calcular estadísticas editoriales.
+ *
+ * Incluye:
+ * - conteo de palabras
+ * - tiempos de lectura
+ * - cobertura de traducciones
+ * - resúmenes para consola
+ */
+
 
 const fs = require("fs/promises");
 const path = require("path");
@@ -261,7 +271,7 @@ function getTranslationStatsReport(items, label) {
 
 	const completion =
 		expected > 0
-			? (existing / expected * 100).toFixed(1)
+			? Number((existing / expected * 100).toFixed(1))
 			: 100;
 
 
@@ -363,14 +373,51 @@ function getTranslationSummary(items) {
 		).length;
 
 	return {
+		total: items.length,
+		languages: allLanguages,
 		expected,
 		existing,
 		incomplete,
 		coverage:
 			expected > 0
-				? existing / expected
+				? Number((existing / expected).toFixed(3))
 				: 1
 	};
+}
+
+function buildStatistics(
+	posts,
+	pages,
+	postStats = []
+) {
+
+	const authors = posts
+		.map(post => post.author_id)
+		.filter(Boolean);
+
+
+	return {
+		generatedAt:
+			new Date().toISOString(),
+	
+		site: {
+			totalPosts: posts.length,
+			totalPostVersions: postStats.length,
+			totalPages: pages.length
+		},
+	
+		authors: countOccurrences(authors),
+	
+		translations: {
+			posts: getTranslationSummary(posts),
+			pages: getTranslationSummary(pages)
+		},
+	
+		content: generateContentStatistics(postStats),
+	
+		posts: postStats
+	};
+
 }
 
 function generateStatistics(
@@ -498,8 +545,10 @@ function createReport(lines) {
 }
 
 module.exports = {
+	buildStatistics,
 	generateStatistics,
 	collectPostStats,
+	generateContentStatistics,
 	getContentStatisticsReport,
 	getTranslationStatsReport
 };

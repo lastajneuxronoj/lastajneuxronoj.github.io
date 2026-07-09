@@ -2,8 +2,12 @@
 	"name": "lastajneuxronoj",
 	"version": "1.0.0",
 	"description": "",
-	"main": "build-posts.js",
+	"main": "scripts/build-posts.js",
 	"scripts": {
+		"build": "node scripts/build-posts.js",
+		"sitemap": "node scripts/build-sitemap.js",
+		"stats": "node scripts/build-stats.js",
+		"all": "npm run build && npm run sitemap && npm run stats",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"repository": {

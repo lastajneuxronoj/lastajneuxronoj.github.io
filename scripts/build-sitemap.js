@@ -1,0 +1,100 @@
+/**
+ * Genera sitemap.xml para motores de búsqueda.
+ *
+ * Fuentes:
+ * - posts.json
+ * - sitemap-extra.json
+ *
+ * Salida:
+ * - sitemap.xml
+ */
+
+const fs = require("fs/promises");
+const { POSTS_JSON_PATH,
+        PAGES_JSON_PATH,
+        SITEMAP_PATH,
+        SITEMAP_EXTRA_PATH,
+        SITE_URL
+     } = require("./config");
+
+async function main() {
+
+	const posts = JSON.parse(
+		await fs.readFile(
+			POSTS_JSON_PATH,
+			"utf-8"
+		)
+	);
+
+	await buildSitemap(posts);
+
+}
+
+async function buildSitemap(posts) {
+    const urls = [];
+
+    // Página principal
+    urls.push(`
+        <url>
+            <loc>${SITE_URL}</loc>
+        </url>
+    `);
+
+    // Posts generados
+    posts.forEach(post => {
+        Object.keys(post.file || {}).forEach(lang => {
+            urls.push(`
+        <url>
+            <loc>${SITE_URL}blog/${post.number}-${lang}.html</loc>
+            <lastmod>${post.date}</lastmod>
+        </url>
+            `);
+        });
+    });
+
+
+    // Páginas estáticas adicionales
+    try {
+        const extraPages = JSON.parse(
+            await fs.readFile(SITEMAP_EXTRA_PATH, "utf-8")
+        );
+
+        extraPages.forEach(page => {
+            urls.push(`
+        <url>
+            <loc>${SITE_URL}${page.path.replace(/^\//, "")}</loc>
+            ${page.lastmod ? `<lastmod>${page.lastmod}</lastmod>` : ""}
+        </url>
+            `);
+        });
+
+    } catch {
+        console.log("⚠ No se encontró sitemap-extra.json");
+    }
+
+
+    const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset 
+    xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+${urls.join("\n")}
+
+</urlset>
+`;
+
+    await fs.writeFile(
+        SITEMAP_PATH,
+        sitemap.trim(),
+        "utf-8"
+    );
+
+    console.log(`✔ ${SITEMAP_PATH}`);
+}
+
+module.exports = {
+	buildSitemap
+};
+
+if (require.main === module) {
+	main().catch(console.error);
+}
