@@ -726,3 +726,10 @@ tbody tr:hover {
 	height: 36px;
 }
 
+.post-content img.emoji {
+	display: inline-block;
+	vertical-align: -0.15em;
+	width: 1em;
+	height: 1em;
+	margin: 0;
+}

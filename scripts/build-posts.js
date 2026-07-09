@@ -12,11 +12,30 @@
  * Uso: node build-posts.js
  */
 
+/**
+ * Pipeline de generación:
+ *
+ * Markdown
+ *   ↓
+ * preprocessReferences()
+ *   ↓
+ * marked.parse()
+ *   ↓
+ * KaTeX + referencias
+ *   ↓
+ * Twemoji
+ *   ↓
+ * plantilla HTML
+ *
+ * El orden es importante.
+ */
+
 const fs = require("fs/promises");
 const path = require("path");
 const { marked } = require("marked");
 const katex = require("katex");
 const twemoji = require("@twemoji/api");
+const cheerio = require("cheerio");
 
 const ROOT = path.resolve(__dirname, "..");
 
@@ -372,8 +391,12 @@ async function main() {
 			} = preprocessReferences(md);
 
 
-			// Markdown → HTML
+			// Markdown → HTML (compatible con emojis)
 			let htmlContent = marked.parse(markdown);
+
+			// Twemoji debe ejecutarse al final para evitar interferencias
+			// con KaTeX y los marcadores personalizados de referencias.
+			htmlContent = renderTwemojiContent(htmlContent);
 
 			// Envolver tablas en un contenedor con scroll horizontal
 			htmlContent = htmlContent.replace(
@@ -520,7 +543,7 @@ async function buildStaticPages(pages, translations) {
 // RENDER SYSTEM
 // =========================
 
-// Devuelve solo el <img> del emoji (o "" si no hay)
+// Devuelve solo el <img> del emoji del cover (o "" si no hay)
 function renderEmojiImg(emoji) {
 	if (!emoji) return "";
 
@@ -528,6 +551,35 @@ function renderEmojiImg(emoji) {
 		folder: "svg",
 		ext: ".svg",
 	});
+}
+
+function renderTwemojiContent(html) {
+
+	const $ = cheerio.load(html);
+
+	$("*").each((_, element) => {
+
+		// Ignorar bloques de código
+		if ($(element).closest("pre, code").length > 0) {
+			return;
+		}
+
+		const content = $(element).html();
+
+		if (!content) {
+			return;
+		}
+
+		$(element).html(
+			twemoji.parse(content, {
+				folder: "svg",
+				ext: ".svg",
+			})
+		);
+
+	});
+
+	return $.root().html();
 }
 
 // Arma el bloque de portada: imagen + badge de emoji superpuesto
