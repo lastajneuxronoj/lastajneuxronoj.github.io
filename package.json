@@ -29,7 +29,8 @@
 		"dotenv": "^16.6.1",
 		"highlight.js": "^11.11.1",
 		"katex": "^0.17.0",
-		"marked": "^18.0.5"
+		"marked": "^18.0.5",
+		"slugify": "^1.6.9"
 	},
 	"directories": {
 		"doc": "docs"

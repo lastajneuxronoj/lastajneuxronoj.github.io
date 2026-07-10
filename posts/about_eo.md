@@ -23,4 +23,6 @@ function saludar(nombre) {
 
 {#tbl:ejemplo2 title="Tabla de ejemplo 2"} 
 
+## Titolo 1
+
 ![Imagen de ejemplo](https://www.linuxbabe.com/wp-content/uploads/2016/12/Bing-wallpapers-for-linux.png){#fig:Linux title = "Linux"}

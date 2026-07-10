@@ -172,3 +172,7 @@ body>main {
 	width: 120px;
 	height: 120px;
 }
+
+.toc-sidebar {
+	display: none;
+}

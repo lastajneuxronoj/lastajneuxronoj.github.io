@@ -16,6 +16,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     setupDetailsAnimation();
+    initializeTOC();
 });
 
 

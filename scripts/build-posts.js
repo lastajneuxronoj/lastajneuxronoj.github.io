@@ -37,6 +37,7 @@ const katex = require("katex");
 const twemoji = require("@twemoji/api");
 const cheerio = require("cheerio");
 const hljs = require("highlight.js");
+const slugify = require('slugify');
 const { preprocessCallouts } = require("./callouts");
 
 
@@ -660,6 +661,8 @@ function renderMarkdownContent(md, lang, translations) {
 	html = highlightCodeBlocks(html);
 	html = addLineNumbers(html);
 
+	html = processHeadings(html);
+
 	return html;
 }
 
@@ -753,6 +756,7 @@ function addCodeLanguageLabels(html) {
 	return $.html();
 }
 
+// Renderiza emojis dentro del post
 function renderTwemojiContent(html) {
 
 	const $ = cheerio.load(html);
@@ -1054,6 +1058,51 @@ function countWords(html) {
 	return text
 		? text.split(/\s+/).length
 		: 0;
+}
+
+function processHeadings(html) {
+
+	const $ = cheerio.load(html);
+	const toc = [];
+	
+	$("h2, h3, h4").each((i, el) => {
+	
+		const text = $(el).text();
+	
+		const id = slugify(text, {
+			lower: true,
+			strict: true
+		});
+	
+		$(el).attr("id", id);
+	
+		toc.push({
+			text,
+			id,
+			level: Number(el.tagName.substring(1))
+		});
+	
+	});
+
+	const tocHtml = `
+	<nav class="toc-sidebar">
+		${toc.map(item => `
+			<a
+				href="#${item.id}"
+				class="toc-item level-${item.level}"
+				data-title="${item.text}"
+				data-target="${item.id}">
+			</a>
+		`).join("")}
+	</nav>
+	`;
+
+		if (toc.length > 0) {
+		$("body").append(tocHtml);
+	}
+	
+	return $.html();
+
 }
 
 // =========================

@@ -453,15 +453,26 @@ function findCaption(target) {
 
 // Dispara la animación de resaltado (soporta clicks repetidos)
 function highlightCaption(target) {
+
 	const caption = findCaption(target);
 
-	caption.classList.remove("highlight-flash");
-	void caption.offsetWidth; // fuerza reflow para poder re-disparar la animación
-	caption.classList.add("highlight-flash");
+	const isHeading =
+		/^H[1-6]$/.test(caption.tagName);
+
+	const highlightClass = isHeading
+		? "highlight-heading"
+		: "highlight-flash";
+
+	caption.classList.remove(highlightClass);
+
+	void caption.offsetWidth;
+
+	caption.classList.add(highlightClass);
 
 	caption.addEventListener("animationend", () => {
-		caption.classList.remove("highlight-flash");
+		caption.classList.remove(highlightClass);
 	}, { once: true });
+
 }
 
 // Botón de copiar código
@@ -478,3 +489,57 @@ document.querySelectorAll(".copy-button").forEach((btn) => {
     }
   });
 });
+
+function initializeTOC() {
+
+	const headings = document.querySelectorAll(
+		"h2[id], h3[id], h4[id]"
+	);
+
+	const tocItems = document.querySelectorAll(
+		".toc-item"
+	);
+
+	if (!headings.length || !tocItems.length) {
+		return;
+	}
+
+	const observer = new IntersectionObserver(
+
+		(entries) => {
+
+			entries.forEach(entry => {
+
+				if (!entry.isIntersecting) {
+					return;
+				}
+
+				const id = entry.target.id;
+
+				tocItems.forEach(item => {
+					item.classList.remove("active");
+				});
+
+				const activeItem = document.querySelector(
+					`.toc-item[data-target="${id}"]`
+				);
+
+				if (activeItem) {
+					activeItem.classList.add("active");
+				}
+
+			});
+
+		},
+
+		{
+			rootMargin: "-20% 0px -70% 0px"
+		}
+
+	);
+
+	headings.forEach(heading => {
+		observer.observe(heading);
+	});
+
+}
