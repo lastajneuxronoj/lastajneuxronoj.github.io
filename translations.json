@@ -9,6 +9,15 @@
 		"ui": {
 			"toc": {
 				"title": "Contenido"
+			},
+			"categories": {
+				"title": "Categorías",
+				"names": {
+					"science": "Ciencia",
+					"translation": "Traducción",
+					"shavian": "Shaviano",
+					"memoirs": "Memorias"
+				}
 			}
 		},
 		"posts": {
@@ -66,6 +75,15 @@
 		"ui": {
 			"toc": {
 				"title": "Enhavo"
+			},
+			"categories": {
+				"title": "Kategorioj",
+				"names": {
+					"science": "Scienco",
+					"translation": "Traduko",
+					"shavian": "Ŝava",
+					"memoirs": "Memoroj"
+				}
 			}
 		},
 		"posts": {

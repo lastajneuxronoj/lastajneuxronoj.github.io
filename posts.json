@@ -11,6 +11,7 @@
 		"type": {
 			"es": "Prueba 3"
 		},
+		"category": "shavian",
 		"author_id": "tomas",
 		"author": {
 			"es": "Autor"

@@ -16,6 +16,8 @@ function loadPosts() {
 
 	postList.innerHTML = "";
 
+	const categorySlug = document.body.dataset.category || null;
+
 	fetch("/posts.json")
 	.then(res => res.json())
 	.then(posts => {
@@ -24,6 +26,7 @@ function loadPosts() {
 
 		posts
 		.filter(post => post.file?.[lang])
+		.filter(post => !categorySlug || post.category === categorySlug)
 		.forEach(post => {
 
 			const card =

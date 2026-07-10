@@ -30,6 +30,7 @@
 		"highlight.js": "^11.11.1",
 		"katex": "^0.17.0",
 		"marked": "^18.0.5",
+		"rss": "^1.2.2",
 		"slugify": "^1.6.9"
 	},
 	"directories": {

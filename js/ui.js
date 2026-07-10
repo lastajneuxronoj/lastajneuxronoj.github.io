@@ -254,37 +254,46 @@ async function updateLanguageDependentLinks(userInitiated = false) {
 	}
 
 	const page = document.body.dataset.page;
-	const postNumber = document.body.dataset.number;
 
 	let targetUrl = null;
+	let availableLangs = null;
+	let buildLinkForLang = null;
 
-	if (page === "post" && postNumber) {
-		const availableLangs = (document.body.dataset.availableLangs || "").split(",");
-
-		if (!availableLangs.includes(lang)) {
-			if (userInitiated) {
-				await showLangUnavailableError(availableLangs);
-			}
-			return; // no navegar, ni en carga ni en click
-		}
-
+	if (page === "post") {
+		const postNumber = document.body.dataset.number;
+		availableLangs = (document.body.dataset.availableLangs || "").split(",");
 		targetUrl = `/blog/${postNumber}-${lang}.html`;
-	} else if (page === "about") {
-		targetUrl = `/about-${lang}.html`;
+		buildLinkForLang = (code) => `/blog/${postNumber}-${code}.html`;
+
+	} else if (page === "page") {
+		const pageId = document.body.dataset.pageId;
+		availableLangs = (document.body.dataset.availableLangs || "").split(",");
+		targetUrl = `/${pageId}-${lang}.html`;
+		buildLinkForLang = (code) => `/${pageId}-${code}.html`;
+
+	} else if (page === "category") {
+		const categorySlug = document.body.dataset.category;
+		availableLangs = (document.body.dataset.availableLangs || "").split(",");
+		targetUrl = `/categories/${categorySlug}-${lang}.html`;
+		buildLinkForLang = (code) => `/categories/${categorySlug}-${code}.html`;
 	}
 
-	// Solo redirigir si el usuario lo pidió explícitamente
+	if (availableLangs && !availableLangs.includes(lang)) {
+		if (userInitiated) {
+			await showLangUnavailableError(availableLangs, buildLinkForLang);
+		}
+		return; // no navegar, ni en carga ni en click
+	}
+
 	if (userInitiated && targetUrl && window.location.pathname !== targetUrl) {
 		window.location.href = targetUrl;
 	}
 }
 
-async function showLangUnavailableError(availableLangs) {
+async function showLangUnavailableError(availableLangs, buildLinkForLang) {
 	const translations = await getTranslations();
 	const currentLang = getCurrentLang();
 	const t = translations[currentLang];
-
-	const number = document.body.dataset.number;
 
 	let titles = {};
 	try {
@@ -311,45 +320,50 @@ async function showLangUnavailableError(availableLangs) {
 
 	list.innerHTML = "";
 
-		list.innerHTML = "";
+	availableLangs.forEach((code) => {
+		const li = document.createElement("li");
+		const a = document.createElement("a");
 
-			availableLangs.forEach((code) => {
-				const li = document.createElement("li");
-				const a = document.createElement("a");
-			
-				const flagImg = document.createElement("img");
-				flagImg.className = "lang-modal-flag";
-				flagImg.src = `/svg/flag_${code}.svg`;
-				flagImg.alt = "";
-				flagImg.setAttribute("aria-hidden", "true");
-			
-				const textWrapper = document.createElement("span");
-				textWrapper.className = "lang-modal-text";
-			
-				const langSpan = document.createElement("span");
-				langSpan.className = "lang-modal-lang";
-				langSpan.textContent = titles[code]
-					? `${t.languageNames[code] || code}:`
-					: (t.languageNames[code] || code);
-			
-				textWrapper.appendChild(langSpan);
-			
-				if (titles[code]) {
-					const titleSpan = document.createElement("span");
-					titleSpan.className = "lang-modal-title";
-					titleSpan.textContent = ` ${titles[code]}`;
-				
-					textWrapper.appendChild(titleSpan);
-				}
-			
-				a.href = `/blog/${number}-${code}.html`;
-				a.dataset.lang = code;
-				a.appendChild(flagImg);
-				a.appendChild(textWrapper);
-			
-				li.appendChild(a);
-				list.appendChild(li);
-			});
+		const flagImg = document.createElement("img");
+		flagImg.className = "lang-modal-flag";
+		flagImg.src = `/svg/flag_${code}.svg`;
+		flagImg.alt = "";
+		flagImg.setAttribute("aria-hidden", "true");
+
+		const textWrapper = document.createElement("span");
+		textWrapper.className = "lang-modal-text";
+
+		const langSpan = document.createElement("span");
+		langSpan.className = "lang-modal-lang";
+		langSpan.textContent = titles[code]
+			? `${t.languageNames[code] || code}:`
+			: (t.languageNames[code] || code);
+
+		textWrapper.appendChild(langSpan);
+
+		if (titles[code]) {
+			const titleSpan = document.createElement("span");
+			titleSpan.className = "lang-modal-title";
+			titleSpan.textContent = ` ${titles[code]}`;
+
+			textWrapper.appendChild(titleSpan);
+		}
+
+		a.href = buildLinkForLang ? buildLinkForLang(code) : "#";
+		a.dataset.lang = code;
+		a.appendChild(flagImg);
+		a.appendChild(textWrapper);
+
+		li.appendChild(a);
+		list.appendChild(li);
+
+		a.addEventListener("click", () => {
+		localStorage.setItem("lang", code);
+	});
+
+	li.appendChild(a);
+	list.appendChild(li);
+	});
 
 	overlay.classList.remove("hidden");
 

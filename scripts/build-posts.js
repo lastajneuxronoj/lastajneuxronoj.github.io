@@ -507,6 +507,7 @@ async function main() {
 		pages,
 		translations
 	);
+	generatedPages += await buildCategoryPages(posts, translations);
 
 	await buildSitemap(posts);
 
@@ -594,6 +595,70 @@ async function buildStaticPages(pages, translations) {
 	return generated;
 }
 
+
+async function buildCategoryPages(posts, translations) {
+
+	let generated = 0;
+
+	const byLangCategory = {};
+	const categoryLangs = {}; // slug -> Set(langs)
+
+	posts.forEach(post => {
+		if (!post.category) return;
+
+		Object.keys(post.file || {}).forEach(lang => {
+			byLangCategory[lang] = byLangCategory[lang] || new Set();
+			byLangCategory[lang].add(post.category);
+
+			categoryLangs[post.category] = categoryLangs[post.category] || new Set();
+			categoryLangs[post.category].add(lang);
+		});
+	});
+
+	const template = await loadTemplate("category.html");
+
+	for (const [lang, categorySlugs] of Object.entries(byLangCategory)) {
+
+		const categoryLabel = translations[lang]?.ui?.categories?.title || "Categorías";
+		const categoryNames = translations[lang]?.ui?.categories?.names || {};
+
+		for (const categorySlug of categorySlugs) {
+
+			const categoryName = categoryNames[categorySlug] || categorySlug;
+			const url = `${SITE_URL}categories/${categorySlug}-${lang}.html`;
+
+			const seo = buildSEOData({
+				title: `${categoryLabel}: ${categoryName}`,
+				description: "",
+				url,
+				lang,
+				type: "CollectionPage"
+			});
+
+			const html = renderTemplate(template, {
+				lang,
+				title: buildPageTitle(`${categoryLabel}: ${categoryName}`),
+				...seo,
+				section_bg: categoryLabel,
+				section_title: categoryName,
+				categorySlug,
+				categoryAvailableLangs: [...categoryLangs[categorySlug]].join(","),
+				titleId: slugify(categoryName, { lower: true, strict: true })
+			});
+
+			const outDir = path.join(ROOT, "categories");
+			await fs.mkdir(outDir, { recursive: true });
+
+			const outPath = path.join(outDir, `${categorySlug}-${lang}.html`);
+			await fs.writeFile(outPath, html, "utf-8");
+
+			console.log(`✔ Página de categoría generada: ${outPath}`);
+			generated++;
+		}
+	}
+
+	return generated;
+}
 
 // =========================
 // RENDER SYSTEM
@@ -1009,8 +1074,10 @@ async function renderPage({ type, data }) {
 				langMap: JSON.stringify(langMap),
 				body: data.htmlContent,
 				section_bg: data.page.section_bg?.[data.lang] || "",
-				section_title: sectionTitle,
+				section_title: data.page.section_title?.[data.lang] || "",
 				titleId,
+				pageId: data.page.id,
+				availableLangs: data.availableLangs.join(","),
 				backToHome: data.translations[data.lang].backToHome
 			});
 		}
