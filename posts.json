@@ -33,6 +33,7 @@
 		"type": {
 			"eo": "Provo"
 		},
+		"category": "test",
 		"author_id": "tomas",
 		"author": {
 			"eo": "Aŭtoro"
@@ -55,6 +56,7 @@
 		"type": {
 			"eo": "Provo"
 		},
+		"category": "test",
 		"author_id": "tomas",
 		"author": {
 			"eo": "Aŭtoro"

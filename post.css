@@ -116,17 +116,23 @@
 
 
 /* ==========================================
-   CONTROLES DE NAVEGACIÓN (post anterior / siguiente)
+   CONTROLES DE NAVEGACIÓN (post anterior / siguiente / relacionado)
 ========================================== */
 
-.post-nav-controls {
-	display: flex;
-	justify-content: space-between;
+.post-footer-nav {
+	display: grid;
+	
+	grid-template-columns: repeat(3, 1fr);
+	align-items: center;
+	column-gap: 2rem;
 	margin-top: 4rem;
 	padding-top: 2rem;
+
 	border-top: 3px solid #444;
+
 	font-family: 'Hubot Sans', sans-serif;
 }
+
 
 .post-nav {
 	text-decoration: none;
@@ -135,45 +141,62 @@
 	text-transform: uppercase;
 	position: relative;
 	font-size: 0.75rem;
+
 	display: flex;
 	flex-direction: column;
 }
 
+
 .prev-post {
-	text-align: left;
-	margin-top: 0;
+	justify-self: start;
+}
+
+.related-post-card {
+	justify-self: center;
 }
 
 .next-post {
-	text-align: right;
-	margin-left: auto;
+	justify-self: end;
 }
 
-.prev-post:only-child {
-	margin-right: auto;
+
+.post-nav span {
+	font-size: 0.75rem;
 }
 
-.next-post:only-child {
-	margin-left: auto;
+
+.post-nav strong {
+	font-size: 1rem;
+	text-transform: none;
 }
+
 
 .post-nav::after {
 	content: "";
+
 	position: absolute;
+
 	width: 100%;
 	height: 2px;
+
 	background-color: var(--secondary-color);
+
 	opacity: 0.75;
+
 	bottom: -2px;
 	left: 0;
+
 	transform: scaleX(0);
 	transform-origin: left;
+
 	transition: transform 0.25s ease-in-out;
 }
+
 
 .post-nav:hover::after {
 	transform: scaleX(1);
 }
+
 
 
 /* ==========================================

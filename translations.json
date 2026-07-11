@@ -16,7 +16,8 @@
 					"science": "Ciencia",
 					"translation": "Traducción",
 					"shavian": "Shaviano",
-					"memoirs": "Memorias"
+					"memoirs": "Memorias",
+					"test": "Prueba"
 				}
 			}
 		},
@@ -37,7 +38,8 @@
 			"markdownNotFound": "el archivo del post no fue encontrado.",
 			"contentLoadError": "Error al cargar contenido",
 			"previousPost": "PUBLICACIÓN ANTERIOR",
-			"nextPost": "PUBLICACIÓN SIGUIENTE"
+			"nextPost": "PUBLICACIÓN SIGUIENTE",
+			"relatedPost": "PUBLICACIÓN RELACIONADA ≈"
 		},
 		"references": {
 			"figure": "Figura",
@@ -82,7 +84,8 @@
 					"science": "Scienco",
 					"translation": "Traduko",
 					"shavian": "Ŝava",
-					"memoirs": "Memoroj"
+					"memoirs": "Memoroj",
+					"test": "Prueba"
 				}
 			}
 		},
@@ -103,7 +106,8 @@
 			"markdownNotFound": "blogaĵa dosiero ne trovita.",
 			"contentLoadError": "Eraro dum ŝargado de la enhavo.",
 			"previousPost": "ANTAŬA AFIŜO",
-			"nextPost": "SEKVA AFIŜO"
+			"nextPost": "SEKVA AFIŜO",
+			"relatedPost": "RILATA AFIŜO ≈ "
 		},
 		"references": {
 			"figure": "Figuro",

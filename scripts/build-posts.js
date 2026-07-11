@@ -420,6 +420,7 @@ async function main() {
 				type: "post",
 				data: {
 					post,
+					posts,
 					lang,
 					htmlContent,
 					readingTime,
@@ -928,34 +929,95 @@ async function renderPage({ type, data }) {
 				langMap[lang] = `/blog/${data.post.number}-${lang}.html`;
 			});
 
+			// Calcula posts candidatos para artículo relacionado según categoría
+			const candidates = data.posts.filter(post =>
+				post.number !== data.post.number &&
+				post.category &&
+				post.category === data.post.category &&
+				post.title?.[data.lang]
+			);
+
+			const relatedPost =
+				candidates.length > 0
+					? candidates[
+						Math.floor(
+							Math.random() * candidates.length
+						)
+					]
+					: null;
+					
 			const titles = {};
 
 			data.availableLangs.forEach((lang) => {
 				titles[lang] = data.post.title[lang];
 			});
 
-				// Navegación entre posts
-			const navControls = `
-				<div class="post-nav-controls">
-					${
-						data.prevPost
-							? `<a class="post-nav prev-post" href="/blog/${data.prevPost.number}-${data.lang}.html">
-								<span>← ${data.translations[data.lang].post.previousPost}</span>
-								<strong>${data.prevPost.title[data.lang]}</strong>
-							</a>`
-							: ""
-					}
+			// Navegación entre posts
+			const postFooterNav = `
+			<div class="post-footer-nav">
+
+				${
+					data.prevPost
+						? `
+						<a class="post-nav prev-post"
+							href="/blog/${data.prevPost.number}-${data.lang}.html">
 				
-					${
-						data.nextPost
-							? `<a class="post-nav next-post" href="/blog/${data.nextPost.number}-${data.lang}.html">
-								<span>${data.translations[data.lang].post.nextPost} →</span>
-								<strong>${data.nextPost.title[data.lang]}</strong>
-							</a>`
-							: ""
-					}
-				</div>
-			`;
+							<span>
+								← ${data.translations[data.lang].post.previousPost}
+							</span>
+				
+							<strong>
+								${data.prevPost.title[data.lang]}
+							</strong>
+				
+						</a>
+						`
+						: "<div></div>"
+				}
+			
+			
+				${
+					relatedPost
+						? `
+						<a class="post-nav related-post-card"
+							href="/blog/${relatedPost.number}-${data.lang}.html">
+				
+							<span>
+								${data.translations[data.lang].post.relatedPost}
+							</span>
+				
+							<strong>
+								${relatedPost.title[data.lang]}
+							</strong>
+				
+						</a>
+						`
+						: "<div></div>"
+				}
+			
+			
+				${
+					data.nextPost
+						? `
+						<a class="post-nav next-post"
+							href="/blog/${data.nextPost.number}-${data.lang}.html">
+				
+							<span>
+								${data.translations[data.lang].post.nextPost} →
+							</span>
+				
+							<strong>
+								${data.nextPost.title[data.lang]}
+							</strong>
+				
+						</a>
+						`
+						: "<div></div>"
+				}
+			
+			</div>
+		`;
+
 
 			const coverHtml = renderCover({
 				image: data.coverImage,
@@ -976,7 +1038,7 @@ async function renderPage({ type, data }) {
 				body: data.htmlContent,
 				backToHome: data.translations[data.lang].backToHome,
 				langMap: JSON.stringify(langMap),
-				navControls,
+				postFooterNav,
 				availableLangs: data.availableLangs.join(","),
 				titles: JSON.stringify(titles).replace(/"/g, "&quot;"),
 				...seo,
