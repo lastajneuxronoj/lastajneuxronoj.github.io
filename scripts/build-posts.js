@@ -45,6 +45,17 @@ const { LANGUAGE_NAMES } = require("./config");
 const findCoverImage = require("./utils/find-cover-image");
 const buildSearchIndex = require("./build-search-index");
 
+const { 
+	buildJsonCategories,
+ 	buildCategoriesIndex,
+	buildCategoryPages
+} = require("./build-categories");
+
+const {
+	buildSEOData,
+	buildPageTitle
+} = require("./utils/seo");
+
 const ROOT = path.resolve(__dirname, "..");
 
 const {generateStatistics} = require("./stats");
@@ -56,6 +67,8 @@ const {
 	SITEMAP_EXTRA_PATH
 } = require("./config");
 
+
+
 const POSTS_MD_DIR = path.join(ROOT, "posts");
 const ABOUT_MD_DIR = path.join(ROOT, "posts");
 
@@ -63,62 +76,6 @@ const SITEMAP_PATH = path.join(ROOT, "sitemap.xml");
 
 const SITE_NAME = "Lastaj Neŭronoj";
 const SITE_URL = "https://lastajneuxronoj.github.io/";
-
-function buildPageTitle(title) {
-	return `${title} | ${SITE_NAME}`;
-}
-
-// Función de metadatos para SEO
-function buildSEOData({
-	title,
-	description = "",
-	url,
-	lang,
-	availableLangs = [],
-	alternates = {},
-	type = "WebPage",
-	image = ""
-}) {
-
-	const hreflang = Object.entries(alternates)
-		.map(([lang, href]) =>
-			`<link rel="alternate" hreflang="${lang}" href="${href}">`
-		)
-		.join("\n");
-
-
-	const jsonLD = JSON.stringify({
-		"@context": "https://schema.org",
-		"@type": type,
-		"headline": title,
-		"name": title,
-		"description": description,
-		"url": url,
-		"inLanguage": lang,
-		"publisher": {
-			"@type": "Organization",
-			"name": SITE_NAME
-		}
-	});
-
-
-	return {
-		description,
-		url,
-		hreflang,
-		jsonLD,
-		ogTitle: title,
-		ogDescription: description,
-		ogType: type === "BlogPosting" ? "article" : "website",
-		ogUrl: url,
-		ogLocale: lang,
-		ogImage: image ? `${SITE_URL}${image}` : "",
-		twitterCard: "summary_large_image",
-		twitterTitle: title,
-		twitterDescription: description,
-		twitterImage: image ? `${SITE_URL}${image}` : "",
-	};
-}
 
 // Cuenta referencias
 function parseAttributes(attrs = "") {
@@ -456,6 +413,8 @@ async function main() {
 		translations
 	);
 	generatedPages += await buildCategoryPages(posts, translations);
+	generatedPages += await buildJsonCategories(posts);
+	generatedPages += await buildCategoriesIndex(translations);
 
 	await buildSitemap(posts, pages);
 
@@ -545,80 +504,6 @@ async function buildStaticPages(pages, translations) {
 	for (const language of Object.keys(translations)) {
 		await buildRSS(language);
 		await buildSearchIndex(language);
-	}
-
-	return generated;
-}
-
-// Crea páginas de categorías
-async function buildCategoryPages(posts, translations) {
-
-	let generated = 0;
-
-	const byLangCategory = {};
-	const categoryLangs = {}; // slug -> Set(langs)
-
-	posts.forEach(post => {
-		if (!post.category) return;
-
-		Object.keys(post.file || {}).forEach(lang => {
-			byLangCategory[lang] = byLangCategory[lang] || new Set();
-			byLangCategory[lang].add(post.category);
-
-			categoryLangs[post.category] = categoryLangs[post.category] || new Set();
-			categoryLangs[post.category].add(lang);
-		});
-	});
-
-	const template = await loadTemplate("category.html");
-
-	for (const [lang, categorySlugs] of Object.entries(byLangCategory)) {
-
-		const categoryLabel = translations[lang]?.ui?.categories?.title || "Categorías";
-		const categoryNames = translations[lang]?.ui?.categories?.names || {};
-
-		for (const categorySlug of categorySlugs) {
-
-			const categoryName = categoryNames[categorySlug] || categorySlug;
-			const url = `${SITE_URL}categories/${categorySlug}-${lang}.html`;
-
-			const seo = buildSEOData({
-				title: `${categoryLabel}: ${categoryName}`,
-				description: "",
-				url,
-				lang,
-				type: "CollectionPage"
-			});
-			
-			const rssLink = `
-				<link
-					rel="alternate"
-					type="application/rss+xml"
-					title="Lastaj Neŭronoj - ${lang}"
-					href="/rss-${lang}.xml">
-			`;
-
-			const html = renderTemplate(template, {
-				lang,
-				title: buildPageTitle(`${categoryLabel}: ${categoryName}`),
-				...seo,
-				section_bg: categoryLabel,
-				section_title: categoryName,
-				categorySlug,
-				categoryAvailableLangs: [...categoryLangs[categorySlug]].join(","),
-				titleId: slugify(categoryName, { lower: true, strict: true }),
-				rssLink,
-			});
-
-			const outDir = path.join(ROOT, "categories");
-			await fs.mkdir(outDir, { recursive: true });
-
-			const outPath = path.join(outDir, `${categorySlug}-${lang}.html`);
-			await fs.writeFile(outPath, html, "utf-8");
-
-			console.log(`✔ Página de categoría generada: ${outPath}`);
-			generated++;
-		}
 	}
 
 	return generated;

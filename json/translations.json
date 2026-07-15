@@ -4,6 +4,8 @@
 			"logo_text": "Lastaj Neŭronoj",
 			"header_home": "[ Inicio ]",
 			"header_about": "[ Sobre mí ]",
+			"header_categories": "[ Categorías ]",
+			"header_proyects": "[ Proyectos ]",
 			"lang_code": "[ES]"
 		},
 		"ui": {
@@ -11,7 +13,8 @@
 				"title": "Contenido"
 			},
 			"categories": {
-				"title": "Categorías",
+				"title": "CATEGORIES",
+				"subtitle": "Categorías",
 				"names": {
 					"science": "Ciencia",
 					"translation": "Traducción",
@@ -74,6 +77,8 @@
 			"logo_text": "Lastaj Neŭronoj",
 			"header_home": "[ Ĉefpaĝo ]",
 			"header_about": "[ Pri mi ]",
+			"header_categories": "[ Kategorioj ]",
+			"header_proyects": "[ Projektoj ]",
 			"lang_code": "[EO]"
 		},
 		"ui": {
@@ -81,13 +86,14 @@
 				"title": "Enhavo"
 			},
 			"categories": {
-				"title": "Kategorioj",
+				"title": "CATEGORIES",
+				"subtitle": "Kategorioj",
 				"names": {
 					"science": "Scienco",
 					"translation": "Traduko",
 					"shavian": "Ŝava",
 					"memoirs": "Memoroj",
-					"test": "Prueba"
+					"test": "Provo"
 				}
 			},
 			"search": "Serĉi..."

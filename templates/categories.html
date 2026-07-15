@@ -8,13 +8,13 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="description" content="Blogo pri sciencdisvastigo, personaj tekstoj kaj tradukoj.">
 	<meta name="robots" content="index, follow">
-	<meta property="og:title" content="Lastaj Neŭronoj">
+	<meta property="og:title" content="{{ogTitle}}">
 	<meta property="og:description" content="Blogo pri sciencdisvastigo, personaj tekstoj kaj tradukoj.">
 	<meta property="og:type" content="website">
 	<meta property="og:url" content="https://lastajneuxronoj.github.io/">
 	<meta property="og:locale" content="eo">
 	<!--<meta property="og:image" content="https://lastajneuxronoj.github.io/svg/imagen_compartir.svg">-->
-	<link rel="canonical" href="https://lastajneuxronoj.github.io/">
+	<link rel="canonical" href="{{canonicalUrl}}">
 	<!--Agregar idiomas-->
 	<link rel="alternate" hreflang="eo" href="https://lastajneuxronoj.github.io/">
 	<link rel="alternate" hreflang="es" href="https://lastajneuxronoj.github.io/">
@@ -69,7 +69,7 @@
 	<link href="https://fonts.googleapis.com/css2?family=Hubot+Sans:ital,wght@0,200..900;1,200..900&family=Vollkorn:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
 </head>
 
-<body data-page="categories-index" data-category="{{categorySlug}}" data-available-langs="{{categoryAvailableLangs}}">
+<body data-page="categories-index">
 	<div id="header-container"></div>
 
     <main class="post-list" id="post-list-container">
@@ -87,10 +87,7 @@
     		</h2>
     	</div>
 
-    	<div class="categories-grid">
-
-    		{{categoriesContent}}
-
+    	<div class="categories-grid" id="categories-grid">
     	</div>
 
     </main>
@@ -103,6 +100,7 @@
 	<script src="/js/content.js"></script>
 	<script src="/js/main.js"></script>
 	<script src="/js/search.js"></script>
+	<script src="/js/categories.js"></script>
 </body>
 
 </html>

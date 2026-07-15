@@ -8,7 +8,7 @@
 		"sitemap": "node scripts/build-sitemap.js",
 		"stats": "node scripts/build-stats.js",
 		"fetch:goatcounter": "node scripts/fetch-goatcounter.js",
-		"all": " npm run build && npm run sitemap && npm run stats",
+		"all": " npm run build && npm run stats",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"repository": {
@@ -35,5 +35,8 @@
 	},
 	"directories": {
 		"doc": "docs"
+	},
+	"devDependencies": {
+		"madge": "^8.0.0"
 	}
 }

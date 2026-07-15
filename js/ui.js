@@ -292,8 +292,8 @@ async function updateLanguageDependentLinks(userInitiated = false) {
 	} else if (page === "category") {
 		const categorySlug = document.body.dataset.category;
 		availableLangs = (document.body.dataset.availableLangs || "").split(",");
-		targetUrl = `/categories/${categorySlug}-${lang}.html`;
-		buildLinkForLang = (code) => `/categories/${categorySlug}-${code}.html`;
+		targetUrl = `/blog/categories/${categorySlug}.html`;
+		buildLinkForLang = () => `/blog/categories/${categorySlug}.html`;
 	}
 
 	if (availableLangs && !availableLangs.includes(lang)) {

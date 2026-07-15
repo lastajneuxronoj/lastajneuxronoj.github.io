@@ -54,10 +54,18 @@ module.exports = {
 
 	POSTS_MD_DIR:
 		path.join(ROOT, "posts"),
-
+	
 	OUTPUT_DIR:
 		path.join(ROOT, "blog"),
+
+	CATEGORIES_META_PATH:
+	path.join(
+		JSON_DIR,
+		"categories-meta.json"
+	),
 	
+	TEMPLATES_DIR:
+	path.join(ROOT, "templates"),
 
 	ABOUT_OUTPUT_DIR:
 		ROOT,

@@ -1,0 +1,22 @@
+{
+  "shavian": {
+    "count": {
+      "es": 1
+    },
+    "emoji": "🔠",
+    "description": {
+      "es": "Sistema de escritura creado por Ronald Kingsley Read para el idioma inglés tras una competencia ideada por George Bernard Shaw.",
+      "eo": "Skribsistemo kreita de Ronald Kingsley Read por la angla post konkurso de George Bernard Shaw."
+    }
+  },
+  "test": {
+    "count": {
+      "eo": 2
+    },
+    "emoji": "🐞",
+    "description": {
+      "es": "Artículos para probar la interfaz y generador de Lastaj Neŭronoj, y asegurarse que no existen bugs.",
+      "eo": "Artikoloj por provi la interfacon kaj generatoron de Lastaj Neŭronoj, kaj certigi, ke ne ekzistas cimoj."
+    }
+  }
+}
