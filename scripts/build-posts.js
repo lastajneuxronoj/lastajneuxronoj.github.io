@@ -523,6 +523,7 @@ function renderEmojiImg(emoji) {
 	});
 }
 
+// Renderiza el contenido de los markdown linkeados por posts.json y pages-json
 function renderMarkdownContent(md, lang, translations, pageTitle = "") {
 
 	// Extensiones Markdown propias
@@ -783,11 +784,16 @@ async function renderPage({ type, data }) {
 			if (type === "post") {
 			const template = await loadTemplate("post.html");
 			
+		const categoryLink = data.post.category
+			? `<a class="post-category" href="/blog/categories/${data.post.category}.html">${data.post.type?.[data.lang] || data.post.category}</a>`
+			: "";
+
 			const meta = [
 				data.post.date,
-				data.post.type?.[data.lang],
+				categoryLink,
 				data.post.author?.[data.lang]
 			]
+
 			.filter(Boolean)
 			.join(" | ");
 		

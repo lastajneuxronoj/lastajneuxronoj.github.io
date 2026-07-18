@@ -10,7 +10,9 @@
 		},
 		"ui": {
 			"toc": {
-				"title": "Contenido"
+				"title": "Contenido",
+				"music": "Música",
+				"podcast": "Podcast"
 			},
 			"categories": {
 				"title": "CATEGORIES",
@@ -83,7 +85,9 @@
 		},
 		"ui": {
 			"toc": {
-				"title": "Enhavo"
+				"title": "Enhavo",
+				"music": "Muziko",
+				"podcast": "Podkastaĵo"
 			},
 			"categories": {
 				"title": "CATEGORIES",

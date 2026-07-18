@@ -41,6 +41,11 @@
 	text-transform: uppercase;
 }
 
+.post-category {
+	color:inherit;
+	text-decoration: underline;
+}
+
 
 /* ==========================================
    LAYOUT DEL POST

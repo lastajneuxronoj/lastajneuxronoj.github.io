@@ -1,4 +1,3 @@
-<!--Esta es una copia del inde.html original para mantener el SEO-->
 <!DOCTYPE html>
 <html lang="eo" id="html-root">
 
@@ -14,29 +13,43 @@
 	<meta property="og:type" content="website">
 	<meta property="og:url" content="https://lastajneuxronoj.github.io/">
 	<meta property="og:locale" content="eo">
+	<link rel="alternate" type="application/rss+xml" title="Lastaj Neŭronoj - Español" href="/rss-es.xml">
+	<link rel="alternate" type="application/rss+xml" title="Lastaj Neŭronoj - Esperanto" href="/rss-eo.xml">
 	<!--<meta property="og:image" content="https://lastajneuxronoj.github.io/svg/imagen_compartir.svg">-->
 	<link rel="canonical" href="https://lastajneuxronoj.github.io/">
 	<!--Agregar idiomas-->
 	<link rel="alternate" hreflang="eo" href="https://lastajneuxronoj.github.io/">
 	<link rel="alternate" hreflang="es" href="https://lastajneuxronoj.github.io/">
+	<link rel="icon" type="image/svg+xml" href="/svg/logo-mark.svg">
+	<link rel="icon" type="image/x-icon" href="/favicon.ico">
+
+	<!--Importante dejar antes de los estilos-->
+	<script>
+	(() => {
+		const savedTheme = localStorage.getItem("theme");
+	
+		const theme =
+			savedTheme ||
+			(
+				window.matchMedia("(prefers-color-scheme: dark)").matches
+					? "dark"
+					: "light"
+			);
+	
+		if (theme === "dark") {
+			document.documentElement.classList.add("dark");
+		}
+	})();
+	</script>
 
 	<!-- Estilos -->
-	<link rel="stylesheet" href="/style.css" />
-	<link rel="stylesheet" href="/post.css" />
-	<link rel="stylesheet" href="/header_footer.css" />
-	<link rel="stylesheet" href="/mobile.css" media="(max-width: 768px)">
+	<link rel="stylesheet" href="/css/style.css" />
+	<link rel="stylesheet" href="/css/post.css" />
+	<link rel="stylesheet" href="/css/header_footer.css" />
+	<link rel="stylesheet" href="/css/mobile.css" media="(max-width: 768px)">
 
 	<!-- Scripts -->
 	<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-	<script>
-		// Aplicar el tema almacenado al cargar la página
-		(function () {
-			const theme = localStorage.getItem("theme") || "light";
-			if (theme === "dark") {
-				document.documentElement.classList.add("dark");
-			}
-		})();
-	</script>
 	<script>
 		(function () {
 			const lang = localStorage.getItem("lang") || "eo";
@@ -76,6 +89,7 @@
 	<script src="https://twemoji.maxcdn.com/v/latest/twemoji.min.js"></script>
 	<script src="/js/content.js"></script>
 	<script src="/js/main.js"></script>
+	<script src="/js/search.js"></script>
 </body>
 
 </html>

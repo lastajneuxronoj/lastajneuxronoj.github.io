@@ -1389,3 +1389,139 @@ tbody tr:hover {
 
 }
 
+/* Menú desplegable */
+.header-dropdown {
+	position: relative;
+	display: inline-block;
+}
+
+.dropdown-category::after {
+	content: "";
+
+	position: absolute;
+
+	left: 0;
+	top: 0;
+	margin-top: 37px;
+	width: 100%;
+	height: 10px;
+
+	background: var(--category-color) !important;
+
+	z-index: 9999;
+}
+
+
+
+.categories-dropdown {
+
+	display: none;
+	font-family: var(--font-ui);
+	color: var(--primary-color);
+	position: fixed;
+
+	top: 0;
+	left: 0;
+
+	min-width: 260px;
+
+
+	margin-top: 0;
+	padding: 0.4rem;
+
+	background: var(--base-color);
+
+	border: 1px solid var(--border-color);
+
+	border-radius: 8px;
+
+	box-shadow:
+		0 4px 12px rgba(0, 0, 0, 0.15);
+	-webkit-backdrop-filter: blur(10px);
+	backdrop-filter: blur(10px) !important;
+
+	z-index: 2000;
+}
+
+.dropdown-category {
+	position: relative;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 1rem;
+	padding: 0.55rem 0.75rem;
+	border-radius: 6px;
+	text-decoration: none;
+	color: inherit;
+	overflow: hidden;
+}
+
+.dropdown-category::after {
+	content: "";
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	height: 3px;
+	background:
+		var(
+			--category-color,
+			var(--tertiary-color)
+		);
+
+	transform: scaleX(0);
+	transform-origin: left;
+	transition:
+		transform var(--transition-speed);
+}
+
+.dropdown-category:hover::after {
+	transform: scaleX(1);
+}
+
+.dropdown-category:hover {
+	background:
+		var(--hover-bg);
+}
+
+.dropdown-category-name {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.dropdown-category-name img.emoji {
+	transition:
+		transform var(--transition-speed);
+}
+
+.dropdown-category:hover
+.dropdown-category-name img.emoji {
+	transform: scale(1.15);
+}
+
+.dropdown-category-count {
+	font-size: 0.9rem;
+	opacity: 0.7;
+	font-family:
+		var(--ui-font);
+	transition:
+		opacity var(--transition-speed);
+}
+
+.dropdown-category:hover
+.dropdown-category-count {
+	opacity: 1;
+}
+
+.categories-dropdown img.emoji {
+	width: 20px !important;
+	height: 20px !important;
+	vertical-align: middle;
+}
+
+#header-categories::after {
+	content: " ▼";
+	font-size: 0.75em;
+	opacity: 0.7;
+}

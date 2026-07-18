@@ -26,7 +26,14 @@ async function main() {
 		)
 	);
 
-	await buildSitemap(posts);
+	const pages = JSON.parse(
+		await fs.readFile(
+			PAGES_JSON_PATH,
+			"utf-8"
+		)
+	);
+
+	await buildSitemap(posts, pages);
 
 }
 
@@ -100,46 +107,38 @@ async function buildSitemap(posts, pages) {
 
 	});
 
+	// =========================
+	// Índice de categorías
+	// =========================
+
+	urls.push(`
+		<url>
+			<loc>${siteUrl}/blog/categories/</loc>
+		</url>
+	`);
+
 
 	// =========================
 	// Páginas de categorías
 	// =========================
-
-	const categoriesByLang = {};
+	const categories = new Set();
 
 	posts.forEach(post => {
 
 		if (!post.category)
 			return;
 
-
-		Object.keys(post.file || {})
-			.forEach(lang => {
-
-				categoriesByLang[lang] =
-					categoriesByLang[lang] || new Set();
-
-				categoriesByLang[lang]
-					.add(post.category);
-
-			});
+		categories.add(post.category);
 
 	});
 
+	for (const category of categories) {
 
-	for (const [lang, categories]
-		of Object.entries(categoriesByLang)) {
-
-
-		for (const category of categories) {
-
-			urls.push(`
-		<url>
-			<loc>${siteUrl}/categories/${category}-${lang}.html</loc>
-		</url>
-			`);
-
-		}
+		urls.push(`
+			<url>
+				<loc>${siteUrl}/blog/categories/${category}.html</loc>
+			</url>
+		`);
 
 	}
 
