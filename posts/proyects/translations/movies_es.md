@@ -1,0 +1,3 @@
+## Pronto...
+
+Estoy traduciendo una película chilena al esperanto. Pronto estará disponible.

@@ -68,13 +68,11 @@
     	<link href="https://fonts.googleapis.com/css2?family=Hubot+Sans:ital,wght@0,200..900;1,200..900&family=Vollkorn:ital,wght@0,400..900;1,400..900display=swap"    rel="stylesheet">
 
 		<!--SCRIPT DE CONTEO DE VISITAS-->
-		<!-- ACTIVAR DESPUÉS!!!!-->
-
-		<!--<script data-goatcounter="https://lastajneuxronoj.goatcounter.com/count"
-        async src="//gc.zgo.at/count.js"></script>-->
+		<script data-goatcounter="https://lastajneuxronoj.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
     </head>
 
-	<body data-page="page" data-page-id="{{pageId}}" data-available-langs="{{availableLangs}}">
+	<body data-page="page" data-page-id="{{pageId}}" data-available-langs="{{availableLangs}}" data-lang-urls='{{lang_urls}}'>
 	
 		<div id="header-container"></div>
 	
@@ -85,7 +83,7 @@
 					<img id="back-icon"
 					     src="./svg/left_arrow_b.svg"
 					     alt="Flecha hacia atrás">
-					<a href="./index.html">{{backToHome}}</a>
+					<a href="/index.html">{{backToHome}}</a>
 				</div>
 			
 				<div class="post-section-head">
@@ -114,9 +112,9 @@
 	
 		<script src="/js/translation.js"></script>
 		<script src="/js/ui.js"></script>
+		<script src="https://twemoji.maxcdn.com/v/latest/twemoji.min.js"></script>
 		<script src="/js/content.js"></script>
 		<script src="/js/main.js"></script>
 		<script src="/js/search.js"></script>
-	
 	</body>
 </html>

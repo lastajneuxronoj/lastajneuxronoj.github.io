@@ -1,6 +1,41 @@
 {
+  "memoirs": {
+    "count": {
+      "eo": 5,
+      "es": 1
+    },
+    "emoji": "🌠",
+    "color": "#FDD835",
+    "description": {
+      "es": "Los textos de esta categoría son relatos personales, recuerdos y reflexiones autobiográficas.",
+      "eo": "La verkaĵoj de ĉi tiu kategorio estas personalaj rakontoj, memoroj kaj aŭtobiografiaj reflektoj."
+    }
+  },
+  "divulgation": {
+    "count": {
+      "eo": 8
+    },
+    "emoji": "🧪",
+    "color": "#43A047",
+    "description": {
+      "es": "Artículos de divulgación científica, análisis de investigaciones y reflexiones sobre biología, química, neurociencias, farmacología, psicología y otras áreas del conocimiento",
+      "eo": "Artikoloj pri sciencdisvastigo, analizoj de esploroj kaj reflektoj pri biologio, ĥemio, neŭroscienco, farmakologio, psiĥologio kaj aliaj fampoj de scio."
+    }
+  },
+  "translation": {
+    "count": {
+      "eo": 3
+    },
+    "emoji": "🌎",
+    "color": "#1E88E5",
+    "description": {
+      "es": "Traducciones de extractos de libros, canciones u otras cosas.",
+      "eo": "Tradukoj de elitaĵoj el libroj, kantoj kaj aliaj aferoj."
+    }
+  },
   "shavian": {
     "count": {
+      "eo": 3,
       "es": 1
     },
     "emoji": "🔠",
@@ -8,18 +43,6 @@
     "description": {
       "es": "Sistema de escritura creado por Ronald Kingsley Read para el idioma inglés tras una competencia ideada por George Bernard Shaw, y luego adaptado para el esperanto.",
       "eo": "Skribsistemo kreita de Ronald Kingsley Read por la angla post konkurso de George Bernard Shaw, kaj adaptita poste al Esperanto."
-    }
-  },
-  "test": {
-    "count": {
-      "eo": 3,
-      "es": 1
-    },
-    "emoji": "🐞",
-    "color": "#E53935",
-    "description": {
-      "es": "Artículos para probar la interfaz y generador de Lastaj Neŭronoj, y asegurarse que no existen bugs.",
-      "eo": "Artikoloj por provi la interfacon kaj generatoron de Lastaj Neŭronoj, kaj certigi, ke ne ekzistas cimoj."
     }
   }
 }

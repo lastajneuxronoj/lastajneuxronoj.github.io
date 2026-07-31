@@ -9,30 +9,45 @@
             <link>https://lastajneuxronoj.github.io</link>
         </image>
         <generator>Lastaj Neŭronoj Static Generator</generator>
-        <lastBuildDate>Wed, 22 Jul 2026 03:02:54 GMT</lastBuildDate>
+        <lastBuildDate>Fri, 31 Jul 2026 22:02:52 GMT</lastBuildDate>
         <atom:link href="https://lastajneuxronoj.github.io/rss-es.xml" rel="self" type="application/rss+xml"/>
-        <pubDate>Wed, 22 Jul 2026 03:02:54 GMT</pubDate>
+        <pubDate>Fri, 31 Jul 2026 22:02:52 GMT</pubDate>
         <copyright><![CDATA[Lastaj Neŭronoj]]></copyright>
         <language><![CDATA[es]]></language>
         <managingEditor><![CDATA[Tomás]]></managingEditor>
         <webMaster><![CDATA[Tomás]]></webMaster>
         <ttl>60</ttl>
         <item>
-            <title><![CDATA[Provo 3]]></title>
-            <description><![CDATA[Este es un post de prueba en español.]]></description>
-            <link>https://lastajneuxronoj.github.io/blog/003-es.html</link>
-            <guid isPermaLink="false">https://lastajneuxronoj.github.io/blog/003-es.html</guid>
-            <category><![CDATA[Shaviano]]></category>
-            <dc:creator><![CDATA[Autor]]></dc:creator>
-            <pubDate>Mon, 14 Jul 2025 00:00:00 GMT</pubDate>
+            <title><![CDATA[La Virgulino]]></title>
+            <description><![CDATA[
+				<img
+					src="https://lastajneuxronoj.github.io/covers/014.webp"
+					alt=""
+					style="max-width:100%;height:auto;">
+				<p>El escrito presenta una historia íntima sobre el sufrimiento personal y la experiencia de imágenes intrahospitalarias, junto con la figura de La Virgen.</p>
+			  ]]></description>
+            <link>https://lastajneuxronoj.github.io/blog/es/014-es.html</link>
+            <guid isPermaLink="false">https://lastajneuxronoj.github.io/blog/es/014-es.html</guid>
+            <category><![CDATA[Memorias]]></category>
+            <dc:creator><![CDATA[Tomĉjo]]></dc:creator>
+            <pubDate>Sun, 02 Feb 2025 00:00:00 GMT</pubDate>
+            <enclosure url="https://lastajneuxronoj.github.io/covers/014.webp" length="0" type="image/webp"/>
         </item>
         <item>
-            <title><![CDATA[Prueba 0]]></title>
-            <description><![CDATA[Descripción 0]]></description>
-            <link>https://lastajneuxronoj.github.io/blog/000-es.html</link>
-            <guid isPermaLink="false">https://lastajneuxronoj.github.io/blog/000-es.html</guid>
-            <category><![CDATA[Prueba]]></category>
-            <pubDate>Sun, 13 Jul 2025 00:00:00 GMT</pubDate>
+            <title><![CDATA[La lógica del alfabeto starlingshaviano]]></title>
+            <description><![CDATA[
+				<img
+					src="https://lastajneuxronoj.github.io/covers/002.webp"
+					alt=""
+					style="max-width:100%;height:auto;">
+				<p>El alfabeto shaviano, adaptado de Ĝan Ŭesli Starling para el esperanto, es presentado en este artículo. El alfabeto no distingue entre mayúsculas y minúsculas, las vocales hacen un círculo en dirección de las agujas del reloj, y las letras son caracterizadas según su posición sobre el eje horizontal.</p>
+			  ]]></description>
+            <link>https://lastajneuxronoj.github.io/blog/es/002-es.html</link>
+            <guid isPermaLink="false">https://lastajneuxronoj.github.io/blog/es/002-es.html</guid>
+            <category><![CDATA[Shaviano]]></category>
+            <dc:creator><![CDATA[Tomĉjo]]></dc:creator>
+            <pubDate>Fri, 16 Feb 2024 00:00:00 GMT</pubDate>
+            <enclosure url="https://lastajneuxronoj.github.io/covers/002.webp" length="0" type="image/webp"/>
         </item>
     </channel>
 </rss>

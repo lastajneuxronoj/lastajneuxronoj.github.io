@@ -154,10 +154,15 @@ body>main {
 
 .text-image {
 	flex-direction: column;
-  }
+	gap:0px;
+}
 
-.text-image img {
-	width: 100%;
+.text-image figure {
+	align-self: center;
+}
+
+.text-image figure img {
+	width: min(250px, 100%);
 }
 
 .table-wrapper {

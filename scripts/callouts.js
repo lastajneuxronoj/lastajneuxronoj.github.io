@@ -50,7 +50,8 @@ ${content.trim()}
 		"warning",
 		"tip",
 		"definition",
-		"example"
+		"example",
+		"media"
 	];
 
 	const calloutIcons = {
@@ -58,7 +59,8 @@ ${content.trim()}
 		warning: "⚠️",
 		tip: "💡",
 		definition: "📖",
-		example: "🔎"
+		example: "🔎",
+		media: "⏯️"
 	};
 
 	const regex = new RegExp(

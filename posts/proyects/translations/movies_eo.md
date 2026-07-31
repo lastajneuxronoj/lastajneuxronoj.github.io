@@ -1,0 +1,3 @@
+## Baldaŭ...
+
+Mi tradukas iun ĉilian filmon al Esperanto. Baldaŭ ĝi disponeblos.

@@ -15,7 +15,7 @@
 			"eo": "Artikoloj por provi la interfacon kaj generatoron de Lastaj Neŭronoj, kaj certigi, ke ne ekzistas cimoj."
 		}
 	},
-	"science": {
+	"divulgation": {
 		"emoji": "🧪",
 		"color": "#43A047",
 		"description": {
@@ -24,8 +24,12 @@
 		}
 	},
 	"translation": {
-		"emoji": "🈁",
-		"color": "#1E88E5"
+		"emoji": "🌎",
+		"color": "#1E88E5",
+		"description": {
+			"es": "Traducciones de extractos de libros, canciones u otras cosas.",
+			"eo": "Tradukoj de elitaĵoj el libroj, kantoj kaj aliaj aferoj."
+		}
 	},
 	"memoirs": {
 		"emoji": "🌠",
@@ -33,6 +37,14 @@
 		"description": {
 			"es": "Los textos de esta categoría son relatos personales, recuerdos y reflexiones autobiográficas.",
 			"eo": "La verkaĵoj de ĉi tiu kategorio estas personalaj rakontoj, memoroj kaj aŭtobiografiaj reflektoj."
+		}
+	},
+	"history": {
+		"emoji": "📕",
+		"color": "#DD2E44",
+		"description": {
+			"es": "Entradas de blog sobre historia.",
+			"eo": "Blogaĵoj pri historio."
 		}
 	}
 }

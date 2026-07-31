@@ -86,12 +86,12 @@ Esta es otra tabla
 
 ## Avisos
 
-:::note
+:::note Nota
 Esto es una **nota** con [enlace a Google](https://google.com).
 :::
 
 
-:::warning
+:::warning Alerta
 Este resultado debe interpretarse con precaución.
 :::
 
@@ -103,7 +103,7 @@ AMPK es un regulador central del metabolismo energético.
 Esto es un tip
 :::
 
-:::example
+:::example Ejemplo
 Esto es un ejemplo
 :::
 
@@ -116,3 +116,19 @@ function saludar(nombre) {
 ```
 
 Como vemos en @code:javascript, la implementación es trivial.
+
+**Compatibilidad con texto shaviano:** 𐑕𐑨𐑤𐑪𐑑𐑩𐑵, 𐑒𐑨𐑮𐑨𐑢! 𐑗𐑦 𐑑𐑦𐑩 𐑧𐑕𐑑𐑨𐑕 𐑐𐑮𐑩𐑝𐑩 𐑛𐑧 𐑤𐑨 𐑖𐑨𐑝𐑨 𐑨𐑤𐑓𐑨𐑚𐑧𐑑𐑩.
+
+**Compatbilidad inline con logogramas del toki pona:** {{tp: mi kama sona e toki pona.}} {{tp: jan pi (toki-pona) li jan pi (pona mute)}}
+
+**Bloque en toki pona:**
+
+:::tokipona
+mi kama sona e toki pona.
+:::
+
+<iframe class="youtube" src="https://www.youtube.com/embed/gsweYWCtvgU" title="Los Blenders - Ha Sido" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+{#media:haSido title="Ha Sido - Los Blenders"}
+
+<div class="post-signature">—Tomĉjo (·𐑑𐑩𐑫𐑗𐑢𐑩).</div>

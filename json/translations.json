@@ -19,7 +19,7 @@
 				"title": "CATEGORIES",
 				"subtitle": "> Categorías",
 				"names": {
-					"science": "Ciencia",
+					"divulgation": "Divulgación",
 					"translation": "Traducción",
 					"shavian": "Shaviano",
 					"memoirs": "Memorias",
@@ -52,7 +52,8 @@
 			"figure": "Figura",
 			"equation": "Ecuación",
 			"table": "Tabla",
-			"code": "Código"
+			"code": "Código",
+			"media": "Multimedia"
 		},
 		"languageNames": {
 			"es": "Español",
@@ -95,7 +96,7 @@
 				"title": "CATEGORIES",
 				"subtitle": "> Kategorioj",
 				"names": {
-					"science": "Scienco",
+					"divulgation": "Disvastigo",
 					"translation": "Traduko",
 					"shavian": "Ŝava",
 					"memoirs": "Memoroj",
@@ -128,7 +129,8 @@
 			"figure": "Figuro",
 			"equation": "Ekvacio",
 			"table": "Tabelo",
-			"code": "Kodo"
+			"code": "Kodo",
+			"media": "Plurmedio"
 		},
 		"languageNames": {
 			"es": "La hispana",

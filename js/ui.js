@@ -311,8 +311,10 @@ async function updateLanguageDependentLinks(userInitiated = false) {
 		})
 	);
 	
+	//Poner links de header. Sintaxis ID (HTML) y ID (JSON)
 	const links = {
-		"header-about": "about"
+		"header-about": "about",
+		"header-projects": "projects"
 	};
 
 	for (const [id, page] of Object.entries(links)) {
@@ -335,10 +337,18 @@ async function updateLanguageDependentLinks(userInitiated = false) {
 		buildLinkForLang = (code) => `/blog/${postNumber}-${code}.html`;
 
 	} else if (page === "page") {
-		const pageId = document.body.dataset.pageId;
-		availableLangs = (document.body.dataset.availableLangs || "").split(",");
-		targetUrl = `/${pageId}-${lang}.html`;
-		buildLinkForLang = (code) => `/${pageId}-${code}.html`;
+
+    	availableLangs = (
+    	    document.body.dataset.availableLangs || ""
+    	).split(",");
+	
+    	const langUrls = JSON.parse(
+    	    document.body.dataset.langUrls || "{}"
+    	);
+	
+    	targetUrl = langUrls[lang];
+	
+    	buildLinkForLang = (code) => langUrls[code];
 
 	} else if (page === "category") {
 		const categorySlug = document.body.dataset.category;
@@ -795,17 +805,13 @@ async function buildProjectsDropdown() {
 
 	await buildDropdown({
 
-		elementId:
-			"projects-dropdown",
+		elementId: "projects-dropdown",
+		url: "/json/projects.json",
 
-		url:
-			"/json/projects.json",
-
-		render:
-			renderProjectsDropdown
+		render: renderProjectsDropdown
 
 	});
-
+	setupProjectLinks();
 }
 
 function renderProjectsDropdown(
@@ -818,79 +824,88 @@ function renderProjectsDropdown(
 		lang
 	);
 
+	function renderProjectTree(
+		items,
+		lang
+	) {
 
-	function renderProjectTree(items, lang) {
+		return Object.entries(items)
 
-	return Object.entries(items)
+			.map(
+				([slug, item]) => {
 
-		.map(
-			([slug, item]) => {
+					const title =
+						item.title?.[lang]
+						|| item.title?.es
+						|| slug;
 
-				const title =
-					item.title?.[lang]
-					|| item.title?.es
-					|| slug;
+					const emoji =
+						item.emoji
+						|| "";
 
-				const emoji =
-					item.emoji
-					|| "";
+					// Carpeta con hijos
 
+					if (item.children) {
 
-			// Carpeta con hijos
-			if (item.children) {
-			
-				return `
-				<div class="project-folder">
-			
-					<div
-						class="project-folder-title"
+						return `
+						<div class="project-folder">
+
+							<div
+								class="project-folder-title"
+								style="--project-color:${item.color || "#888"}"
+							>
+
+								<span>
+									${emoji}
+									${title}
+								</span>
+
+								<span class="folder-arrow">
+									›
+								</span>
+
+							</div>
+
+							<div class="project-submenu">
+
+								${renderProjectTree(
+									item.children,
+									lang
+								)}
+
+							</div>
+
+						</div>
+						`;
+					}
+
+					// Proyecto final
+
+					const localizedUrl =
+						item.url.replace(
+							".html",
+							`-${lang}.html`
+						);
+
+					return `
+					<a
+						class="project-link"
+						href="${localizedUrl}"
+						data-url="${item.url}"
+						data-langs='${JSON.stringify(item.langs || [])}'
 						style="--project-color:${item.color || "#888"}"
 					>
-			
-						<span>
-							${emoji}
-							${title}
-						</span>
-			
-						<span class="folder-arrow">
-							›
-						</span>
-			
-					</div>
-			
-			
-					<div class="project-submenu">
-			
-						${renderProjectTree(
-							item.children,
-							lang
-						)}
-					
-					</div>
-					
-				</div>
-				`;
-			}
+						${emoji}
+						${title}
+					</a>
+					`;
 
+				}
+			)
 
-				// Proyecto final
-				return `
-				<a
-					class="project-link"
-					href="${item.url}"
-					style="--project-color:${item.color || "#888"}"
-				>
-					${emoji}
-					${title}
-				</a>
-				`;
+			.join("");
 
-			}
-		)
-
-		.join("");
-
-}
+	}
 }
 
 function setupDropdown(
@@ -974,15 +989,55 @@ function setupDropdown(
 
 }
 
+function setupProjectLinks() {
+
+	document
+		.querySelectorAll(".project-link")
+		.forEach(link => {
+
+			link.addEventListener(
+				"click",
+				async (e) => {
+
+					const currentLang =	getCurrentLang();
+
+					const availableLangs =
+						JSON.parse(link.dataset.langs);
+
+					if (
+						availableLangs.includes(
+							currentLang
+						)
+					) {
+						return;
+					}
+
+					e.preventDefault();
+
+					const baseUrl = link.dataset.url;
+
+					await showLangUnavailableError(
+						availableLangs,
+						code =>
+							baseUrl.replace(
+								".html",
+								`-${code}.html`
+							)
+					);
+
+				}
+			);
+
+		});
+
+}
+
 window.addEventListener(
 	"languageChanged",
 	async () => {
 
 		await buildCategoriesDropdown();
-
 		await buildProjectsDropdown();
 
 	}
 );
-
-

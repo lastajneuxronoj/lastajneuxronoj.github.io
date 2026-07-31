@@ -1,22 +1,22 @@
 [
   {
-    "number": "003",
-    "title": "Provo 3",
-    "excerpt": "Este es un post de prueba en español.",
-    "type": "Prueba 3",
-    "category": "shavian",
-    "emoji": "👀",
-    "cover": "",
-    "url": "/blog/003-es.html"
+    "number": "014",
+    "title": "La Virgulino",
+    "excerpt": "El escrito presenta una historia íntima sobre el sufrimiento personal y la experiencia de imágenes intrahospitalarias, junto con la figura de La Virgen.",
+    "type": "Memorias",
+    "category": "memoirs",
+    "emoji": "⛪",
+    "cover": "/covers/014.webp",
+    "url": "/blog/es/014-es.html"
   },
   {
-    "number": "000",
-    "title": "Prueba 0",
-    "excerpt": "Descripción 0",
-    "type": "Prueba",
-    "category": "test",
-    "emoji": "",
-    "cover": "",
-    "url": "/blog/000-es.html"
+    "number": "002",
+    "title": "La lógica del alfabeto starlingshaviano",
+    "excerpt": "El alfabeto shaviano, adaptado de Ĝan Ŭesli Starling para el esperanto, es presentado en este artículo. El alfabeto no distingue entre mayúsculas y minúsculas, las vocales hacen un círculo en dirección de las agujas del reloj, y las letras son caracterizadas según su posición sobre el eje horizontal.",
+    "type": "Shaviano",
+    "category": "shavian",
+    "emoji": "🔠",
+    "cover": "/covers/002.webp",
+    "url": "/blog/es/002-es.html"
   }
 ]

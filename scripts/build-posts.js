@@ -109,6 +109,7 @@ function preprocessReferences(markdown) {
 	let figureNumber = 0;
 	let tableNumber = 0;
 	let codeNumber = 0;
+	let mediaNumber = 0;
 
 	const referenceMap = {};
 
@@ -208,6 +209,29 @@ function preprocessReferences(markdown) {
 		}
 	);
 
+	// Media
+	markdown = markdown.replace(
+	    /\{([^}]*)\}/g,
+	    (match, attrs) => {
+
+	        const {label, title} = parseAttributes(attrs);
+
+	        if (!label || !label.startsWith("media:")) {
+	            return match;
+	        }
+
+	        mediaNumber++;
+
+	        referenceMap[label] = {
+	            type: "media",
+	            number: mediaNumber,
+	            description: title
+	        };
+
+	        return `@@REF:${label}@@`;
+	    }
+	);
+
 	return { markdown, referenceMap };
 }
 
@@ -216,7 +240,8 @@ function renderReferences(html, referenceMap = {}, lang, translations) {
 		equation: "Ekvacio",
 		figure: "Figuro",
 		table: "Tabelo",
-		code: "Kodo"
+		code: "Kodo",
+		media: "Plurmedio"
 	};
 	// Inline math
 	html = html.replace(
@@ -279,6 +304,14 @@ case "code":
 <figcaption class="code-caption">${labels.code} ${ref.number}${ref.description ? `: ${ref.description}` : ""}</figcaption>
 </figure>
 `;
+				case "media":
+    				return `
+    				<div class="media-anchor" id="${id}">
+    				    <figcaption class="figure-caption">
+    				        ${labels.media} ${ref.number}${ref.description ? `: ${ref.description}` : ""}
+    				    </figcaption>
+    				</div>
+    				`;
 			}
 		}
 	);
@@ -308,7 +341,10 @@ function replaceReferences(html, referenceMap, lang, translations) {
 					return `<a href="#${id}">${labels.table} ${ref.number}</a>`;
 				case "code":
 					return `<a href="#${id}" title="${ref.description || ""}">${labels.code} ${ref.number}</a>`;
+				case "media":
+    				return `<a href="#${id}">${labels.media} ${ref.number}</a>`;
 			}
+
 		}
 	);
 }
@@ -478,7 +514,10 @@ async function buildStaticPages(pages, translations) {
 				page.section_title?.[lang] || ""
 			);
 
-			const coverImage = await findCoverImage(page.id);
+			const coverImage =
+    			page.cover ||
+    			await findCoverImage(page.id);
+				
 			const html = await renderPage({
 				type: "page",
 				data: {
@@ -488,12 +527,34 @@ async function buildStaticPages(pages, translations) {
 					translations,
 					availableLangs,
 					coverImage,
+					lang_urls: JSON.stringify(page.url || {}),
 				},
 			});
 
+			let outputFile;
+
+			if (page.url) {
+			
+				outputFile =
+					typeof page.url === "string"
+						? page.url
+						: page.url[lang];
+			
+			} else {
+			
+				outputFile =
+					`${page.id}-${lang}.html`;
+			
+			}
+			
 			const outPath = path.join(
 				ROOT,
-				`${page.id}-${lang}.html`
+				outputFile.replace(/^\/+/, "")
+			);
+
+			await fs.mkdir(
+				path.dirname(outPath),
+				{ recursive: true }
 			);
 
 			await fs.writeFile(
@@ -1012,56 +1073,98 @@ async function renderPage({ type, data }) {
 
 		// Renderizar la página como page
 		if (type === "page") {
-			const template = await loadTemplate(`${data.page.template || "page"}.html`);
-
-			const url = `${SITE_URL}${data.page.id}-${data.lang}.html`;
-
-			const langMap = {};
-			data.availableLangs.forEach(lang => {
-				langMap[lang] = `/${data.page.id}-${lang}.html`;
-			});
 		
-			const sectionTitle = data.page.section_title?.[data.lang] || "";
+		    const template = await loadTemplate(
+		        `${data.page.template || "page"}.html`
+		    );
 		
-			const titleId = sectionTitle
-				? slugify(sectionTitle, { lower: true, strict: true })
-				: "";
+		    const pageUrls = data.page.url || {};
 		
-			const seo = buildSEOData({
-				title: data.page.title[data.lang],
-				description: data.page.description?.[data.lang] || "",
-				url,
-				lang: data.lang,
-				type: data.page.id === "about" ? "AboutPage" : "WebPage",
-				image: data.coverImage || "",   // <-- actualizado
-				alternates: Object.fromEntries(
-					data.availableLangs.map(lang => [
-						lang,
-						`${SITE_URL}${data.page.id}-${lang}.html`
-					])
-				)
-			});
+		    const currentUrl =
+		        typeof pageUrls === "string"
+		            ? pageUrls
+		            : pageUrls[data.lang] || `/${data.page.id}-${data.lang}.html`;
 		
-			const coverHtml = renderCover({
-				image: data.coverImage,
-				emoji: data.page.emoji,
-			});
-
-			return renderTemplate(template, {
-				lang: data.lang,
-				title: buildPageTitle(data.page.title[data.lang]),
-				cover: coverHtml,
-				...seo,
-				langMap: JSON.stringify(langMap),
-				body: data.htmlContent,
-				section_bg: data.page.section_bg?.[data.lang] || "",
-				section_title: data.page.section_title?.[data.lang] || "",
-				titleId,
-				pageId: data.page.id,
-				availableLangs: data.availableLangs.join(","),
-				backToHome: data.translations[data.lang].backToHome,
-				rssLink,
-			});
+		    const url =
+		        `${SITE_URL}${currentUrl.replace(/^\/+/, "")}`;
+		
+		    const langMap = {};
+		
+		    data.availableLangs.forEach(lang => {
+			
+		        if (typeof pageUrls === "string") {
+				
+		            langMap[lang] = pageUrls;
+				
+		        } else {
+				
+		            langMap[lang] =
+		                pageUrls[lang] ||
+		                `/${data.page.id}-${lang}.html`;
+				
+		        }
+			
+		    });
+		
+		    const sectionTitle =
+		        data.page.section_title?.[data.lang] || "";
+		
+		    const titleId = sectionTitle
+		        ? slugify(sectionTitle, {
+		            lower: true,
+		            strict: true
+		        })
+		        : "";
+			
+		    const seo = buildSEOData({
+		        title: data.page.title[data.lang],
+		        description:
+		            data.page.description?.[data.lang] || "",
+		        url,
+		        lang: data.lang,
+		        type:
+		            data.page.id === "about"
+		                ? "AboutPage"
+		                : "WebPage",
+		        image: data.coverImage || "",
+		        alternates: Object.fromEntries(
+		            data.availableLangs.map(lang => [
+		                lang,
+		                `${SITE_URL}${
+		                    (langMap[lang] || "").replace(/^\/+/, "")
+		                }`
+		            ])
+		        )
+		    });
+		
+		    const coverHtml = renderCover({
+		        image: data.coverImage,
+		        emoji: data.page.emoji,
+		    });
+		
+		    return renderTemplate(template, {
+		        lang: data.lang,
+		        title: buildPageTitle(
+		            data.page.title[data.lang]
+		        ),
+		        cover: coverHtml,
+		        ...seo,
+		        langMap: JSON.stringify(langMap),
+		        lang_urls: JSON.stringify(langMap),
+		        body: data.htmlContent,
+		        section_bg:
+		            data.page.section_bg?.[data.lang] || "",
+		        section_title:
+		            data.page.section_title?.[data.lang] || "",
+		        titleId,
+		        pageId: data.page.id,
+		        availableLangs:
+		            data.availableLangs.join(","),
+		        backToHome:
+		            data.translations[data.lang].backToHome,
+		        rssLink,
+		    });
+		
 		}
 
 	throw new Error("Unknown type: " + type);

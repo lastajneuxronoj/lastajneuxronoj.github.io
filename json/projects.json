@@ -14,7 +14,8 @@
 				},
 				"emoji": "📚",
 				"color": "#F4900C",
-				"url": "/projects/tradukoj/libroj.html"
+				"url": "/projects/translations/books.html",
+				"langs": ["eo"]
 			},
 			"filmoj": {
 				"title": {
@@ -23,7 +24,8 @@
 				},
 				"emoji": "🎬",
 				"color": "#3F7123",
-				"url": "/projects/tradukoj/filmoj.html"
+				"url": "/projects/translations/movies.html",
+				"langs": ["eo", "es"]
 			}
 		}
 	},
@@ -36,23 +38,25 @@
 		"emoji": "🔤",
 		"color": "#3B88C3",
 		"children": {
-			"klavarfasono": {
+			"layout": {
 				"title": {
 					"es": "Distribución de teclado",
 					"eo": "Klavarfasono"
 				},
 				"emoji": "⌨️",
 				"color": "#99AAB5",
-				"url": "/projects/sava/klavarfasono.html"
+				"url": "/projects/sxava/layout.html",
+				"langs": ["eo", "es"]
 			},
-			"transliterumilo": {
+			"transliterator": {
 				"title": {
 					"es": "Transliterador",
 					"eo": "Transliterumilo"
 				},
 				"emoji": "🔤",
 				"color": "#3B88C3",
-				"url": "/projects/sava/transliterumilo.html"
+				"url": "/projects/sxava/transliterator.html",
+				"langs": ["eo"]
 			}
 		}
 	}

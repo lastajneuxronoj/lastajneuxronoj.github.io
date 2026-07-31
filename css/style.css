@@ -487,30 +487,59 @@ img.emoji {
 	margin: 0;
 }
 
+/*Emojis a partir de imágenes (no Twemoji)*/
+.img-inline {
+    display: inline-flex;
+    align-items: center;
+    gap: .25em;
+    white-space: nowrap;
+}
+
+.img-inline img {
+    width: 1.2em !important;
+    height: 1em !important;
+    vertical-align: 0-.15em;
+    flex-shrink: 0;
+	margin-top: 0px !important;
+	margin-bottom: 0px !important;
+	border-radius: 6px !important;
+}
+
 
 /* ==========================================
    COMPONENTE: TEXTO + IMAGEN
 ========================================== */
 
 .text-image {
-	display: grid;
-	grid-template-columns: minmax(250px, 1fr) 2fr;
-	gap: 24px;
-	width: 100%;
-	align-items: center;
+    display: flex;
+    gap: 24px;
+    align-items: center;
+	margin-top: 0px;
+	margin-bottom: 0px;
 }
 
-.text-image img {
-	width: 100%;
-	max-width: 100%;
-	height: auto;
+.text-image > p:empty {
+	display: none;
+}
+
+.text-image .text-image-content {
+	line-height: 1.5;
+}
+
+.text-image figure {
+	margin: 0;
+	height: 100%;
+	
+}
+
+
+.text-image figure img {
 	display: block;
+	width: clamp(80px, 3vw, 220px);
+	height: auto;
+	margin-top: 0px;
+	margin-bottom: 0px;
 }
-
-.text-image p {
-	line-height: 1.6;
-}
-
 
 /* ==========================================
    TOGGLE DE TEMA
@@ -607,6 +636,7 @@ th {
 
 td {
 	font-family: var(--font-body);
+	text-align: center;
 }
 
 tbody tr:nth-child(even) {
@@ -1624,7 +1654,7 @@ tbody tr:hover {
 .projects-dropdown {
 
 	font-family: var(--font-ui);
-
+	font-weight: 500;
 	opacity: 0;
 	transform: translateY(-10px);
 	visibility: hidden;
@@ -1916,3 +1946,242 @@ tbody tr:hover {
 
 }
 
+/*Teclas*/
+
+.IPA {
+	font-family: 'Times New Roman', Times, serif !important;
+	font-size: 1em;
+}
+
+.klav {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.25em;
+	background-color: #f5f2f0;
+	color: #000;
+	border: 1px solid #d0d2d6;
+	border-radius: 5px;
+	padding: 1px 5px;
+	font-family: ui-monospace,
+		Menlo, Monaco, Consolas,
+		"Cascadia Mono", "Segoe UI Mono";
+	font-size: calc(1em * 0.870);
+	font-weight: 700;
+	font-style: normal;
+}
+
+.klav img {
+	height: 0.9em;
+	width: auto;
+	border-radius: 0px !important;
+	margin: 0px !important;
+}
+
+.windows {
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	background-color: #b2daf8;
+	font-style: normal;
+}
+
+.linux {
+	font-family: 'Times New Roman', Times, serif;
+	background-color: #ecdda4;
+}
+
+.apple {
+	font-family: 'Trebuchet MS', sans-serif;
+	background-color: rgb(245, 245, 245);
+	font-style: normal;
+}
+
+.android {
+	background-color: #c1fadb;
+	font-family: Android Euclid,Roboto,Helvetica,Arial,sans-serif;
+}
+
+.simbolo {
+	color: green;
+	font-weight: 600;
+}
+
+.shift {
+	color: #48aec0;
+}
+
+.RALT {
+	color: #7a1fc5;
+}
+
+.ctrl {color:rgb(3, 3, 216);
+}
+
+.helm {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 1.4em !important;
+	font-weight: normal;
+}
+
+.plus {
+	color: #999;
+	font-weight: 400;
+}
+
+/* Botones de klavarfasono */
+.hero-menu {
+    background-image: url("/images/klavarfasono_background.webp");
+    background-size: cover;
+    background-position: center;
+
+    width: 100%;
+    /* max-width: 800px; */
+    aspect-ratio: 16 / 9;
+
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-areas:
+        "a a"
+        "b c"
+        "d d";
+
+    gap: 16px;
+    padding: 32px;
+    box-sizing: border-box;
+	margin-bottom: 10px;
+}
+
+.hero-menu .btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+	font-family: var(--font-ui);
+    padding: 16px;
+    background: var(--base-color);
+    border-radius: 8px;
+    text-decoration: none;
+    color: var(--primary-color);
+    font-weight: bold;
+	-webkit-backdrop-filter: blur(10px);
+	backdrop-filter: blur(10px);
+}
+
+.hero-menu .btn:nth-child(1) { grid-area: a; }
+.hero-menu .btn:nth-child(2) { grid-area: b; }
+.hero-menu .btn:nth-child(3) { grid-area: c; }
+.hero-menu .btn:nth-child(4) { grid-area: d; }
+
+/* Botones */
+.download-links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px 12px;
+    margin: 1em 0;
+}
+
+.download-links strong {
+    white-space: nowrap;
+}
+
+.project-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+	white-space: nowrap;
+
+    padding: 12px 18px;
+
+    background: var(--primary-color);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+
+	font-family: var(--font-ui);
+    color: var(--background-color) !important;
+    text-decoration: none;
+
+    transition: transform .15s ease,
+                box-shadow .2s ease,
+                border-color .2s ease;
+}
+
+.project-button:hover {
+    transform: translateY(-2px);
+    border-color: var(--background-color);
+	color: var(--primary-color);
+    box-shadow: 0 4px 12px rgba(0,0,0,.15);
+}
+
+.project-button img {
+    width:  1.20rem;
+    height: 1.20rem;
+    object-fit: contain;
+	margin-top: 0px !important;
+	margin-bottom: 0px !important;
+}
+
+.project-button span {
+    font-weight: 600;
+}
+
+.image-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 16px;
+	align-items: center;
+	margin-bottom: 1em;
+}
+
+.image-gallery > p {
+    display: none;
+}
+
+.image-gallery img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 8px;
+	
+}
+
+.image-gallery-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+}
+
+@media (max-width: 768px) {
+    .image-gallery-3 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .image-gallery-3 {
+        grid-template-columns: 1fr;
+    }
+}
+
+.columns-2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+}
+
+.columns-2 > p:empty {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .columns-2 {
+        grid-template-columns: 1fr;
+    }
+}
+
+.youtube {
+    display: block;
+    width: min(100%, 800px);
+    aspect-ratio: 16 / 9;
+    height: auto;
+    margin: 1.5rem auto;
+    border: none;
+    border-radius: 8px;
+}

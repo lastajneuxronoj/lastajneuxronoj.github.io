@@ -1,113 +1,606 @@
 [
 	{
-		"number": "003",
-		"emoji": "👀",
+		"number": "019",
+		"emoji": "😴",
+		"cover": "/covers/019.webp",
 		"title": {
-			"es": "Provo 3"
+			"eo": "Morfea Manifestiĝo"
 		},
 		"file": {
-			"es": "003_es.md"
+			"eo": "eo/019_eo.md"
 		},
 		"type": {
-			"es": "Prueba 3"
+			"eo": "Memoroj"
 		},
-		"category": "shavian",
+		"category": "memoirs",
 		"author_id": "tomas",
 		"author": {
-			"es": "Autor"
+			"eo": "Tomĉjo"
 		},
-		"date": "2025-07-14",
+		"date": "2026-04-08",
 		"excerpt": {
-			"es": "Este es un post de prueba en español."
-		}
-	},
-	{
-		"number": "002",
-		"emoji": "🤌🏻",
-		"title": {
-			"eo": "Provo 2"
-		},
-		"file": {
-			"eo": "002_eo.md"
-		},
-		"type": {
-			"eo": "Provo"
-		},
-		"category": "test",
-		"author_id": "tomas",
-		"author": {
-			"eo": "Aŭtoro"
-		},
-		"date": "2025-07-14",
-		"excerpt": {
-			"eo": "Ĉi tio estas la dua prova artikolo en Esperanto: Maecenas in eleifend tortor. Fusce suscipit sapien ut euismod ultrices. Nam nec accumsan eros. Ut sed facilisis eros. Ut eget purus consequat nibh fermentum tempus ac sit amet neque. Proin vitae vulputate tellus. Nulla ac venenatis augue. Nam ac dolor nibh. Morbi at auctor ipsum, in tincidunt ipsum"
-		}
-	},
-	{
-		"number": "001",
-		"emoji": "🤔",
-		"cover": "/covers/001.webp",
-		"title": {
-			"eo": "Provo 1: Tre longa titolo en esperanto, kiu estas utila por kontroli la interfacon"
-		},
-		"file": {
-			"eo": "001_eo.md"
-		},
-		"type": {
-			"eo": "Provo"
-		},
-		"category": "test",
-		"author_id": "tomas",
-		"author": {
-			"eo": "Aŭtoro"
-		},
-		"date": "2025-07-14",
-		"excerpt": {
-			"eo": "Ĉi tio estas prova artikolo en Esperanto. Maecenas in eleifend tortor. Fusce suscipit sapien ut euismod ultrices. Nam nec accumsan eros. Ut sed facilisis eros. Ut eget purus consequat nibh fermentum tempus ac sit amet neque. Proin vitae vulputate tellus. Nulla ac venenatis augue. Nam ac dolor nibh. Morbi at auctor ipsum, in tincidunt ipsum. "
+			"eo": "Mi priskribas profundan, emocian sonĝon. Mi inkludas temojn de frenezo, realeco, kaj la serĉado de signifo, kun referencoj al psiĥedela sperto kaj influoj de verkistoj kiel William Burroughs kaj Aldous Huxley. La teksto reflektas la konflikton inter realo kaj iluzio, kaj la serĉadon de konscio kaj liberiĝo."
 		},
 		"music": [
 			{
-				"url":	"https://youtu.be/XfELJU1mRMg?si=4FB3dupB30hP_lah",
-				"title": "Never Gonna Give You Up"
+				"title": "Alone, Together - The Strokes",
+				"url": "https://www.youtube.com/embed/oUW7V4X0My0"
 			},
 			{
-				"url":	"https://youtu.be/XfELJU1mRMg?si=4FB3dupB30hP_lah",
-				"title": "Never Gonna Give You Up"
+				"title": "Moro, lasso, al mio duolo",
+				"url": "https://www.youtube.com/watch?v=dIe5zDoGlyU"
 			}
 		],
-
 		"podcast": [
 			{
-				"title": "",
-				"url": ""
+				"title": "Morfea Manifestiĝo",
+				"url": "https://open.spotify.com/episode/0IBGPTmfZhUXmNbMu11KC9?si=VxGoourIRdSy1woZmUadZg"
 			}
 		]
 	},
 	{
-		"number": "000",
-		"emoji": "",
+		"number": "018",
+		"emoji": "🚼",
+		"cover": "/covers/018.webp",
 		"title": {
-			"es": "Prueba 0",
-			"eo": "Provo 0"
+			"eo": "Scienca Instinkto ĉe Beboj"
 		},
 		"file": {
-			"es": "000_es.md",
-			"eo": "000_eo.md"
+			"eo": "eo/018_eo.md"
 		},
 		"type": {
-			"es": "Prueba",
-			"eo": "Provo"
+			"eo": "Disvastigo"
 		},
-		"category": "test",
+		"category": "divulgation",
 		"author_id": "tomas",
 		"author": {
-			"es": "",
-			"eo": "Aŭtoro"
+			"eo": "Tomĉjo"
 		},
-		"date": "2025-07-13",
+		"date": "2026-03-18",
 		"excerpt": {
-			"es": "Descripción 0",
-			"eo": "Priskribo 0: Maecenas in eleifend tortor. Fusce suscipit sapien ut euismod ultrices. Nam nec accumsan eros. Ut sed facilisis eros. Ut eget purus consequat nibh fermentum tempus ac sit amet neque. Proin vitae vulputate tellus. Nulla ac venenatis augue. Nam ac dolor nibh. Morbi at auctor ipsum, in tincidunt ipsum"
+			"eo": "Ĉi tiu afiŝo esploras la naturan kapablon de beboj rekoni kaj reagi al la mondo ĉirkaŭ ili, montrante kiel ilia percepto kaj konduto jam enhavas elementojn de scienca esploro. Tiel la teksto ligas la eksperimentojn kun demando: ĉu la homa instinkto por scienco jam kuŝas en nia plej frua percepto?"
+		},
+		"podcast": [
+			{
+				"title": "Scienca Instinkto ĉe Beboj",
+				"url": "https://open.spotify.com/episode/7pc2POVrTdpM2sQn6uSKtr?si=lmVIltFqRGSY3H4vhNtcSA"
+			}
+		]
+	},
+	{
+		"number": "017",
+		"emoji": "🚫",
+		"cover": "/covers/017.webp",
+		"title": {
+			"eo": "Pri Homeopatio"
+		},
+		"file": {
+			"eo": "eo/017_eo.md"
+		},
+		"type": {
+			"eo": "Disvastigo"
+		},
+		"category": "divulgation",
+		"author_id": "tomas",
+		"author": {
+			"eo": "Tomĉjo"
+		},
+		"date": "2025-08-03",
+		"excerpt": {
+			"eo": "Homeopatio estas alternativa medicina sistemo fondita en la 18-a jarcento de la kuracisto Christian Frederick Samuel Hahnemann. Ĝi bazas sin sur la principo de simileco kaj uzas diluojn de substancoj. Tamen, la efikeco de homeopatio ne estas pruvita kaj ĝi estas konsiderata pseŭdoscienco. La uzado de homeopatio povas esti danĝera kaj malhelpi efektivan traktadon de gravaj malsanoj."
+		},
+		"podcast": [
+			{
+				"title": "Pri Homeopatio",
+				"url": "https://creators.spotify.com/pod/profile/toms-bm/episodes/Pri-homeopatio-e36d5q4"
+			}
+		]
+	},
+	{
+		"number": "016",
+		"emoji": "🍄",
+		"cover": "/covers/016.jpg",
+		"title": {
+			"eo": "La vojo de Wasson al Eleŭziso"
+		},
+		"file": {
+			"eo": "eo/016_eo.md"
+		},
+		"type": {
+			"eo": "Traduko"
+		},
+		"category": "translation",
+		"author_id": "tomas",
+		"author": {
+			"eo": "Tomĉjo"
+		},
+		"date": "2025-04-06",
+		"excerpt": {
+			"eo": "Ĉi tiu tradukaĵo rakontas la vojaĝon de R. Gordon Wasson al la misteroj de Eleŭziso, ligante la sperton kun la vizioj de Blake, Platono kaj indiĝenaj ŝamanaj praktikoj. La teksto priskribas la transforman potencon de fungoj, kiuj ebligas percepti la mondon kun dia klareco kaj atingi ekstazon kiel la antikvaj iniciatoj."
+		},
+		"music": [
+			{
+				"title": "Kids On Holiday - Animal Collective",
+				"url": "https://www.youtube.com/watch?v=6NtMtW2ven4"
+			}
+		],
+		"podcast": [
+			{
+				"title": "La vojo de Wasson al Eleŭziso",
+				"url": "https://creators.spotify.com/pod/show/toms-bm/episodes/La-Vojo-de-Wasson-al-Eleziso-e3163h5"
+			}
+		]
+	},
+	{
+		"number": "015",
+		"emoji": "🚑",
+		"cover": "/covers/015.webp",
+		"title": {
+			"eo": "Sindromo de Stevens-Johnson, de Lyell kaj ME"
+		},
+		"file": {
+			"eo": "eo/015_eo.md"
+		},
+		"type": {
+			"eo": "Disvastigo"
+		},
+		"category": "divulgation",
+		"author_id": "tomas",
+		"author": {
+			"eo": "Tomĉjo"
+		},
+		"date": "2025-03-09",
+		"excerpt": {
+			"eo": "La afiŝo klarigas la severajn haŭtajn kaj mukozajn reagojn konatajn kiel sindromoj de Stevens-Johnson kaj Lyell, kaj ligas ilin al la kunteksto de multforma eritemo (ME). Ĝi priskribas la simptomojn, la riskojn kaj la klinikan gravecon de ĉi tiuj sindromoj, atentigante pri ilia potenciale vivdanĝera naturo kaj la bezono de tuja medicina interveno."
+		},
+		"podcast": [
+			{
+				"title": "Sindromo de Stevens-Johnson, de Lyell kaj ME",
+				"url": "https://creators.spotify.com/pod/show/toms-bm/episodes/Sindromo-de-Stevens-Johnson--de-Lyell-kaj-ME-e2vtr2e"
+			}
+		]
+	},
+	{
+		"number": "014",
+		"emoji": "⛪",
+		"cover": "/covers/014.webp",
+		"title": {
+			"eo": "La Virgulino",
+			"es": "La Virgulino"
+		},
+		"file": {
+			"eo": "eo/014_eo.md",
+			"es": "es/014_es.md"
+		},
+		"type": {
+			"eo": "Memoroj",
+			"es": "Memorias"
+		},
+		"category": "memoirs",
+		"author_id": "tomas",
+		"author": {
+			"eo": "Tomĉjo",
+			"es": "Tomĉjo"
+		},
+		"date": "2025-02-02",
+		"excerpt": {
+			"eo": "La verkaĵo prezentas intiman rakonton pri persona sufero kaj la sperto de hospitalaj bildoj kune kun la figuro de la Virgulino.",
+			"es": "El escrito presenta una historia íntima sobre el sufrimiento personal y la experiencia de imágenes intrahospitalarias, junto con la figura de La Virgen."
+		},
+		"music": [
+			{
+				"title": "Dogs - Nouns",
+				"url": "https://www.youtube.com/embed/PtqiWsgd9sQ"
+			}
+		],
+		"podcast": [
+			{
+				"title": "La Virgulino",
+				"url": "https://creators.spotify.com/pod/show/toms-bm/episodes/La-Virgulino-e2uajgd"
+			}
+		]
+	},
+	{
+		"number": "013",
+		"emoji": "🐑",
+		"cover": "/covers/013.webp",
+		"title": {
+			"eo": "Spongoformaj Encefalopatioj"
+		},
+		"file": {
+			"eo": "eo/013_eo.md"
+		},
+		"type": {
+			"eo": "Disvastigo"
+		},
+		"category": "divulgation",
+		"author_id": "tomas",
+		"author": {
+			"eo": "Tomĉjo"
+		},
+		"date": "2024-12-10",
+		"excerpt": {
+			"eo": "La teksto klarigas la historion kaj naturon de spongoformaj encefalopatioj, raraj sed devastaj malsanoj kaŭzitaj de prionoj — proteinoj sen genetika informo, kiuj tamen kapablas transdoni patologion. Ĝi rakontas pri ŝaftremo, kuru inter la fore-oj de Papuo, la krizo de frenezaj bovoj en Britio, kaj la homaj formoj kiel la malsano de Creutzfeldt-Jakob."
+		},
+		"music": [
+			{
+				"title": "Animal - Pearl Jam",
+				"url": "https://www.youtube.com/embed/47zf8kGobfk"
+			}
+		],
+		"podcast": [
+			{
+				"title": "Spongoformaj Encefalopatioj",
+				"url": "https://creators.spotify.com/pod/show/toms-bm/episodes/Spongoformaj-Encefalopatioj-e2t2em5"
+			}
+		]
+	},
+	{
+		"number": "012",
+		"emoji": "💊",
+		"cover": "/covers/012.webp",
+		"title": {
+			"eo": "Antropologo en Marso"
+		},
+		"file": {
+			"eo": "eo/012_eo.md"
+		},
+		"type": {
+			"eo": "Traduko"
+		},
+		"category": "translation",
+		"author_id": "tomas",
+		"author": {
+			"eo": "Tomĉjo"
+		},
+		"date": "2024-12-10",
+		"excerpt": {
+			"eo": "Ĉi tiu tradukaĵo el Oliver Sacks rakontas la historion de Temple Grandin, aŭtisma verkisto kaj sciencistino, kiu trovis trankvilon en la klara kaj eksplicita lingvo de scienco. La teksto priskribas ŝian adoleskan barakton kontraŭ la sento de nekapablo vivi “normalan vivon”, la streĉon kaj emocian turbulecon, kaj la decido dediĉi sin plene al scienco."
+		},
+		"podcast": [
+			{
+				"title": "Antropologo en Marso",
+				"url": "https://open.spotify.com/episode/7FJq1fyxSr7uuRh8TCxGVb"
+			}
+		]
+	},
+	{
+		"number": "011",
+		"emoji": "🌺",
+		"cover": "/covers/011.webp",
+		"title": {
+			"eo": "Printempa depresio kaj alergio"
+		},
+		"file": {
+			"eo": "eo/011_eo.md"
+		},
+		"type": {
+			"eo": "Disvastigo"
+		},
+		"category": "divulgation",
+		"author_id": "tomas",
+		"author": {
+			"eo": "Tomĉjo"
+		},
+		"date": "2024-11-03",
+		"excerpt": {
+			"eo": "La teksto pritraktas la subtilan rilaton inter la sezona ŝanĝo de printempo, la apero de alergioj kaj la influo sur mensa sano. Ĝi montras kiel poleno, klimatŝanĝoj kaj biologiaj reagoj povas kunplektiĝi kun sentoj de laceco, malgajo aŭ depresio, kaj kiel ĉi tiu kombino efikas al la ĉiutaga vivo."
+		},
+		"podcast": [
+			{
+				"title": "Printempa depresio kaj alergio",
+				"url": "https://podcasters.spotify.com/pod/show/toms-bm/episodes/Polena-alergio-kaj-printempa-depresio-e2qgh4o"
+			}
+		]
+	},
+	{
+		"number": "010",
+		"emoji": "💀",
+		"cover": "/covers/010.webp",
+		"title": {
+			"eo": "Vira memmortigado"
+		},
+		"file": {
+			"eo": "eo/010_eo.md"
+		},
+		"type": {
+			"eo": "Disvastigo"
+		},
+		"category": "divulgation",
+		"author_id": "tomas",
+		"author": {
+			"eo": "Tomĉjo"
+		},
+		"date": "2024-09-19",
+		"excerpt": {
+			"eo": "La teksto traktas la ofte subtaksatan fenomenon de memmortigo inter viroj, montrante kiel sociaj roloj, ekonomiaj faktoroj kaj mensaj malordoj kunplektiĝas por krei pli altan riskon. Ĝi prezentas statistikojn pri senlaboreco, senhejmeco, malliberejo kaj alkoholemado, kaj klarigas kial viroj, malgraŭ malpli oftaj diagnozoj kaj pli malmultaj memmortigprovoj, havas signife pli altan indicon de kompletitaj memmortigoj ol virinoj"
+		},
+		"podcast": [
+			{
+				"title": "Vira memmortigado",
+				"url": "https://podcasters.spotify.com/pod/show/toms-bm/episodes/Vira-memmortigado-e2ok3b6"
+			}
+		]
+	},
+	{
+		"number": "009",
+		"emoji": "⭕",
+		"cover": "/covers/009.webp",
+		"title": {
+			"eo": "Ci(r)kloj"
+		},
+		"file": {
+			"eo": "eo/009_eo.md"
+		},
+		"type": {
+			"eo": "Traduko"
+		},
+		"category": "memoirs",
+		"author_id": "tomas",
+		"author": {
+			"eo": "Tomĉjo"
+		},
+		"date": "2024-08-03",
+		"excerpt": {
+			"eo": "Mi priskribas mian travivaĵon kun depresio kaj la rolon, kiun muziko ludas en mia vivo. Mencias mi diversajn kantojn kaj esploras la efikon de psiĥedelio. Mi esprimas mian malcertecon pri la estonteco kaj kiel vivi sen emocioj aŭ eŭtimie."
+		},
+		"music": [
+			{
+				"url": "https://www.youtube.com/watch?v=HGaAi6-SkXA",
+				"title": "Circles - Soul Coughing"
+			}
+		],
+		"podcast": [
+			{
+				"url": "https://podcasters.spotify.com/pod/show/toms-bm/episodes/Cirkloj-e2mppmo",
+				"title": "Ci(r)kloj"
+			}
+		]
+	},
+	{
+		"number": "008",
+		"emoji": "🏳️‍🌈",
+		"cover": "/covers/008.jpg",
+		"title": {
+			"eo": "De Contemptu Mundi"
+		},
+		"file": {
+			"eo": "eo/008_eo.md"
+		},
+		"type": {
+			"eo": "Traduko"
+		},
+		"category": "translation",
+		"author_id": "tomas",
+		"author": {
+			"eo": "Tomĉjo"
+		},
+		"date": "2024-06-11",
+		"excerpt": {
+			"eo": "La verko «De Contemptu Mundi» de Bernard de Morlaix aperas sur libro pri homofobio. La verko el la jaro 1140 priskribas la pekon de sodomio kaj la kreskantan malĝojon en la mondo. La verko estas emocia kaj dramatika, kaj montras la influon de la homofobia kulturo en tiu tempo."
+		},
+		"music": [
+			{
+				"url": "https://www.youtube.com/watch?v=KEcx9F_FW2U",
+				"title": "Lemon - U2"
+			}
+		]
+	},
+	{
+		"number": "007",
+		"emoji": "🧟",
+		"cover": "/covers/007.webp",
+		"title": {
+			"eo": "Pri kio estas psiĥologia disociado"
+		},
+		"file": {
+			"eo": "eo/007_eo.md"
+		},
+		"type": {
+			"eo": "Disvastigo"
+		},
+		"category": "divulgation",
+		"author_id": "tomas",
+		"author": {
+			"eo": "Tomĉjo"
+		},
+		"date": "2024-05-31",
+		"excerpt": {
+			"eo": "La disertaĵo priskribas la fenomenon de psiĥologia disociado, kiu estas malkontinueco de integriĝfunkcioj de la individuo. La disertaĵo esploras la difinojn, simptomojn, kaj perspektivojn pri disociado, inkluzive de la Teorio pri Struktura Disociado de Personeco. La disertaĵo ankaŭ klarigas kiel disociado estas rilata al traŭmo kaj konscistato, kaj priskribas la celon de psiĥologia terapio en la integriĝo de la partoj de la personeco."
+		},
+
+		"podcast": [
+			{
+				"title": "Pri kio estas psiĥologia disociado",
+				"url": "https://podcasters.spotify.com/pod/show/toms-bm/episodes/Pri-kio-estas-psiologia-disociado-e2micf1"
+			}
+		]
+	},
+	{
+		"number": "006",
+		"emoji": "🚵‍♂️",
+		"cover": "/covers/006.jpg",
+		"title": {
+			"eo": "La Unua Bicikla Tago"
+		},
+		"file": {
+			"eo": "eo/006_eo.md"
+		},
+		"type": {
+			"eo": "Disvastigo"
+		},
+		"category": "divulgation",
+		"author_id": "tomas",
+		"author": {
+			"eo": "Tomĉjo"
+		},
+		"date": "2024-04-19",
+		"excerpt": {
+			"eo": "La artikolo pri Albert Hofmann priskribas liajn spertojn kun LSD-25 kaj kiel li malkovris ĝian psiĥoaktivajn propraĵojn. Hofmann estis ĥemiisto, kiu studis plantojn kaj sintezis LSD-25 en 1938. Li priskribas siajn unuajn spertojn kun la substanco kaj kiel ĝi ŝanĝis lian percepton de la mondo. La artikolo ankaŭ mencias la historion de la LSD-o kaj ĝian influon sur la kulturon kaj sciencan esploron."
+		},
+		"music": [
+			{
+				"url": "https://www.youtube.com/watch?v=MV_GhzoSHeY",
+				"title": "We'll Never Know the Place... - Fever The Ghost"
+			},
+			{
+				"url": "https://www.youtube.com/watch?v=qDWM7eMaETk",
+				"title": "Bicycle - Unknown Mortal Orchestra"
+			}
+		],
+		"podcast": [
+			{
+				"title": "La Unua Bicikla Tago",
+				"url": "https://open.spotify.com/episode/3aE3HiRtrd3RRnV6i6Olnh?si=ikGJwb9ZQv-kgqMDRs-jWA"
+			}
+		]
+	},
+	{
+		"number": "005",
+		"emoji": "💊",
+		"cover": "/covers/005.webp",
+		"title": {
+			"eo": "Kelkaj tagoj antaŭ… (kaj la antaŭaj)"
+		},
+		"file": {
+			"eo": "eo/005_eo.md"
+		},
+		"type": {
+			"eo": "Memoroj"
+		},
+		"category": "memoirs",
+		"author_id": "tomas",
+		"author": {
+			"eo": "Tomĉjo"
+		},
+		"date": "2024-04-11",
+		"excerpt": {
+			"eo": "Mi priskribas siajn spertojn kun farmaktraktado por mensa malordo, inkluzive de la efikoj kaj la antaŭaj antaŭaĵoj. Li priskribas la malfavorajn efikojn de kontraŭdepresiaj medikamentoj kaj la pli bonan sperton kun humor-stabilaĵoj. Li ankaŭ mencias la limigita aliron al sia psiĥiatro pro provizora finiĝo de prizorgado en malsanulejo"
+		},
+		"music": [
+			{
+				"url": "https://youtu.be/gd62SwP8ENA?si=iM0STyhWZ4VwGO4T",
+				"title": "Fête D'Adieu - Deerhoof"
+			},
+			{
+				"url": "https://youtu.be/ZGT0P0XJRFM?si=ti0qOlhvl8ugv_HA",
+				"title": "Suite: Judy Blue Eyes - Crosby, Stills & Nash"
+			}
+		]
+	},
+	{
+		"number": "004",
+		"emoji": "🔠",
+		"cover": "/covers/004.jpg",
+		"title": {
+			"eo": "Historio de la ŝava kaj ŝavidaj alfabetoj"
+		},
+		"file": {
+			"eo": "eo/004_eo.md"
+		},
+		"type": {
+			"eo": "Ŝava"
+		},
+		"category": "shavian",
+		"author_id": "tomas",
+		"author": {
+			"eo": "Tomĉjo"
+		},
+		"date": "2024-02-28",
+		"excerpt": {
+			"eo": "La artikolo priskribas la historion de la ŝava kaj ŝavidaj alfabetoj. Ĝi inkludas informon pri George Bernard Shaw kaj lia kritiko pri la angla ortografio, la kreo de la ŝava alfabeto, la starlingŝava alfabeto, kaj aliaj ŝavaj variantoj kiel Quikscript kaj Revised Shaw Abjad. Ankaŭ estas menciita la studaĵo farita de Sergio Pokrovskij pri la starlingŝava alfabeto."
+		},
+		"podcast": [
+			{
+				"title": "Historio de la ŝava kaj ŝavidaj alfabetoj",
+				"url": "https://podcasters.spotify.com/pod/show/toms-bm/episodes/Historio-de-la-ava-kaj-avidaj-alfabetoj-e2o6uc9/a-abh4ngh"
+			}
+		]
+	},
+	{
+		"number": "003",
+		"emoji": "🍺",
+		"cover": "/covers/003.webp",
+		"title": {
+			"eo": "Ĝi estis estinta"
+		},
+		"file": {
+			"eo": "eo/003_eo.md"
+		},
+		"type": {
+			"eo": "Memoroj"
+		},
+		"category": "memoirs",
+		"author_id": "tomas",
+		"author": {
+			"eo": "Tomĉjo"
+		},
+		"date": "2024-02-20",
+		"excerpt": {
+			"eo": "La aŭtoro rememoras pri la intensa adoleskeco kaj drinkado kun amikoj post mezlernejo. Li sopiras pri tiuj memoroj, sed komprenas ke ili estas estintaj kaj ne plu nunaj. La aŭtoro priskribas la paradokson de feliĉo kaj sufero en tiuj momentoj kaj esprimas siajn sentojn per la kanto «Ha Sido» de Los Blenders."
+		},
+		"music": [
+			{
+				"url":	"https://www.youtube.com/watch?v=gsweYWCtvgU&t",
+				"title": "Ha Sido - Los Blenders"
+			}
+		],
+		"podcast": [
+			{
+				"title": "Ĝi estis estinta",
+				"url": "https://podcasters.spotify.com/pod/show/toms-bm/episodes/i-estas-estinta-e2o6f38"
+			}
+		]
+	},
+	{
+		"number": "002",
+		"emoji": "🔠",
+		"cover": "/covers/002.webp",
+		"title": {
+			"eo": "La logiko de la starling-ŝava alfabeto",
+			"es": "La lógica del alfabeto starlingshaviano"
+		},
+		"file": {
+			"eo": "eo/002_eo.md",
+			"es": "es/002_es.md"
+		},
+		"type": {
+			"eo": "Ŝava",
+			"es": "Shaviano"
+		},
+		"category": "shavian",
+		"author_id": "tomas",
+		"author": {
+			"eo": "Tomĉjo",
+			"es": "Tomĉjo"
+		},
+		"date": "2024-02-16",
+		"excerpt": {
+			"eo": "La ŝava alfabeto, adaptita de Ĝan Ŭesli Starling por Esperanto, estas prezentita en ĉi tiu artikolo. La alfabeto ne distingas majusklojn kaj minusklojn, vokaloj faras cirklon en dekstruma direkto, kaj literoj estas kategorizitaj laŭ siaj pozicioj sur la horizontala akso.",
+			"es": "El alfabeto shaviano, adaptado de Ĝan Ŭesli Starling para el esperanto, es presentado en este artículo. El alfabeto no distingue entre mayúsculas y minúsculas, las vocales hacen un círculo en dirección de las agujas del reloj, y las letras son caracterizadas según su posición sobre el eje horizontal."
+		}
+	},
+	{
+		"number": "001",
+		"emoji": "⌨️",
+		"cover": "/covers/001.webp",
+		"title": {
+			"eo": "Jen mia starling-ŝava klavarfasono"
+		},
+		"file": {
+			"eo": "eo/001_eo.md"
+		},
+		"type": {
+			"eo": "Ŝava"
+		},
+		"category": "shavian",
+		"author_id": "tomas",
+		"author": {
+			"eo": "Tomĉjo"
+		},
+		"date": "2024-02-15",
+		"excerpt": {
+			"eo": "La celo de tiu ĉi afiŝo estas prezenti la klavaron, kiun mi kreis por disvastigi la uzadon de la nemulte konata ŝava alfabeto. Unue mi volas anonci, ke, kiel mi deklaris en la propra dokumentado de la klavarfasono; “mi ne proponas ortografian reformon ĉe la Esperantujo”. "
 		}
 	}
 ]

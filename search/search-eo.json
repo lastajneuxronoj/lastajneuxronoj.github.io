@@ -1,32 +1,192 @@
 [
   {
+    "number": "019",
+    "title": "Morfea Manifestiĝo",
+    "excerpt": "Mi priskribas profundan, emocian sonĝon. Mi inkludas temojn de frenezo, realeco, kaj la serĉado de signifo, kun referencoj al psiĥedela sperto kaj influoj de verkistoj kiel William Burroughs kaj Aldous Huxley. La teksto reflektas la konflikton inter realo kaj iluzio, kaj la serĉadon de konscio kaj liberiĝo.",
+    "type": "Memoroj",
+    "category": "memoirs",
+    "emoji": "😴",
+    "cover": "/covers/019.webp",
+    "url": "/blog/eo/019-eo.html"
+  },
+  {
+    "number": "018",
+    "title": "Scienca Instinkto ĉe Beboj",
+    "excerpt": "Ĉi tiu afiŝo esploras la naturan kapablon de beboj rekoni kaj reagi al la mondo ĉirkaŭ ili, montrante kiel ilia percepto kaj konduto jam enhavas elementojn de scienca esploro. Tiel la teksto ligas la eksperimentojn kun demando: ĉu la homa instinkto por scienco jam kuŝas en nia plej frua percepto?",
+    "type": "Disvastigo",
+    "category": "divulgation",
+    "emoji": "🚼",
+    "cover": "/covers/018.webp",
+    "url": "/blog/eo/018-eo.html"
+  },
+  {
+    "number": "017",
+    "title": "Pri Homeopatio",
+    "excerpt": "Homeopatio estas alternativa medicina sistemo fondita en la 18-a jarcento de la kuracisto Christian Frederick Samuel Hahnemann. Ĝi bazas sin sur la principo de simileco kaj uzas diluojn de substancoj. Tamen, la efikeco de homeopatio ne estas pruvita kaj ĝi estas konsiderata pseŭdoscienco. La uzado de homeopatio povas esti danĝera kaj malhelpi efektivan traktadon de gravaj malsanoj.",
+    "type": "Disvastigo",
+    "category": "divulgation",
+    "emoji": "🚫",
+    "cover": "/covers/017.webp",
+    "url": "/blog/eo/017-eo.html"
+  },
+  {
+    "number": "016",
+    "title": "La vojo de Wasson al Eleŭziso",
+    "excerpt": "Ĉi tiu tradukaĵo rakontas la vojaĝon de R. Gordon Wasson al la misteroj de Eleŭziso, ligante la sperton kun la vizioj de Blake, Platono kaj indiĝenaj ŝamanaj praktikoj. La teksto priskribas la transforman potencon de fungoj, kiuj ebligas percepti la mondon kun dia klareco kaj atingi ekstazon kiel la antikvaj iniciatoj.",
+    "type": "Traduko",
+    "category": "translation",
+    "emoji": "🍄",
+    "cover": "/covers/016.jpg",
+    "url": "/blog/eo/016-eo.html"
+  },
+  {
+    "number": "015",
+    "title": "Sindromo de Stevens-Johnson, de Lyell kaj ME",
+    "excerpt": "La afiŝo klarigas la severajn haŭtajn kaj mukozajn reagojn konatajn kiel sindromoj de Stevens-Johnson kaj Lyell, kaj ligas ilin al la kunteksto de multforma eritemo (ME). Ĝi priskribas la simptomojn, la riskojn kaj la klinikan gravecon de ĉi tiuj sindromoj, atentigante pri ilia potenciale vivdanĝera naturo kaj la bezono de tuja medicina interveno.",
+    "type": "Disvastigo",
+    "category": "divulgation",
+    "emoji": "🚑",
+    "cover": "/covers/015.webp",
+    "url": "/blog/eo/015-eo.html"
+  },
+  {
+    "number": "014",
+    "title": "La Virgulino",
+    "excerpt": "La verkaĵo prezentas intiman rakonton pri persona sufero kaj la sperto de hospitalaj bildoj kune kun la figuro de la Virgulino.",
+    "type": "Memoroj",
+    "category": "memoirs",
+    "emoji": "⛪",
+    "cover": "/covers/014.webp",
+    "url": "/blog/eo/014-eo.html"
+  },
+  {
+    "number": "013",
+    "title": "Spongoformaj Encefalopatioj",
+    "excerpt": "La teksto klarigas la historion kaj naturon de spongoformaj encefalopatioj, raraj sed devastaj malsanoj kaŭzitaj de prionoj — proteinoj sen genetika informo, kiuj tamen kapablas transdoni patologion. Ĝi rakontas pri ŝaftremo, kuru inter la fore-oj de Papuo, la krizo de frenezaj bovoj en Britio, kaj la homaj formoj kiel la malsano de Creutzfeldt-Jakob.",
+    "type": "Disvastigo",
+    "category": "divulgation",
+    "emoji": "🐑",
+    "cover": "/covers/013.webp",
+    "url": "/blog/eo/013-eo.html"
+  },
+  {
+    "number": "012",
+    "title": "Antropologo en Marso",
+    "excerpt": "Ĉi tiu tradukaĵo el Oliver Sacks rakontas la historion de Temple Grandin, aŭtisma verkisto kaj sciencistino, kiu trovis trankvilon en la klara kaj eksplicita lingvo de scienco. La teksto priskribas ŝian adoleskan barakton kontraŭ la sento de nekapablo vivi “normalan vivon”, la streĉon kaj emocian turbulecon, kaj la decido dediĉi sin plene al scienco.",
+    "type": "Traduko",
+    "category": "translation",
+    "emoji": "💊",
+    "cover": "/covers/012.webp",
+    "url": "/blog/eo/012-eo.html"
+  },
+  {
+    "number": "011",
+    "title": "Printempa depresio kaj alergio",
+    "excerpt": "La teksto pritraktas la subtilan rilaton inter la sezona ŝanĝo de printempo, la apero de alergioj kaj la influo sur mensa sano. Ĝi montras kiel poleno, klimatŝanĝoj kaj biologiaj reagoj povas kunplektiĝi kun sentoj de laceco, malgajo aŭ depresio, kaj kiel ĉi tiu kombino efikas al la ĉiutaga vivo.",
+    "type": "Disvastigo",
+    "category": "divulgation",
+    "emoji": "🌺",
+    "cover": "/covers/011.webp",
+    "url": "/blog/eo/011-eo.html"
+  },
+  {
+    "number": "010",
+    "title": "Vira memmortigado",
+    "excerpt": "La teksto traktas la ofte subtaksatan fenomenon de memmortigo inter viroj, montrante kiel sociaj roloj, ekonomiaj faktoroj kaj mensaj malordoj kunplektiĝas por krei pli altan riskon. Ĝi prezentas statistikojn pri senlaboreco, senhejmeco, malliberejo kaj alkoholemado, kaj klarigas kial viroj, malgraŭ malpli oftaj diagnozoj kaj pli malmultaj memmortigprovoj, havas signife pli altan indicon de kompletitaj memmortigoj ol virinoj",
+    "type": "Disvastigo",
+    "category": "divulgation",
+    "emoji": "💀",
+    "cover": "/covers/010.webp",
+    "url": "/blog/eo/010-eo.html"
+  },
+  {
+    "number": "009",
+    "title": "Ci(r)kloj",
+    "excerpt": "Mi priskribas mian travivaĵon kun depresio kaj la rolon, kiun muziko ludas en mia vivo. Mencias mi diversajn kantojn kaj esploras la efikon de psiĥedelio. Mi esprimas mian malcertecon pri la estonteco kaj kiel vivi sen emocioj aŭ eŭtimie.",
+    "type": "Traduko",
+    "category": "memoirs",
+    "emoji": "⭕",
+    "cover": "/covers/009.webp",
+    "url": "/blog/eo/009-eo.html"
+  },
+  {
+    "number": "008",
+    "title": "De Contemptu Mundi",
+    "excerpt": "La verko «De Contemptu Mundi» de Bernard de Morlaix aperas sur libro pri homofobio. La verko el la jaro 1140 priskribas la pekon de sodomio kaj la kreskantan malĝojon en la mondo. La verko estas emocia kaj dramatika, kaj montras la influon de la homofobia kulturo en tiu tempo.",
+    "type": "Traduko",
+    "category": "translation",
+    "emoji": "🏳️‍🌈",
+    "cover": "/covers/008.jpg",
+    "url": "/blog/eo/008-eo.html"
+  },
+  {
+    "number": "007",
+    "title": "Pri kio estas psiĥologia disociado",
+    "excerpt": "La disertaĵo priskribas la fenomenon de psiĥologia disociado, kiu estas malkontinueco de integriĝfunkcioj de la individuo. La disertaĵo esploras la difinojn, simptomojn, kaj perspektivojn pri disociado, inkluzive de la Teorio pri Struktura Disociado de Personeco. La disertaĵo ankaŭ klarigas kiel disociado estas rilata al traŭmo kaj konscistato, kaj priskribas la celon de psiĥologia terapio en la integriĝo de la partoj de la personeco.",
+    "type": "Disvastigo",
+    "category": "divulgation",
+    "emoji": "🧟",
+    "cover": "/covers/007.webp",
+    "url": "/blog/eo/007-eo.html"
+  },
+  {
+    "number": "006",
+    "title": "La Unua Bicikla Tago",
+    "excerpt": "La artikolo pri Albert Hofmann priskribas liajn spertojn kun LSD-25 kaj kiel li malkovris ĝian psiĥoaktivajn propraĵojn. Hofmann estis ĥemiisto, kiu studis plantojn kaj sintezis LSD-25 en 1938. Li priskribas siajn unuajn spertojn kun la substanco kaj kiel ĝi ŝanĝis lian percepton de la mondo. La artikolo ankaŭ mencias la historion de la LSD-o kaj ĝian influon sur la kulturon kaj sciencan esploron.",
+    "type": "Disvastigo",
+    "category": "divulgation",
+    "emoji": "🚵‍♂️",
+    "cover": "/covers/006.jpg",
+    "url": "/blog/eo/006-eo.html"
+  },
+  {
+    "number": "005",
+    "title": "Kelkaj tagoj antaŭ… (kaj la antaŭaj)",
+    "excerpt": "Mi priskribas siajn spertojn kun farmaktraktado por mensa malordo, inkluzive de la efikoj kaj la antaŭaj antaŭaĵoj. Li priskribas la malfavorajn efikojn de kontraŭdepresiaj medikamentoj kaj la pli bonan sperton kun humor-stabilaĵoj. Li ankaŭ mencias la limigita aliron al sia psiĥiatro pro provizora finiĝo de prizorgado en malsanulejo",
+    "type": "Memoroj",
+    "category": "memoirs",
+    "emoji": "💊",
+    "cover": "/covers/005.webp",
+    "url": "/blog/eo/005-eo.html"
+  },
+  {
+    "number": "004",
+    "title": "Historio de la ŝava kaj ŝavidaj alfabetoj",
+    "excerpt": "La artikolo priskribas la historion de la ŝava kaj ŝavidaj alfabetoj. Ĝi inkludas informon pri George Bernard Shaw kaj lia kritiko pri la angla ortografio, la kreo de la ŝava alfabeto, la starlingŝava alfabeto, kaj aliaj ŝavaj variantoj kiel Quikscript kaj Revised Shaw Abjad. Ankaŭ estas menciita la studaĵo farita de Sergio Pokrovskij pri la starlingŝava alfabeto.",
+    "type": "Ŝava",
+    "category": "shavian",
+    "emoji": "🔠",
+    "cover": "/covers/004.jpg",
+    "url": "/blog/eo/004-eo.html"
+  },
+  {
+    "number": "003",
+    "title": "Ĝi estis estinta",
+    "excerpt": "La aŭtoro rememoras pri la intensa adoleskeco kaj drinkado kun amikoj post mezlernejo. Li sopiras pri tiuj memoroj, sed komprenas ke ili estas estintaj kaj ne plu nunaj. La aŭtoro priskribas la paradokson de feliĉo kaj sufero en tiuj momentoj kaj esprimas siajn sentojn per la kanto «Ha Sido» de Los Blenders.",
+    "type": "Memoroj",
+    "category": "memoirs",
+    "emoji": "🍺",
+    "cover": "/covers/003.webp",
+    "url": "/blog/eo/003-eo.html"
+  },
+  {
     "number": "002",
-    "title": "Provo 2",
-    "excerpt": "Ĉi tio estas la dua prova artikolo en Esperanto: Maecenas in eleifend tortor. Fusce suscipit sapien ut euismod ultrices. Nam nec accumsan eros. Ut sed facilisis eros. Ut eget purus consequat nibh fermentum tempus ac sit amet neque. Proin vitae vulputate tellus. Nulla ac venenatis augue. Nam ac dolor nibh. Morbi at auctor ipsum, in tincidunt ipsum",
-    "type": "Provo",
-    "category": "test",
-    "emoji": "🤌🏻",
-    "cover": "",
-    "url": "/blog/002-eo.html"
+    "title": "La logiko de la starling-ŝava alfabeto",
+    "excerpt": "La ŝava alfabeto, adaptita de Ĝan Ŭesli Starling por Esperanto, estas prezentita en ĉi tiu artikolo. La alfabeto ne distingas majusklojn kaj minusklojn, vokaloj faras cirklon en dekstruma direkto, kaj literoj estas kategorizitaj laŭ siaj pozicioj sur la horizontala akso.",
+    "type": "Ŝava",
+    "category": "shavian",
+    "emoji": "🔠",
+    "cover": "/covers/002.webp",
+    "url": "/blog/eo/002-eo.html"
   },
   {
     "number": "001",
-    "title": "Provo 1: Tre longa titolo en esperanto, kiu estas utila por kontroli la interfacon",
-    "excerpt": "Ĉi tio estas prova artikolo en Esperanto. Maecenas in eleifend tortor. Fusce suscipit sapien ut euismod ultrices. Nam nec accumsan eros. Ut sed facilisis eros. Ut eget purus consequat nibh fermentum tempus ac sit amet neque. Proin vitae vulputate tellus. Nulla ac venenatis augue. Nam ac dolor nibh. Morbi at auctor ipsum, in tincidunt ipsum. ",
-    "type": "Provo",
-    "category": "test",
-    "emoji": "🤔",
+    "title": "Jen mia starling-ŝava klavarfasono",
+    "excerpt": "La celo de tiu ĉi afiŝo estas prezenti la klavaron, kiun mi kreis por disvastigi la uzadon de la nemulte konata ŝava alfabeto. Unue mi volas anonci, ke, kiel mi deklaris en la propra dokumentado de la klavarfasono; “mi ne proponas ortografian reformon ĉe la Esperantujo”. ",
+    "type": "Ŝava",
+    "category": "shavian",
+    "emoji": "⌨️",
     "cover": "/covers/001.webp",
-    "url": "/blog/001-eo.html"
-  },
-  {
-    "number": "000",
-    "title": "Provo 0",
-    "excerpt": "Priskribo 0: Maecenas in eleifend tortor. Fusce suscipit sapien ut euismod ultrices. Nam nec accumsan eros. Ut sed facilisis eros. Ut eget purus consequat nibh fermentum tempus ac sit amet neque. Proin vitae vulputate tellus. Nulla ac venenatis augue. Nam ac dolor nibh. Morbi at auctor ipsum, in tincidunt ipsum",
-    "type": "Provo",
-    "category": "test",
-    "emoji": "",
-    "cover": "",
-    "url": "/blog/000-eo.html"
+    "url": "/blog/eo/001-eo.html"
   }
 ]

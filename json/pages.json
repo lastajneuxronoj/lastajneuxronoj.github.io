@@ -1,12 +1,17 @@
 [
 	{
 	    "id": "about",
+		"url": {
+			"eo": "/about-eo.html",
+			"es": "/about-es.html"
+		},
 	    "template": "page",
 	    "title": {
 	    	"eo": "Pri mi",
 	    	"es": "Sobre mí"
 	    },
 		"emoji":"🙋🏻",
+		"cover":"images/kato.jpg",
 	    "description": {
 	    	"eo": "Informoj pri la aŭtoro.",
 	    	"es": "Información sobre el autor."
@@ -22,6 +27,153 @@
 	    "section_bg": {
 	    	"eo": "ABOUT",
 	    	"es": "ABOUT"
+	    }
+    },
+	
+	{
+	    "id": "Projects",
+		"url": {
+			"eo": "/projects-eo.html",
+			"es": "/projects-es.html"
+		},
+	    "template": "page",
+	    "title": {
+	    	"eo": "Projektoj",
+	    	"es": "Proyectos"
+	    },
+		"emoji":"👀",
+	    "description": {
+	    	"eo": "Proyectos personales.",
+	    	"es": "Jen personalaj projektoj."
+	    },
+	    "file": {
+	    	"eo": "/proyects/proyects_eo.md",
+	    	"es": "/proyects/proyects_es.md"
+	    },
+	    "section_title": {
+	    	"eo": "Projektoj",
+	    	"es": "Proyectos"
+	    },
+	    "section_bg": {
+	    	"eo": "PROYECTS",
+	    	"es": "PROYECTS"
+	    }
+    },
+	{
+	    "id": "layout",
+		"url": {
+			"eo": "/projects/sxava/layout-eo.html",
+			"es": "/projects/sxava/layout-es.html"
+		},
+	    "template": "page",
+	    "title": {
+	    	"eo": "Projektoj",
+	    	"es": "Proyectos"
+	    },
+		"emoji":"⌨️",
+		"cover": "images/klavarfasono_background.webp",
+	    "description": {
+	    	"eo": "Mia propra starlingŝava klavarfasono.",
+	    	"es": "Mi propia distribución de teclado starlingshaviana"
+	    },
+	    "file": {
+	    	"eo": "/proyects/sxava/layout_eo.md",
+	    	"es": "/proyects/sxava/layout_es.md"
+	    },
+	    "section_title": {
+	    	"eo": "Starlingŝava klavarfasono",
+	    	"es": "Distribución de teclado shaviana"
+	    },
+	    "section_bg": {
+	    	"eo": "LAYOUT",
+	    	"es": "LAYOUT"
+	    }
+    },
+	{
+	    "id": "books",
+		"url": {
+			"eo": "/projects/translations/books-eo.html",
+			"es": "/projects/translations/books-es.html"
+		},
+	    "template": "page",
+	    "title": {
+	    	"eo": "Libroj",
+	    	"es": "Libros"
+	    },
+		"emoji":"📚",
+	    "description": {
+	    	"eo": "Libroj tradukitaj de mi",
+	    	"es": "Libros traducidos por mi"
+	    },
+	    "file": {
+	    	"eo": "/proyects/translations/books_eo.md",
+	    	"es": "/proyects/translations/books_es.md"
+	    },
+	    "section_title": {
+	    	"eo": "Libroj",
+	    	"es": "Libros"
+	    },
+	    "section_bg": {
+	    	"eo": "BOOKS",
+	    	"es": "BOOKS"
+	    }
+    },
+		{
+	    "id": "movies",
+		"url": {
+			"eo": "/projects/translations/movies-eo.html",
+			"es": "/projects/translations/movies-es.html"
+		},
+	    "template": "page",
+	    "title": {
+	    	"eo": "Filmoj",
+	    	"es": "Películas"
+	    },
+		"emoji":"🎬",
+	    "description": {
+	    	"eo": "Filmoj subtekstigitaj de mi",
+	    	"es": "Películas subtituladas por mi"
+	    },
+	    "file": {
+	    	"eo": "/proyects/translations/movies_eo.md",
+	    	"es": "/proyects/translations/movies_es.md"
+	    },
+	    "section_title": {
+	    	"eo": "Filmoj",
+	    	"es": "Películas"
+	    },
+	    "section_bg": {
+	    	"eo": "MOVIES",
+	    	"es": "MOVIES"
+	    }
+    },
+	{
+	    "id": "transliterator",
+		"url": {
+			"eo": "/projects/sxava/transliterator-eo.html",
+			"es": "/projects/sxava/transliterator-es.html"
+		},
+	    "template": "page",
+	    "title": {
+	    	"eo": "Transliterumilo",
+	    	"es": "Transliterador"
+	    },
+		"emoji":"🔤",
+	    "description": {
+	    	"eo": "Transliterumilo EO-Shaw",
+	    	"es": "Transliterador EO-Shaw"
+	    },
+	    "file": {
+	    	"eo": "/proyects/sxava/transliterator_eo.md",
+	    	"es": "/proyects/sxava/transliterator_es.md"
+	    },
+	    "section_title": {
+	    	"eo": "Transliterumilo",
+	    	"es": "Transliterador"
+	    },
+	    "section_bg": {
+	    	"eo": "TRANSLITERATOR",
+	    	"es": "TRANSLITERATOR"
 	    }
     }
 ]
