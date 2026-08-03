@@ -9,16 +9,80 @@
             <link>https://lastajneuxronoj.github.io</link>
         </image>
         <generator>Lastaj Neŭronoj Static Generator</generator>
-        <lastBuildDate>Fri, 31 Jul 2026 22:02:52 GMT</lastBuildDate>
+        <lastBuildDate>Sun, 02 Aug 2026 21:45:16 GMT</lastBuildDate>
         <atom:link href="https://lastajneuxronoj.github.io/rss-es.xml" rel="self" type="application/rss+xml"/>
-        <pubDate>Fri, 31 Jul 2026 22:02:52 GMT</pubDate>
+        <pubDate>Sun, 02 Aug 2026 21:45:16 GMT</pubDate>
         <copyright><![CDATA[Lastaj Neŭronoj]]></copyright>
         <language><![CDATA[es]]></language>
         <managingEditor><![CDATA[Tomás]]></managingEditor>
         <webMaster><![CDATA[Tomás]]></webMaster>
         <ttl>60</ttl>
         <item>
-            <title><![CDATA[La Virgulino]]></title>
+            <title><![CDATA[Epifanía morfea]]></title>
+            <description><![CDATA[
+				<img
+					src="https://lastajneuxronoj.github.io/covers/019.webp"
+					alt=""
+					style="max-width:100%;height:auto;">
+				<p>Describo un sueño profundo y emocional. Incluyo temas de locura, realidad y la búsqueda de significado, con referencias a la experiencia psicodélica y a escritores como William Burroughs y Aldous Huxley. El texto refleja el conflicto entre la realidad y la ilusión, y la búsqueda de conciencia y liberación.</p>
+			  ]]></description>
+            <link>https://lastajneuxronoj.github.io/blog/es/019-es.html</link>
+            <guid isPermaLink="false">https://lastajneuxronoj.github.io/blog/es/019-es.html</guid>
+            <category><![CDATA[Memorias]]></category>
+            <dc:creator><![CDATA[Tomĉjo]]></dc:creator>
+            <pubDate>Wed, 08 Apr 2026 00:00:00 GMT</pubDate>
+            <enclosure url="https://lastajneuxronoj.github.io/covers/019.webp" length="0" type="image/webp"/>
+        </item>
+        <item>
+            <title><![CDATA[Instinto científico en bebés]]></title>
+            <description><![CDATA[
+				<img
+					src="https://lastajneuxronoj.github.io/covers/018.webp"
+					alt=""
+					style="max-width:100%;height:auto;">
+				<p>Esta entrada explora la capacidad natural de los bebés para reconocer y reaccionar ante el mundo que los rodea, mostrando cómo su percepción y comportamiento ya contienen elementos de investigación científica. De esta manera, el texto conecta los experimentos con la pregunta: ¿el instinto humano por la ciencia ya reside en nuestra percepción más temprana?</p>
+			  ]]></description>
+            <link>https://lastajneuxronoj.github.io/blog/es/018-es.html</link>
+            <guid isPermaLink="false">https://lastajneuxronoj.github.io/blog/es/018-es.html</guid>
+            <category><![CDATA[Divulgación]]></category>
+            <dc:creator><![CDATA[Tomĉjo]]></dc:creator>
+            <pubDate>Wed, 18 Mar 2026 00:00:00 GMT</pubDate>
+            <enclosure url="https://lastajneuxronoj.github.io/covers/018.webp" length="0" type="image/webp"/>
+        </item>
+        <item>
+            <title><![CDATA[Sobre la Homeopatía]]></title>
+            <description><![CDATA[
+				<img
+					src="https://lastajneuxronoj.github.io/covers/017.webp"
+					alt=""
+					style="max-width:100%;height:auto;">
+				<p>La homeopatía es un sistema de medicina alternativa fundado en el siglo XVIII por el médico Christian Frederick Samuel Hahnemann. Se basa en el principio de similitud y utiliza diluciones de sustancias. Sin embargo, la eficacia de la homeopatía no está probada y se considera pseudociencia. El uso de la homeopatía puede ser peligroso y obstaculizar el tratamiento efectivo de enfermedades graves.</p>
+			  ]]></description>
+            <link>https://lastajneuxronoj.github.io/blog/es/017-es.html</link>
+            <guid isPermaLink="false">https://lastajneuxronoj.github.io/blog/es/017-es.html</guid>
+            <category><![CDATA[Divulgación]]></category>
+            <dc:creator><![CDATA[Tomĉjo]]></dc:creator>
+            <pubDate>Sun, 03 Aug 2025 00:00:00 GMT</pubDate>
+            <enclosure url="https://lastajneuxronoj.github.io/covers/017.webp" length="0" type="image/webp"/>
+        </item>
+        <item>
+            <title><![CDATA[Síndrome de Stevens-Johnson, de Lyell y ME]]></title>
+            <description><![CDATA[
+				<img
+					src="https://lastajneuxronoj.github.io/covers/015.webp"
+					alt=""
+					style="max-width:100%;height:auto;">
+				<p>La entrada explica las reacciones severas de la piel y las membranas mucosas conocidas como síndromes de Stevens-Johnson y Lyell, y las conecta con el contexto del eritema multiforme (ME). Describe los síntomas, los riesgos y la importancia clínica de estos síndromes, advirtiendo sobre su naturaleza potencialmente mortal y la necesidad de intervención médica inmediata.</p>
+			  ]]></description>
+            <link>https://lastajneuxronoj.github.io/blog/es/015-es.html</link>
+            <guid isPermaLink="false">https://lastajneuxronoj.github.io/blog/es/015-es.html</guid>
+            <category><![CDATA[Divulgación]]></category>
+            <dc:creator><![CDATA[Tomĉjo]]></dc:creator>
+            <pubDate>Sun, 09 Mar 2025 00:00:00 GMT</pubDate>
+            <enclosure url="https://lastajneuxronoj.github.io/covers/015.webp" length="0" type="image/webp"/>
+        </item>
+        <item>
+            <title><![CDATA[La Virgen]]></title>
             <description><![CDATA[
 				<img
 					src="https://lastajneuxronoj.github.io/covers/014.webp"
@@ -32,6 +96,70 @@
             <dc:creator><![CDATA[Tomĉjo]]></dc:creator>
             <pubDate>Sun, 02 Feb 2025 00:00:00 GMT</pubDate>
             <enclosure url="https://lastajneuxronoj.github.io/covers/014.webp" length="0" type="image/webp"/>
+        </item>
+        <item>
+            <title><![CDATA[Encefalopatías Espongiformes]]></title>
+            <description><![CDATA[
+				<img
+					src="https://lastajneuxronoj.github.io/covers/013.webp"
+					alt=""
+					style="max-width:100%;height:auto;">
+				<p>El texto explica la historia y naturaleza de las encefalopatías espongiformes, enfermedades raras pero devastadoras causadas por priones, proteínas sin información genética que sin embargo pueden transmitir una patología. Relata sobre el scrapie, el kuru entre los fore de Papúa, la crisis de las vacas locas en Gran Bretaña y las formas humanas como la enfermedad de Creutzfeldt-Jakob.</p>
+			  ]]></description>
+            <link>https://lastajneuxronoj.github.io/blog/es/013-es.html</link>
+            <guid isPermaLink="false">https://lastajneuxronoj.github.io/blog/es/013-es.html</guid>
+            <category><![CDATA[Divulgación]]></category>
+            <dc:creator><![CDATA[Tomĉjo]]></dc:creator>
+            <pubDate>Tue, 10 Dec 2024 00:00:00 GMT</pubDate>
+            <enclosure url="https://lastajneuxronoj.github.io/covers/013.webp" length="0" type="image/webp"/>
+        </item>
+        <item>
+            <title><![CDATA[Depresión primaveral y alergia]]></title>
+            <description><![CDATA[
+				<img
+					src="https://lastajneuxronoj.github.io/covers/011.webp"
+					alt=""
+					style="max-width:100%;height:auto;">
+				<p>El texto aborda la sutil relación entre el cambio estacional de la primavera, la aparición de alergias y la influencia en la salud mental. Muestra cómo el polen, los cambios climáticos y las reacciones biológicas pueden entrelazarse con sentimientos de cansancio, tristeza o depresión, y cómo esta combinación afecta la vida cotidiana.</p>
+			  ]]></description>
+            <link>https://lastajneuxronoj.github.io/blog/es/011-es.html</link>
+            <guid isPermaLink="false">https://lastajneuxronoj.github.io/blog/es/011-es.html</guid>
+            <category><![CDATA[Divulgación]]></category>
+            <dc:creator><![CDATA[Tomĉjo]]></dc:creator>
+            <pubDate>Sun, 03 Nov 2024 00:00:00 GMT</pubDate>
+            <enclosure url="https://lastajneuxronoj.github.io/covers/011.webp" length="0" type="image/webp"/>
+        </item>
+        <item>
+            <title><![CDATA[Sobre qué es la disociación psicológica]]></title>
+            <description><![CDATA[
+				<img
+					src="https://lastajneuxronoj.github.io/covers/007.webp"
+					alt=""
+					style="max-width:100%;height:auto;">
+				<p>El escrito describe el fenómeno de la disociación psicológica, que es la discontinuidad de las funciones integradoras del individuo. La disertación explora las definiciones, síntomas y perspectivas sobre la disociación, incluyendo la Teoría de la Disociación Estructural de la Personalidad. La disertación también explica cómo la disociación está relacionada con el trauma y la conciencia, y describe el objetivo de la terapia psicológica en la integración de las partes de la personalidad.</p>
+			  ]]></description>
+            <link>https://lastajneuxronoj.github.io/blog/es/007-es.html</link>
+            <guid isPermaLink="false">https://lastajneuxronoj.github.io/blog/es/007-es.html</guid>
+            <category><![CDATA[Divulgación]]></category>
+            <dc:creator><![CDATA[Tomĉjo]]></dc:creator>
+            <pubDate>Fri, 31 May 2024 00:00:00 GMT</pubDate>
+            <enclosure url="https://lastajneuxronoj.github.io/covers/007.webp" length="0" type="image/webp"/>
+        </item>
+        <item>
+            <title><![CDATA[Historia de los alfabetos shavianos]]></title>
+            <description><![CDATA[
+				<img
+					src="https://lastajneuxronoj.github.io/covers/004.jpg"
+					alt=""
+					style="max-width:100%;height:auto;">
+				<p>El artículo describe la historia de los alfabetos shavianos. Incluye información sobre George Bernard Shaw y su crítica a la ortografía inglesa, la creación del alfabeto shaviano, el alfabeto starlingshaviano y otras variantes shavianas como Quikscript y Revised Shaw Abjad. También se menciona el estudio realizado por Sergio Pokrovskij sobre el alfabeto starlingshaviano.</p>
+			  ]]></description>
+            <link>https://lastajneuxronoj.github.io/blog/es/004-es.html</link>
+            <guid isPermaLink="false">https://lastajneuxronoj.github.io/blog/es/004-es.html</guid>
+            <category><![CDATA[Shaviano]]></category>
+            <dc:creator><![CDATA[Tomĉjo]]></dc:creator>
+            <pubDate>Wed, 28 Feb 2024 00:00:00 GMT</pubDate>
+            <enclosure url="https://lastajneuxronoj.github.io/covers/004.jpg" length="0" type="image/jpeg"/>
         </item>
         <item>
             <title><![CDATA[La lógica del alfabeto starlingshaviano]]></title>
@@ -48,6 +176,22 @@
             <dc:creator><![CDATA[Tomĉjo]]></dc:creator>
             <pubDate>Fri, 16 Feb 2024 00:00:00 GMT</pubDate>
             <enclosure url="https://lastajneuxronoj.github.io/covers/002.webp" length="0" type="image/webp"/>
+        </item>
+        <item>
+            <title><![CDATA[Aquí está mi distribución de teclado starlingshaviana]]></title>
+            <description><![CDATA[
+				<img
+					src="https://lastajneuxronoj.github.io/covers/001.webp"
+					alt=""
+					style="max-width:100%;height:auto;">
+				<p>El objetivo de esta publicación es presentar el teclado que he creado para difundir el uso del poco conocido alfabeto shaviano. Primero quiero anunciar que, como declaré en la propia documentación de la distribución del teclado; “no propongo una reforma ortográfica en el esperantismo”.</p>
+			  ]]></description>
+            <link>https://lastajneuxronoj.github.io/blog/es/001-es.html</link>
+            <guid isPermaLink="false">https://lastajneuxronoj.github.io/blog/es/001-es.html</guid>
+            <category><![CDATA[Shaviano]]></category>
+            <dc:creator><![CDATA[Tomĉjo]]></dc:creator>
+            <pubDate>Thu, 15 Feb 2024 00:00:00 GMT</pubDate>
+            <enclosure url="https://lastajneuxronoj.github.io/covers/001.webp" length="0" type="image/webp"/>
         </item>
     </channel>
 </rss>

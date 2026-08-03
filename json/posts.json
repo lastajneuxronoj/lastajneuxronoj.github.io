@@ -4,22 +4,27 @@
 		"emoji": "😴",
 		"cover": "/covers/019.webp",
 		"title": {
-			"eo": "Morfea Manifestiĝo"
+			"eo": "Morfea Manifestiĝo",
+			"es": "Epifanía morfea"
 		},
 		"file": {
-			"eo": "eo/019_eo.md"
+			"eo": "eo/019_eo.md",
+			"es": "es/019_es.md"
 		},
 		"type": {
-			"eo": "Memoroj"
+			"eo": "Memoroj",
+			"es": "Memorias"
 		},
 		"category": "memoirs",
 		"author_id": "tomas",
 		"author": {
-			"eo": "Tomĉjo"
+			"eo": "Tomĉjo",
+			"es": "Tomĉjo"
 		},
 		"date": "2026-04-08",
 		"excerpt": {
-			"eo": "Mi priskribas profundan, emocian sonĝon. Mi inkludas temojn de frenezo, realeco, kaj la serĉado de signifo, kun referencoj al psiĥedela sperto kaj influoj de verkistoj kiel William Burroughs kaj Aldous Huxley. La teksto reflektas la konflikton inter realo kaj iluzio, kaj la serĉadon de konscio kaj liberiĝo."
+			"eo": "Mi priskribas profundan, emocian sonĝon. Mi inkludas temojn de frenezo, realeco, kaj la serĉado de signifo, kun referencoj al psiĥedela sperto kaj influoj de verkistoj kiel William Burroughs kaj Aldous Huxley. La teksto reflektas la konflikton inter realo kaj iluzio, kaj la serĉadon de konscio kaj liberiĝo.",
+			"es": "Describo un sueño profundo y emocional. Incluyo temas de locura, realidad y la búsqueda de significado, con referencias a la experiencia psicodélica y a escritores como William Burroughs y Aldous Huxley. El texto refleja el conflicto entre la realidad y la ilusión, y la búsqueda de conciencia y liberación."
 		},
 		"music": [
 			{
@@ -43,22 +48,27 @@
 		"emoji": "🚼",
 		"cover": "/covers/018.webp",
 		"title": {
-			"eo": "Scienca Instinkto ĉe Beboj"
+			"eo": "Scienca Instinkto ĉe Beboj",
+			"es": "Instinto científico en bebés"
 		},
 		"file": {
-			"eo": "eo/018_eo.md"
+			"eo": "eo/018_eo.md",
+			"es": "es/018_es.md"
 		},
 		"type": {
-			"eo": "Disvastigo"
+			"eo": "Disvastigo",
+			"es": "Divulgación"
 		},
 		"category": "divulgation",
 		"author_id": "tomas",
 		"author": {
-			"eo": "Tomĉjo"
+			"eo": "Tomĉjo",
+			"es": "Tomĉjo"
 		},
 		"date": "2026-03-18",
 		"excerpt": {
-			"eo": "Ĉi tiu afiŝo esploras la naturan kapablon de beboj rekoni kaj reagi al la mondo ĉirkaŭ ili, montrante kiel ilia percepto kaj konduto jam enhavas elementojn de scienca esploro. Tiel la teksto ligas la eksperimentojn kun demando: ĉu la homa instinkto por scienco jam kuŝas en nia plej frua percepto?"
+			"eo": "Ĉi tiu afiŝo esploras la naturan kapablon de beboj rekoni kaj reagi al la mondo ĉirkaŭ ili, montrante kiel ilia percepto kaj konduto jam enhavas elementojn de scienca esploro. Tiel la teksto ligas la eksperimentojn kun demando: ĉu la homa instinkto por scienco jam kuŝas en nia plej frua percepto?",
+			"es": "Esta entrada explora la capacidad natural de los bebés para reconocer y reaccionar ante el mundo que los rodea, mostrando cómo su percepción y comportamiento ya contienen elementos de investigación científica. De esta manera, el texto conecta los experimentos con la pregunta: ¿el instinto humano por la ciencia ya reside en nuestra percepción más temprana?"
 		},
 		"podcast": [
 			{
@@ -72,22 +82,27 @@
 		"emoji": "🚫",
 		"cover": "/covers/017.webp",
 		"title": {
-			"eo": "Pri Homeopatio"
+			"eo": "Pri Homeopatio",
+			"es": "Sobre la Homeopatía"
 		},
 		"file": {
-			"eo": "eo/017_eo.md"
+			"eo": "eo/017_eo.md",
+			"es": "es/017_es.md"
 		},
 		"type": {
-			"eo": "Disvastigo"
+			"eo": "Disvastigo",
+			"es": "Divulgación"
 		},
 		"category": "divulgation",
 		"author_id": "tomas",
 		"author": {
-			"eo": "Tomĉjo"
+			"eo": "Tomĉjo",
+			"es": "Tomĉjo"
 		},
 		"date": "2025-08-03",
 		"excerpt": {
-			"eo": "Homeopatio estas alternativa medicina sistemo fondita en la 18-a jarcento de la kuracisto Christian Frederick Samuel Hahnemann. Ĝi bazas sin sur la principo de simileco kaj uzas diluojn de substancoj. Tamen, la efikeco de homeopatio ne estas pruvita kaj ĝi estas konsiderata pseŭdoscienco. La uzado de homeopatio povas esti danĝera kaj malhelpi efektivan traktadon de gravaj malsanoj."
+			"eo": "Homeopatio estas alternativa medicina sistemo fondita en la 18-a jarcento de la kuracisto Christian Frederick Samuel Hahnemann. Ĝi bazas sin sur la principo de simileco kaj uzas diluojn de substancoj. Tamen, la efikeco de homeopatio ne estas pruvita kaj ĝi estas konsiderata pseŭdoscienco. La uzado de homeopatio povas esti danĝera kaj malhelpi efektivan traktadon de gravaj malsanoj.",
+			"es": "La homeopatía es un sistema de medicina alternativa fundado en el siglo XVIII por el médico Christian Frederick Samuel Hahnemann. Se basa en el principio de similitud y utiliza diluciones de sustancias. Sin embargo, la eficacia de la homeopatía no está probada y se considera pseudociencia. El uso de la homeopatía puede ser peligroso y obstaculizar el tratamiento efectivo de enfermedades graves."
 		},
 		"podcast": [
 			{
@@ -136,22 +151,27 @@
 		"emoji": "🚑",
 		"cover": "/covers/015.webp",
 		"title": {
-			"eo": "Sindromo de Stevens-Johnson, de Lyell kaj ME"
+			"eo": "Sindromo de Stevens-Johnson, de Lyell kaj ME",
+			"es": "Síndrome de Stevens-Johnson, de Lyell y ME"
 		},
 		"file": {
-			"eo": "eo/015_eo.md"
+			"eo": "eo/015_eo.md",
+			"es": "es/015_es.md"
 		},
 		"type": {
-			"eo": "Disvastigo"
+			"eo": "Disvastigo",
+			"es": "Divulgación"
 		},
 		"category": "divulgation",
 		"author_id": "tomas",
 		"author": {
-			"eo": "Tomĉjo"
+			"eo": "Tomĉjo",
+			"es": "Tomĉjo"
 		},
 		"date": "2025-03-09",
 		"excerpt": {
-			"eo": "La afiŝo klarigas la severajn haŭtajn kaj mukozajn reagojn konatajn kiel sindromoj de Stevens-Johnson kaj Lyell, kaj ligas ilin al la kunteksto de multforma eritemo (ME). Ĝi priskribas la simptomojn, la riskojn kaj la klinikan gravecon de ĉi tiuj sindromoj, atentigante pri ilia potenciale vivdanĝera naturo kaj la bezono de tuja medicina interveno."
+			"eo": "La afiŝo klarigas la severajn haŭtajn kaj mukozajn reagojn konatajn kiel sindromoj de Stevens-Johnson kaj Lyell, kaj ligas ilin al la kunteksto de multforma eritemo (ME). Ĝi priskribas la simptomojn, la riskojn kaj la klinikan gravecon de ĉi tiuj sindromoj, atentigante pri ilia potenciale vivdanĝera naturo kaj la bezono de tuja medicina interveno.",
+			"es": "La entrada explica las reacciones severas de la piel y las membranas mucosas conocidas como síndromes de Stevens-Johnson y Lyell, y las conecta con el contexto del eritema multiforme (ME). Describe los síntomas, los riesgos y la importancia clínica de estos síndromes, advirtiendo sobre su naturaleza potencialmente mortal y la necesidad de intervención médica inmediata."
 		},
 		"podcast": [
 			{
@@ -166,7 +186,7 @@
 		"cover": "/covers/014.webp",
 		"title": {
 			"eo": "La Virgulino",
-			"es": "La Virgulino"
+			"es": "La Virgen"
 		},
 		"file": {
 			"eo": "eo/014_eo.md",
@@ -205,22 +225,27 @@
 		"emoji": "🐑",
 		"cover": "/covers/013.webp",
 		"title": {
-			"eo": "Spongoformaj Encefalopatioj"
+			"eo": "Spongoformaj Encefalopatioj",
+			"es": "Encefalopatías Espongiformes"
 		},
 		"file": {
-			"eo": "eo/013_eo.md"
+			"eo": "eo/013_eo.md",
+			"es": "es/013_es.md"
 		},
 		"type": {
-			"eo": "Disvastigo"
+			"eo": "Disvastigo",
+			"es": "Divulgación"
 		},
 		"category": "divulgation",
 		"author_id": "tomas",
 		"author": {
-			"eo": "Tomĉjo"
+			"eo": "Tomĉjo",
+			"es": "Tomĉjo"
 		},
 		"date": "2024-12-10",
 		"excerpt": {
-			"eo": "La teksto klarigas la historion kaj naturon de spongoformaj encefalopatioj, raraj sed devastaj malsanoj kaŭzitaj de prionoj — proteinoj sen genetika informo, kiuj tamen kapablas transdoni patologion. Ĝi rakontas pri ŝaftremo, kuru inter la fore-oj de Papuo, la krizo de frenezaj bovoj en Britio, kaj la homaj formoj kiel la malsano de Creutzfeldt-Jakob."
+			"eo": "La teksto klarigas la historion kaj naturon de spongoformaj encefalopatioj, raraj sed devastaj malsanoj kaŭzitaj de prionoj — proteinoj sen genetika informo, kiuj tamen kapablas transdoni patologion. Ĝi rakontas pri ŝaftremo, kuru inter la fore-oj de Papuo, la krizo de frenezaj bovoj en Britio, kaj la homaj formoj kiel la malsano de Creutzfeldt-Jakob.",
+			"es": "El texto explica la historia y naturaleza de las encefalopatías espongiformes, enfermedades raras pero devastadoras causadas por priones, proteínas sin información genética que sin embargo pueden transmitir una patología. Relata sobre el scrapie, el kuru entre los fore de Papúa, la crisis de las vacas locas en Gran Bretaña y las formas humanas como la enfermedad de Creutzfeldt-Jakob."
 		},
 		"music": [
 			{
@@ -269,22 +294,27 @@
 		"emoji": "🌺",
 		"cover": "/covers/011.webp",
 		"title": {
-			"eo": "Printempa depresio kaj alergio"
+			"eo": "Printempa depresio kaj alergio",
+			"es": "Depresión primaveral y alergia"
 		},
 		"file": {
-			"eo": "eo/011_eo.md"
+			"eo": "eo/011_eo.md",
+			"es": "es/011_es.md"
 		},
 		"type": {
-			"eo": "Disvastigo"
+			"eo": "Disvastigo",
+			"es": "Divulgación"
 		},
 		"category": "divulgation",
 		"author_id": "tomas",
 		"author": {
-			"eo": "Tomĉjo"
+			"eo": "Tomĉjo",
+			"es": "Tomĉjo"
 		},
 		"date": "2024-11-03",
 		"excerpt": {
-			"eo": "La teksto pritraktas la subtilan rilaton inter la sezona ŝanĝo de printempo, la apero de alergioj kaj la influo sur mensa sano. Ĝi montras kiel poleno, klimatŝanĝoj kaj biologiaj reagoj povas kunplektiĝi kun sentoj de laceco, malgajo aŭ depresio, kaj kiel ĉi tiu kombino efikas al la ĉiutaga vivo."
+			"eo": "La teksto pritraktas la subtilan rilaton inter la sezona ŝanĝo de printempo, la apero de alergioj kaj la influo sur mensa sano. Ĝi montras kiel poleno, klimatŝanĝoj kaj biologiaj reagoj povas kunplektiĝi kun sentoj de laceco, malgajo aŭ depresio, kaj kiel ĉi tiu kombino efikas al la ĉiutaga vivo.",
+			"es": "El texto aborda la sutil relación entre el cambio estacional de la primavera, la aparición de alergias y la influencia en la salud mental. Muestra cómo el polen, los cambios climáticos y las reacciones biológicas pueden entrelazarse con sentimientos de cansancio, tristeza o depresión, y cómo esta combinación afecta la vida cotidiana."
 		},
 		"podcast": [
 			{
@@ -391,22 +421,27 @@
 		"emoji": "🧟",
 		"cover": "/covers/007.webp",
 		"title": {
-			"eo": "Pri kio estas psiĥologia disociado"
+			"eo": "Pri kio estas psiĥologia disociado",
+			"es": "Sobre qué es la disociación psicológica"
 		},
 		"file": {
-			"eo": "eo/007_eo.md"
+			"eo": "eo/007_eo.md",
+			"es": "es/007_es.md"
 		},
 		"type": {
-			"eo": "Disvastigo"
+			"eo": "Disvastigo",
+			"es": "Divulgación"
 		},
 		"category": "divulgation",
 		"author_id": "tomas",
 		"author": {
-			"eo": "Tomĉjo"
+			"eo": "Tomĉjo",
+			"es": "Tomĉjo"
 		},
 		"date": "2024-05-31",
 		"excerpt": {
-			"eo": "La disertaĵo priskribas la fenomenon de psiĥologia disociado, kiu estas malkontinueco de integriĝfunkcioj de la individuo. La disertaĵo esploras la difinojn, simptomojn, kaj perspektivojn pri disociado, inkluzive de la Teorio pri Struktura Disociado de Personeco. La disertaĵo ankaŭ klarigas kiel disociado estas rilata al traŭmo kaj konscistato, kaj priskribas la celon de psiĥologia terapio en la integriĝo de la partoj de la personeco."
+			"eo": "La blogaĵo priskribas la fenomenon de psiĥologia disociado, kiu estas malkontinueco de integriĝfunkcioj de la individuo. La disertaĵo esploras la difinojn, simptomojn, kaj perspektivojn pri disociado, inkluzive de la Teorio pri Struktura Disociado de Personeco. La disertaĵo ankaŭ klarigas kiel disociado estas rilata al traŭmo kaj konscistato, kaj priskribas la celon de psiĥologia terapio en la integriĝo de la partoj de la personeco.",
+			"es": "El escrito describe el fenómeno de la disociación psicológica, que es la discontinuidad de las funciones integradoras del individuo. La disertación explora las definiciones, síntomas y perspectivas sobre la disociación, incluyendo la Teoría de la Disociación Estructural de la Personalidad. La disertación también explica cómo la disociación está relacionada con el trauma y la conciencia, y describe el objetivo de la terapia psicológica en la integración de las partes de la personalidad."
 		},
 
 		"podcast": [
@@ -493,22 +528,27 @@
 		"emoji": "🔠",
 		"cover": "/covers/004.jpg",
 		"title": {
-			"eo": "Historio de la ŝava kaj ŝavidaj alfabetoj"
+			"eo": "Historio de la ŝava kaj ŝavidaj alfabetoj",
+			"es": "Historia de los alfabetos shavianos"
 		},
 		"file": {
-			"eo": "eo/004_eo.md"
+			"eo": "eo/004_eo.md",
+			"es": "es/004_es.md"
 		},
 		"type": {
-			"eo": "Ŝava"
+			"eo": "Ŝava",
+			"es": "Shaviano"
 		},
 		"category": "shavian",
 		"author_id": "tomas",
 		"author": {
-			"eo": "Tomĉjo"
+			"eo": "Tomĉjo",
+			"es": "Tomĉjo"
 		},
 		"date": "2024-02-28",
 		"excerpt": {
-			"eo": "La artikolo priskribas la historion de la ŝava kaj ŝavidaj alfabetoj. Ĝi inkludas informon pri George Bernard Shaw kaj lia kritiko pri la angla ortografio, la kreo de la ŝava alfabeto, la starlingŝava alfabeto, kaj aliaj ŝavaj variantoj kiel Quikscript kaj Revised Shaw Abjad. Ankaŭ estas menciita la studaĵo farita de Sergio Pokrovskij pri la starlingŝava alfabeto."
+			"eo": "La artikolo priskribas la historion de la ŝava kaj ŝavidaj alfabetoj. Ĝi inkludas informon pri George Bernard Shaw kaj lia kritiko pri la angla ortografio, la kreo de la ŝava alfabeto, la starlingŝava alfabeto, kaj aliaj ŝavaj variantoj kiel Quikscript kaj Revised Shaw Abjad. Ankaŭ estas menciita la studaĵo farita de Sergio Pokrovskij pri la starlingŝava alfabeto.",
+			"es": "El artículo describe la historia de los alfabetos shavianos. Incluye información sobre George Bernard Shaw y su crítica a la ortografía inglesa, la creación del alfabeto shaviano, el alfabeto starlingshaviano y otras variantes shavianas como Quikscript y Revised Shaw Abjad. También se menciona el estudio realizado por Sergio Pokrovskij sobre el alfabeto starlingshaviano."
 		},
 		"podcast": [
 			{
@@ -585,22 +625,27 @@
 		"emoji": "⌨️",
 		"cover": "/covers/001.webp",
 		"title": {
-			"eo": "Jen mia starling-ŝava klavarfasono"
+			"eo": "Jen mia starling-ŝava klavarfasono",
+			"es": "Aquí está mi distribución de teclado starlingshaviana"
 		},
 		"file": {
-			"eo": "eo/001_eo.md"
+			"eo": "eo/001_eo.md",
+			"es": "es/001_es.md"
 		},
 		"type": {
-			"eo": "Ŝava"
+			"eo": "Ŝava",
+			"es": "Shaviano"
 		},
 		"category": "shavian",
 		"author_id": "tomas",
 		"author": {
-			"eo": "Tomĉjo"
+			"eo": "Tomĉjo",
+			"es": "Tomĉjo"
 		},
 		"date": "2024-02-15",
 		"excerpt": {
-			"eo": "La celo de tiu ĉi afiŝo estas prezenti la klavaron, kiun mi kreis por disvastigi la uzadon de la nemulte konata ŝava alfabeto. Unue mi volas anonci, ke, kiel mi deklaris en la propra dokumentado de la klavarfasono; “mi ne proponas ortografian reformon ĉe la Esperantujo”. "
+			"eo": "La celo de tiu ĉi afiŝo estas prezenti la klavaron, kiun mi kreis por disvastigi la uzadon de la nemulte konata ŝava alfabeto. Unue mi volas anonci, ke, kiel mi deklaris en la propra dokumentado de la klavarfasono; “mi ne proponas ortografian reformon ĉe la Esperantujo”. ",
+			"es": "El objetivo de esta publicación es presentar el teclado que he creado para difundir el uso del poco conocido alfabeto shaviano. Primero quiero anunciar que, como declaré en la propia documentación de la distribución del teclado; “no propongo una reforma ortográfica en el esperantismo”."
 		}
 	}
 ]

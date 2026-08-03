@@ -9,4 +9,23 @@ Ankaŭ mi interesiĝis pri la **ŝava** (specife la starlingŝava) alfabeto, pro
 
 Do, en ĉi tiu blogo vi povos legi pri miaj interesoj, t.e: sciencdisvastigo, remaĉaĵoj miaj, eltiraĵoj tradukitaj de mi, ktp.; preskaŭ ĉiu blogaĵo kune kun sia respektiva podkastaĵo per [Spotify](https://open.spotify.com/show/6Rzy8fC49uySZ30kX4LbnM?si=glbe-ZwPQNGSegRc2SwX3w). Aldone, [mi tradukas librojn](projects/translations/books-eo.html) al Esperanto, estante disponebla la libro **La Pordoj de la Perceptado** (*The Doors of Perception*) de Aldous Huxley. Nu, se vi interesiĝas pri psiĥedelio restu atenta.
 
+<p style="text-align:center;"><i>La blogaĵoj estas ĉefe verkitaj en Esperanto, kaj poste tradukitaj. Tial, ne ĉiu blogaĵo estos disponeblaj en ĉiu lingvo.</i></p>
+
+<details>
+<summary><b>Kontakto</b></summary>
+<div class="details-content">
+
+- 📘 [**Facebook:**](https://www.facebook.com/lastajneuxronoj/)
+
+- 🎵 [**TikTok:**](https://www.tiktok.com/@lastaj.neuxronoj)
+
+- 📧 [**Retpoŝtadreso:**](mailto:lastajneuxronoj@gmail.com)
+
+- 🖥️ [**GitHub:**](https://github.com/lastajneuxronoj)
+
+- 📡 [**RSS [EO]:**](https://lastajneuxronoj.github.io/rss-eo.xml)
+
+</div>
+</details>
+
 <div class="post-signature">—Tomĉjo (·𐑑𐑩𐑫𐑗𐑢𐑩).</div>

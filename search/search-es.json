@@ -1,13 +1,93 @@
 [
   {
+    "number": "019",
+    "title": "Epifanía morfea",
+    "excerpt": "Describo un sueño profundo y emocional. Incluyo temas de locura, realidad y la búsqueda de significado, con referencias a la experiencia psicodélica y a escritores como William Burroughs y Aldous Huxley. El texto refleja el conflicto entre la realidad y la ilusión, y la búsqueda de conciencia y liberación.",
+    "type": "Memorias",
+    "category": "memoirs",
+    "emoji": "😴",
+    "cover": "/covers/019.webp",
+    "url": "/blog/es/019-es.html"
+  },
+  {
+    "number": "018",
+    "title": "Instinto científico en bebés",
+    "excerpt": "Esta entrada explora la capacidad natural de los bebés para reconocer y reaccionar ante el mundo que los rodea, mostrando cómo su percepción y comportamiento ya contienen elementos de investigación científica. De esta manera, el texto conecta los experimentos con la pregunta: ¿el instinto humano por la ciencia ya reside en nuestra percepción más temprana?",
+    "type": "Divulgación",
+    "category": "divulgation",
+    "emoji": "🚼",
+    "cover": "/covers/018.webp",
+    "url": "/blog/es/018-es.html"
+  },
+  {
+    "number": "017",
+    "title": "Sobre la Homeopatía",
+    "excerpt": "La homeopatía es un sistema de medicina alternativa fundado en el siglo XVIII por el médico Christian Frederick Samuel Hahnemann. Se basa en el principio de similitud y utiliza diluciones de sustancias. Sin embargo, la eficacia de la homeopatía no está probada y se considera pseudociencia. El uso de la homeopatía puede ser peligroso y obstaculizar el tratamiento efectivo de enfermedades graves.",
+    "type": "Divulgación",
+    "category": "divulgation",
+    "emoji": "🚫",
+    "cover": "/covers/017.webp",
+    "url": "/blog/es/017-es.html"
+  },
+  {
+    "number": "015",
+    "title": "Síndrome de Stevens-Johnson, de Lyell y ME",
+    "excerpt": "La entrada explica las reacciones severas de la piel y las membranas mucosas conocidas como síndromes de Stevens-Johnson y Lyell, y las conecta con el contexto del eritema multiforme (ME). Describe los síntomas, los riesgos y la importancia clínica de estos síndromes, advirtiendo sobre su naturaleza potencialmente mortal y la necesidad de intervención médica inmediata.",
+    "type": "Divulgación",
+    "category": "divulgation",
+    "emoji": "🚑",
+    "cover": "/covers/015.webp",
+    "url": "/blog/es/015-es.html"
+  },
+  {
     "number": "014",
-    "title": "La Virgulino",
+    "title": "La Virgen",
     "excerpt": "El escrito presenta una historia íntima sobre el sufrimiento personal y la experiencia de imágenes intrahospitalarias, junto con la figura de La Virgen.",
     "type": "Memorias",
     "category": "memoirs",
     "emoji": "⛪",
     "cover": "/covers/014.webp",
     "url": "/blog/es/014-es.html"
+  },
+  {
+    "number": "013",
+    "title": "Encefalopatías Espongiformes",
+    "excerpt": "El texto explica la historia y naturaleza de las encefalopatías espongiformes, enfermedades raras pero devastadoras causadas por priones, proteínas sin información genética que sin embargo pueden transmitir una patología. Relata sobre el scrapie, el kuru entre los fore de Papúa, la crisis de las vacas locas en Gran Bretaña y las formas humanas como la enfermedad de Creutzfeldt-Jakob.",
+    "type": "Divulgación",
+    "category": "divulgation",
+    "emoji": "🐑",
+    "cover": "/covers/013.webp",
+    "url": "/blog/es/013-es.html"
+  },
+  {
+    "number": "011",
+    "title": "Depresión primaveral y alergia",
+    "excerpt": "El texto aborda la sutil relación entre el cambio estacional de la primavera, la aparición de alergias y la influencia en la salud mental. Muestra cómo el polen, los cambios climáticos y las reacciones biológicas pueden entrelazarse con sentimientos de cansancio, tristeza o depresión, y cómo esta combinación afecta la vida cotidiana.",
+    "type": "Divulgación",
+    "category": "divulgation",
+    "emoji": "🌺",
+    "cover": "/covers/011.webp",
+    "url": "/blog/es/011-es.html"
+  },
+  {
+    "number": "007",
+    "title": "Sobre qué es la disociación psicológica",
+    "excerpt": "El escrito describe el fenómeno de la disociación psicológica, que es la discontinuidad de las funciones integradoras del individuo. La disertación explora las definiciones, síntomas y perspectivas sobre la disociación, incluyendo la Teoría de la Disociación Estructural de la Personalidad. La disertación también explica cómo la disociación está relacionada con el trauma y la conciencia, y describe el objetivo de la terapia psicológica en la integración de las partes de la personalidad.",
+    "type": "Divulgación",
+    "category": "divulgation",
+    "emoji": "🧟",
+    "cover": "/covers/007.webp",
+    "url": "/blog/es/007-es.html"
+  },
+  {
+    "number": "004",
+    "title": "Historia de los alfabetos shavianos",
+    "excerpt": "El artículo describe la historia de los alfabetos shavianos. Incluye información sobre George Bernard Shaw y su crítica a la ortografía inglesa, la creación del alfabeto shaviano, el alfabeto starlingshaviano y otras variantes shavianas como Quikscript y Revised Shaw Abjad. También se menciona el estudio realizado por Sergio Pokrovskij sobre el alfabeto starlingshaviano.",
+    "type": "Shaviano",
+    "category": "shavian",
+    "emoji": "🔠",
+    "cover": "/covers/004.jpg",
+    "url": "/blog/es/004-es.html"
   },
   {
     "number": "002",
@@ -18,5 +98,15 @@
     "emoji": "🔠",
     "cover": "/covers/002.webp",
     "url": "/blog/es/002-es.html"
+  },
+  {
+    "number": "001",
+    "title": "Aquí está mi distribución de teclado starlingshaviana",
+    "excerpt": "El objetivo de esta publicación es presentar el teclado que he creado para difundir el uso del poco conocido alfabeto shaviano. Primero quiero anunciar que, como declaré en la propia documentación de la distribución del teclado; “no propongo una reforma ortográfica en el esperantismo”.",
+    "type": "Shaviano",
+    "category": "shavian",
+    "emoji": "⌨️",
+    "cover": "/covers/001.webp",
+    "url": "/blog/es/001-es.html"
   }
 ]

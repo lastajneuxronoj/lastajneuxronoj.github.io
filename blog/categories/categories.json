@@ -2,7 +2,7 @@
   "memoirs": {
     "count": {
       "eo": 5,
-      "es": 1
+      "es": 2
     },
     "emoji": "🌠",
     "color": "#FDD835",
@@ -13,7 +13,8 @@
   },
   "divulgation": {
     "count": {
-      "eo": 8
+      "eo": 8,
+      "es": 6
     },
     "emoji": "🧪",
     "color": "#43A047",
@@ -36,7 +37,7 @@
   "shavian": {
     "count": {
       "eo": 3,
-      "es": 1
+      "es": 3
     },
     "emoji": "🔠",
     "color": "#3B88C3",
