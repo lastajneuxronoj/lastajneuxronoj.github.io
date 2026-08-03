@@ -9,4 +9,21 @@ Así que en este blog podrás encontrar mis intereses: divulgación científica 
 
 <p style="text-align:center;"><i>Las entradas de blog son escritas principalmente en esperanto y después son traducidas. Por esa razón, no todo artículo estará disponible en cada idioma.</i></p>
 
+<details>
+<summary><b>Contacto:</b></summary>
+<div class="details-content">
+
+- 📘 [**Facebook:**](https://www.facebook.com/lastajneuxronoj/)
+
+- 🎵 [**TikTok:**](https://www.tiktok.com/@lastaj.neuxronoj)
+
+- 📧 [**Correo electrónico:**](mailto:lastajneuxronoj@gmail.com)
+
+- 🖥️ [**GitHub:**](https://github.com/lastajneuxronoj)
+
+- 📡 [**RSS [ES]:**](https://lastajneuxronoj.github.io/rss-es.xml)
+
+</div>
+</details>
+
 <div class="post-signature">—Tomĉjo (·𐑑𐑩𐑫𐑗𐑢𐑩).</div>

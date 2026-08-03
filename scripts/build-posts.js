@@ -854,7 +854,7 @@ async function renderPage({ type, data }) {
 			rel="alternate"
 			type="application/rss+xml"
 			title="Lastaj Neŭronoj - ${languageName}"
-			href="/rss-${data.lang}.xml">
+			href="/blog/rss-${data.lang}.xml">
 	`;
 
 			// Renderizar la página como post

@@ -54,16 +54,20 @@ async function initHeaderFeatures() {
 	setupSearch();
 	await buildCategoriesDropdown();
 	await buildProjectsDropdown();
+
 	setupDropdown(
-	"header-categories",
-	"categories-dropdown"
-);
+		"header-categories",
+		"categories-dropdown"
+	);
 
+	setupDropdown(
+		"header-projects",
+		"projects-dropdown"
+	);
 
-setupDropdown(
-	"header-projects",
-	"projects-dropdown"
-);
+	buildSocialDropdown();
+	setupSocialDropdown();
+	updateRSSLink();
 
 }
 
@@ -196,6 +200,15 @@ function setIconSrc(theme) {
 				theme === "dark"
 					? "/svg/search_b.svg"
 					: "/svg/search_w.svg";
+		}
+
+		const socialIcon = document.getElementById("social-icon");
+
+		if (socialIcon) {
+			socialIcon.src =
+				theme === "dark"
+					? "/svg/social_b.svg"
+					: "/svg/social_w.svg";
 		}
 
 		updateMenuIcon();
@@ -367,6 +380,8 @@ async function updateLanguageDependentLinks(userInitiated = false) {
 	if (userInitiated && targetUrl && window.location.pathname !== targetUrl) {
 		window.location.href = targetUrl;
 	}
+
+	updateRSSLink();
 }
 
 // Muestra un modal para los idiomas disponibles
@@ -908,6 +923,49 @@ function renderProjectsDropdown(
 	}
 }
 
+function buildSocialDropdown() {
+
+    const dropdown =
+        document.getElementById("social-dropdown");
+
+    if (!dropdown) return;
+
+    dropdown.innerHTML = `
+        <a href="https://www.facebook.com/lastajneuxronoj/" target="_blank" rel="noopener noreferrer">
+            <img src="/svg/facebook.svg" alt="Facebook">
+        </a>
+        <a href="https://www.tiktok.com/@lastaj.neuxronoj" target="_blank" rel="noopener noreferrer">
+            <img src="/svg/tiktok.svg" alt="TikTok">
+        </a>
+        <a href="https://open.spotify.com/show/6Rzy8fC49uySZ30kX4LbnM?si=1136087605b74d83" target="_blank" rel="noopener noreferrer">
+            <img src="/svg/spotify.svg" alt="Spotify">
+        </a>
+        <a href="mailto:tucorreo@ejemplo.com">
+            <img src="/svg/mail.svg" alt="Correo">
+        </a>
+        <a href="https://github.com/lastajneuxronoj" target="_blank" rel="noopener noreferrer">
+            <img src="/svg/github.svg" alt="GitHub">
+        </a>
+        <a id="rss-link" href="#">
+            <img src="/svg/rss.svg" alt="RSS">
+        </a>
+    `;
+}
+
+function updateRSSLink() {
+
+    const rssLink =
+        document.getElementById("rss-link");
+
+    if (!rssLink) return;
+
+    const lang =
+        document.documentElement.lang || "eo";
+
+    rssLink.href =
+        `/blog/rss-${lang}.xml`;
+}
+
 function setupDropdown(
 	buttonId,
 	dropdownId
@@ -1032,6 +1090,89 @@ function setupProjectLinks() {
 
 }
 
+function setupSocialDropdown() {
+
+    const button =
+        document.getElementById("social-button");
+
+    const dropdown =
+        document.getElementById("social-dropdown");
+
+    if (!button || !dropdown) {
+        return;
+    }
+
+
+	function positionDropdown() {
+
+	    const rect =
+	        button.getBoundingClientRect();
+
+
+	    dropdown.style.top =
+	        `${rect.bottom + 26}px`;
+
+
+	    dropdown.style.left = "auto";
+	    dropdown.style.right = "20px";
+
+	}
+
+
+    button.addEventListener("click", (event) => {
+
+        event.stopPropagation();
+
+
+        const isHidden =
+            dropdown.classList.contains("dropdown-hidden");
+
+
+        if (isHidden) {
+
+            positionDropdown();
+
+        }
+
+
+        dropdown.classList.toggle("dropdown-hidden");
+
+    });
+
+
+    document.addEventListener("click", () => {
+
+        dropdown.classList.add("dropdown-hidden");
+
+    });
+
+
+    dropdown.addEventListener("click", (event) => {
+
+        event.stopPropagation();
+
+    });
+
+
+	let resizeTimeout;
+
+	window.addEventListener("resize", () => {
+
+	    clearTimeout(resizeTimeout);
+
+	    resizeTimeout = setTimeout(() => {
+
+	        if (!dropdown.classList.contains("dropdown-hidden")) {
+
+	            positionDropdown();
+
+	        }
+
+	    }, 100);
+
+	});
+
+}
 window.addEventListener(
 	"languageChanged",
 	async () => {

@@ -44,7 +44,7 @@ async function buildRSS(language = "es") {
 			siteUrl,
 
 		feed_url:
-			`${siteUrl}/rss-${language}.xml`,
+			`${siteUrl}/blog/rss-${language}.xml`,
 
 		language,
 
@@ -91,9 +91,9 @@ async function buildRSS(language = "es") {
 			continue;
 
 		const htmlFile =
-			fileName
-				.replace(/_/g, "-")
-				.replace(/\.md$/i, ".html");
+    		path.basename(fileName)
+    		    .replace(/_/g, "-")
+    		    .replace(/\.md$/i, ".html");
 
 		const postUrl =
 			`${siteUrl}/blog/${htmlFile}`;

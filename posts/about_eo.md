@@ -19,6 +19,8 @@ Do, en ĉi tiu blogo vi povos legi pri miaj interesoj, t.e: sciencdisvastigo, re
 
 - 🎵 [**TikTok:**](https://www.tiktok.com/@lastaj.neuxronoj)
 
+- 🟢 [**Spotify:**](https://open.spotify.com/show/6Rzy8fC49uySZ30kX4LbnM?si=1136087605b74d83)
+
 - 📧 [**Retpoŝtadreso:**](mailto:lastajneuxronoj@gmail.com)
 
 - 🖥️ [**GitHub:**](https://github.com/lastajneuxronoj)
