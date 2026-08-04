@@ -940,7 +940,7 @@ function buildSocialDropdown() {
         <a href="https://open.spotify.com/show/6Rzy8fC49uySZ30kX4LbnM?si=1136087605b74d83" target="_blank" rel="noopener noreferrer">
             <img src="/svg/spotify.svg" alt="Spotify">
         </a>
-        <a href="mailto:tucorreo@ejemplo.com">
+        <a href="mailto:lastajneuxronoj@gmail.com">
             <img src="/svg/mail.svg" alt="Correo">
         </a>
         <a href="https://github.com/lastajneuxronoj" target="_blank" rel="noopener noreferrer">
