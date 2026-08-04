@@ -68,6 +68,9 @@ const {
 } = require("./config");
 
 
+const {
+    renderNewsletterSignup
+} = require("./utils/newsletter-signup");
 
 const POSTS_MD_DIR = path.join(ROOT, "posts");
 const ABOUT_MD_DIR = path.join(ROOT, "posts");
@@ -1068,6 +1071,8 @@ async function renderPage({ type, data }) {
 				...seo,
 				rssLink,
 				mediaMenu: hasMedia ? mediaMenu : "",
+				newsletterSignup:
+    				renderNewsletterSignup(data.lang),
 			});
 		}
 
