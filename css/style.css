@@ -1539,7 +1539,7 @@ tbody tr:hover {
 	border-radius: 8px;
 
 	background: var(--base-color-solid);
-	color: var(--text-color) !important;
+	color: var(--secondary-color) !important;
 
 	white-space: nowrap;
 

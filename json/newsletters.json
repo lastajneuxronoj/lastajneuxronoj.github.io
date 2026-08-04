@@ -1,12 +1,10 @@
 [
     {
-        "id": 1,
-        "date": "2026-08-03",
+        "id": 0,
+        "date": "2026-07-27",
 
-        "title": "Bulteno #001",
-
-        "posts": [
-            "019"
-        ]
+        "title": "Bulteno #000",
+        "message": "<p>Jen la unua [nova] bulteno de Lastaj Neŭronoj.</p><p>Vi ricevas ĉi tiun retpoŝtaĵon, ĉar vi abonis la bultenon de la malnova versio de Lastaj Neŭronoj (<a href='https://lastajneuxronoj.wordpress.com/'>ĉe WordPress</a>). Mi translokigas la blogon al nova platformo, GitHub Pages, por havi pli grandan liberecon pri la dezajno de la retejo... Kaj mi devas anonci, ke <strong>la nova retejo jam disponeblas</strong>, kaj ĝi nun estas plurlingva (reale, dulingva nun).</p><p>Se vi volas plu sekvi Lastajn Neŭronojn, vi ne bezonas fari ion ajn: via abono restas aktiva. Kompreneble, vi povos malaboni iam ajn per la ligilo ĉe la fino de la retpoŝtaĵo.</p> <p>Vizitu la <a href='https://lastajneuxronoj.github.io/'>novan retejon</a>!</p>",
+        "posts": []
     }
 ]

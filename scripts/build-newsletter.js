@@ -191,13 +191,15 @@ ${t(
 
         const selectedPosts =
             posts.filter(post =>
-                newsletter.posts.includes(
+                (
+                    newsletter.posts ?? []
+                ).includes(
                     post.number
                 )
             );
 
 
-        const newsletterLanguages =
+        let newsletterLanguages =
             [
                 ...new Set(
                     selectedPosts.flatMap(post =>
@@ -207,6 +209,26 @@ ${t(
                     )
                 )
             ];
+        
+        
+        if (newsletterLanguages.length === 0) {
+        
+            if (
+                newsletter.message &&
+                typeof newsletter.message === "object"
+            ) {
+            
+                newsletterLanguages =
+                    Object.keys(
+                        newsletter.message
+                    );
+                
+            } else {
+            
+                newsletterLanguages = ["eo"];
+            
+            }
+        }
 
 
         for (const lang of newsletterLanguages) {
@@ -347,6 +369,28 @@ ${podcast}
                     .join("");
 
 
+            const messageHtml =
+
+                newsletter.message
+
+        ? (
+
+            typeof newsletter.message === "object"
+
+                ? (
+                    newsletter.message[lang]
+                    ??
+                    newsletter.message.eo
+                    ??
+                    ""
+                )
+
+                : newsletter.message
+
+        )
+
+        : "";
+            
 
             const html =
                 renderTemplate(
@@ -396,7 +440,7 @@ ${podcast}
 
 
                         posts:
-                            postsHtml,
+                            postsHtml + messageHtml,
 
 
                         outro:
