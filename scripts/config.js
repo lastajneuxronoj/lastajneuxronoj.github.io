@@ -5,21 +5,37 @@
 
 const path = require("path");
 
-const ROOT = path.resolve(__dirname, "..");
-
-const COVERS_DIR =
-	path.join(ROOT, "covers");
-
-const COVER_EXTENSIONS = [
-	"png",
-	"jpg",
-	"jpeg",
-	"webp",
-	"gif"
-];
+const ROOT =
+    path.resolve(__dirname, "..");
 
 const JSON_DIR =
-	path.join(ROOT, "json");
+    path.join(ROOT, "json");
+
+const OUTPUT_DIR =
+    path.join(ROOT, "blog");
+
+const COVERS_DIR =
+    path.join(ROOT, "covers");
+
+const COVER_EXTENSIONS = [
+    "png",
+    "jpg",
+    "jpeg",
+    "webp",
+    "gif"
+];
+
+const NEWSLETTERS_JSON_PATH =
+    path.join(
+        JSON_DIR,
+        "newsletters.json"
+    );
+
+const NEWSLETTER_DIR =
+    path.join(
+        OUTPUT_DIR,
+        "newsletter"
+    );
 
 module.exports = {
 
@@ -57,8 +73,7 @@ module.exports = {
 	POSTS_MD_DIR:
 		path.join(ROOT, "posts"),
 	
-	OUTPUT_DIR:
-		path.join(ROOT, "blog"),
+	OUTPUT_DIR,
 
 	CATEGORIES_META_PATH:
 	path.join(
@@ -90,4 +105,7 @@ module.exports = {
 	HISTORY_JSON_PATH:
 		path.join(ROOT, "stats", "history.json"),
 	
+	NEWSLETTERS_JSON_PATH,
+    NEWSLETTER_DIR
+
 };

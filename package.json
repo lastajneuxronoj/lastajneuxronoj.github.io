@@ -8,6 +8,7 @@
 		"sitemap": "node scripts/build-sitemap.js",
 		"stats": "node scripts/build-stats.js",
 		"fetch:goatcounter": "node scripts/fetch-goatcounter.js",
+		"newsletter": "node scripts/build-newsletter.js",
 		"all": " npm run build && npm run stats",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},

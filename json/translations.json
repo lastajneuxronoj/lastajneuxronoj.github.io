@@ -74,7 +74,16 @@
     		"definition": "Definición",
     		"example": "Ejemplo"
 		},
-		"backToHome": "VOLVER AL INICIO"
+		"backToHome": "VOLVER AL INICIO",
+		"newsletter": {
+			"label": "Boletín",
+			"intro": "¡Hola! Bienvenido al boletín de <strong>Lastaj Neŭronoj</strong>.",
+			"outro": "Gracias por leer. ¡Hasta el próximo boletín!",
+			"readMore": "Leer artículo completo",
+			"languageNotice": "Todos los artículos de Lastaj Neŭronoj, o al menos la mayoría de ellos, están originalmente escritos en Esperanto. Algunos de ellos están traducidos a otros idiomas.",
+			"availableLanguages": "Idiomas disponibles",
+			"listen": "Escuchar en Spotify"
+		}
 	},
 	"eo": {
 		"header": {
@@ -151,6 +160,15 @@
     		"definition": "Difino",
     		"example": "Ekzemplo"
 		},
-		"backToHome": "REVENI AL LA ĈEFPAĜO"
+		"backToHome": "REVENI AL LA ĈEFPAĜO",
+		"newsletter": {
+			"label": "Bulteno",
+			"intro": "Saluton! Bonvenon al la bulteno de <strong>Lastaj Neŭronoj</strong>.",
+			"outro": "Dankon pro via legado. Ĝis la venonta bulteno!",
+			"readMore": "Legi la tutan artikolon",
+			"languageNotice": "Ĉiuj artikoloj de Lastaj Neŭronoj, aŭ almenaŭ la plejmulto el ili, estas origine verkitaj en Esperanto. Kelkaj el ili estas tradukitaj al aliaj lingvoj.",
+			"availableLanguages": "Disponeblaj lingvoj",
+			"listen": "Aŭskulti en Spotify"
+		}
 	}
 }

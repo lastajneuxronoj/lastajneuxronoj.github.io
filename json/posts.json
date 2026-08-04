@@ -37,7 +37,8 @@
 			}
 		],
 		"podcast": [
-			{
+			{	
+				"lang": "eo",
 				"title": "Morfea Manifestiĝo",
 				"url": "https://open.spotify.com/episode/0IBGPTmfZhUXmNbMu11KC9?si=VxGoourIRdSy1woZmUadZg"
 			}
@@ -72,6 +73,7 @@
 		},
 		"podcast": [
 			{
+				"lang": "eo",
 				"title": "Scienca Instinkto ĉe Beboj",
 				"url": "https://open.spotify.com/episode/7pc2POVrTdpM2sQn6uSKtr?si=lmVIltFqRGSY3H4vhNtcSA"
 			}
@@ -106,6 +108,7 @@
 		},
 		"podcast": [
 			{
+				"lang": "eo",
 				"title": "Pri Homeopatio",
 				"url": "https://creators.spotify.com/pod/profile/toms-bm/episodes/Pri-homeopatio-e36d5q4"
 			}
@@ -141,6 +144,7 @@
 		],
 		"podcast": [
 			{
+				"lang": "eo",
 				"title": "La vojo de Wasson al Eleŭziso",
 				"url": "https://creators.spotify.com/pod/show/toms-bm/episodes/La-Vojo-de-Wasson-al-Eleziso-e3163h5"
 			}
@@ -175,6 +179,7 @@
 		},
 		"podcast": [
 			{
+				"lang": "eo",
 				"title": "Sindromo de Stevens-Johnson, de Lyell kaj ME",
 				"url": "https://creators.spotify.com/pod/show/toms-bm/episodes/Sindromo-de-Stevens-Johnson--de-Lyell-kaj-ME-e2vtr2e"
 			}
@@ -215,6 +220,7 @@
 		],
 		"podcast": [
 			{
+				"lang": "eo",
 				"title": "La Virgulino",
 				"url": "https://creators.spotify.com/pod/show/toms-bm/episodes/La-Virgulino-e2uajgd"
 			}
@@ -255,6 +261,7 @@
 		],
 		"podcast": [
 			{
+				"lang": "eo",
 				"title": "Spongoformaj Encefalopatioj",
 				"url": "https://creators.spotify.com/pod/show/toms-bm/episodes/Spongoformaj-Encefalopatioj-e2t2em5"
 			}
@@ -284,6 +291,7 @@
 		},
 		"podcast": [
 			{
+				"lang": "eo",
 				"title": "Antropologo en Marso",
 				"url": "https://open.spotify.com/episode/7FJq1fyxSr7uuRh8TCxGVb"
 			}
@@ -318,6 +326,7 @@
 		},
 		"podcast": [
 			{
+				"lang": "eo",
 				"title": "Printempa depresio kaj alergio",
 				"url": "https://podcasters.spotify.com/pod/show/toms-bm/episodes/Polena-alergio-kaj-printempa-depresio-e2qgh4o"
 			}
@@ -347,6 +356,7 @@
 		},
 		"podcast": [
 			{
+				"lang": "eo",
 				"title": "Vira memmortigado",
 				"url": "https://podcasters.spotify.com/pod/show/toms-bm/episodes/Vira-memmortigado-e2ok3b6"
 			}
@@ -382,6 +392,7 @@
 		],
 		"podcast": [
 			{
+				"lang": "eo",
 				"url": "https://podcasters.spotify.com/pod/show/toms-bm/episodes/Cirkloj-e2mppmo",
 				"title": "Ci(r)kloj"
 			}
@@ -446,6 +457,7 @@
 
 		"podcast": [
 			{
+				"lang": "eo",
 				"title": "Pri kio estas psiĥologia disociado",
 				"url": "https://podcasters.spotify.com/pod/show/toms-bm/episodes/Pri-kio-estas-psiologia-disociado-e2micf1"
 			}
@@ -485,6 +497,7 @@
 		],
 		"podcast": [
 			{
+				"lang": "eo",
 				"title": "La Unua Bicikla Tago",
 				"url": "https://open.spotify.com/episode/3aE3HiRtrd3RRnV6i6Olnh?si=ikGJwb9ZQv-kgqMDRs-jWA"
 			}
@@ -552,6 +565,7 @@
 		},
 		"podcast": [
 			{
+				"lang": "eo",
 				"title": "Historio de la ŝava kaj ŝavidaj alfabetoj",
 				"url": "https://podcasters.spotify.com/pod/show/toms-bm/episodes/Historio-de-la-ava-kaj-avidaj-alfabetoj-e2o6uc9/a-abh4ngh"
 			}
@@ -587,6 +601,7 @@
 		],
 		"podcast": [
 			{
+				"lang": "eo",
 				"title": "Ĝi estis estinta",
 				"url": "https://podcasters.spotify.com/pod/show/toms-bm/episodes/i-estas-estinta-e2o6f38"
 			}

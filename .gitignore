@@ -30,3 +30,6 @@ stats-report.txt
 *.xlsx
 *.xls
 data/goatcounter/
+
+#newsletter
+blog/newsletter/*.html
