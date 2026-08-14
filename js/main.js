@@ -18,6 +18,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     setupDetailsAnimation();
     initializeTOC();
+    await setupMermaid();
 });
 
 

@@ -138,6 +138,30 @@ function preprocessReferences(markdown) {
 		}
 	);
 
+	// Diagramas Mermaid
+	markdown = markdown.replace(
+		/^:::mermaid\s*(?:\{([^}]*)\})?\s*\n([\s\S]*?)\n:::$/gm,
+		(_, attrs = "", code) => {
+
+			const {label, title} = parseAttributes(attrs);
+
+			if (!label || !label.startsWith("fig:")) {
+				return _;
+			}
+
+			figureNumber++;
+
+			referenceMap[label] = {
+				type: "mermaid",
+				number: figureNumber,
+				code: code.trim(),
+				description: title
+			};
+
+			return `@@REF:${label}@@`;
+		}
+	);
+
 	// Figuras
 	markdown = markdown.replace(
 		/!\[([^\]]*)\]\(([^)]+)\)\s*\{([^}]*)\}/g,
@@ -300,6 +324,18 @@ function renderReferences(html, referenceMap = {}, lang, translations) {
 					</figcaption>
 					`;
 
+				case "mermaid":
+					return `
+					<figure id="${id}" class="mermaid-figure">
+						<div class="mermaid">
+							${escapeHTML(ref.code)}
+						</div>
+						<figcaption class="figure-caption">
+							${labels.figure} ${ref.number}${ref.description ? `: ${ref.description}` : ""}
+						</figcaption>
+					</figure>
+					`;
+
 case "code":
 	return `
 <figure class="code-block" id="${id}">
@@ -346,6 +382,8 @@ function replaceReferences(html, referenceMap, lang, translations) {
 					return `<a href="#${id}" title="${ref.description || ""}">${labels.code} ${ref.number}</a>`;
 				case "media":
     				return `<a href="#${id}">${labels.media} ${ref.number}</a>`;
+				case "mermaid":
+					return `<a href="#${id}">${labels.figure} ${ref.number}</a>`;
 			}
 
 		}

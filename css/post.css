@@ -455,3 +455,18 @@
 .newsletter-powered a {
     color: inherit;
 }
+
+.mermaid-figure {
+	text-align: center;
+}
+
+.mermaid {
+	display: flex;
+	justify-content: center;
+	overflow-x: auto;
+}
+
+.mermaid svg {
+	max-width: 100%;
+	height: auto;
+}

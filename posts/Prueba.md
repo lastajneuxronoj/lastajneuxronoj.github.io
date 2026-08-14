@@ -14,6 +14,15 @@ Párrafo normal de texto con **negrita**, *cursiva*, ~~tachado~~, y `código en 
 
 Maecenas rhoncus nunc at augue pretium, ac placerat arcu tincidunt. Donec et convallis nisl, a laoreet lectus. Vestibulum id velit nec leo rutrum ultricies a eu nisl. Nam dapibus ultrices lacus vitae luctus. Cras commodo mi eros, eget posuere est laoreet a. Proin at elit malesuada, sodales neque eu, dignissim lorem. Maecenas libero sem, fermentum a egestas sit amet, porttitor a arcu. Pellentesque turpis nisi, placerat quis ullamcorper a, accumsan in tortor.
 
+:::mermaid {#fig:mi-grafico title="Flujo de procesamiento"}
+
+flowchart TD
+    A[Markdown] --> B[Preprocesamiento]
+    B --> C[Marked]
+    C --> D[HTML]
+
+:::
+
 Maecenas in eleifend tortor. Fusce suscipit sapien ut euismod ultrices. Nam nec accumsan eros. Ut sed facilisis eros. Ut eget purus consequat nibh fermentum tempus ac sit amet neque. Proin vitae vulputate tellus. Nulla ac venenatis augue. Nam ac dolor nibh. Morbi at auctor ipsum, in tincidunt ipsum. 
 
 Aquí hay varios emojis para prueba de renderizado: 🤔😡🤌🏻👀🪑.

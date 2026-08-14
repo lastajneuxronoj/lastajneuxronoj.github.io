@@ -1,3 +1,5 @@
+let mermaidInitialized = false;
+
 async function loadHeader() {
 	const container = document.getElementById("header-container");
 	if (!container) return;
@@ -68,7 +70,6 @@ async function initHeaderFeatures() {
 	buildSocialDropdown();
 	setupSocialDropdown();
 	updateRSSLink();
-
 }
 
 let menuOpen = false;
@@ -90,7 +91,6 @@ function updateMenuIcon() {
 			: "/svg/menu_b.svg";
 	}
 }
-
 
 function setupMenu() {
 
@@ -216,6 +216,12 @@ function setIconSrc(theme) {
 		setIconSrc(theme);
 
 		updateHighlightTheme(theme);
+
+		if (mermaidInitialized) {
+			updateMermaidTheme(theme);
+		}
+		
+
 	}
 
 
@@ -546,7 +552,95 @@ function updateHighlightTheme(theme) {
 	dark.disabled = !isDark;
 }
 
+// Inicializa Mermaid si hay diagramas
+async function setupMermaid() {
 
+	if (mermaidInitialized) {
+		return;
+	}
+
+	const diagrams =
+		document.querySelectorAll(".mermaid");
+
+	if (!diagrams.length) {
+		return;
+	}
+
+	// Guardar el código Mermaid ORIGINAL antes de renderizar
+	diagrams.forEach(diagram => {
+
+		if (!diagram.dataset.mermaidSource) {
+
+			diagram.dataset.mermaidSource =
+				diagram.textContent.trim();
+
+		}
+
+	});
+
+	const theme =
+		document.body.classList.contains("dark")
+			? "dark"
+			: "default";
+
+	mermaid.initialize({
+		startOnLoad: false,
+		theme: theme
+	});
+
+	await mermaid.run({
+		nodes: diagrams
+	});
+
+	mermaidInitialized = true;
+}
+
+
+// Cambia el tema de los diagramas Mermaid
+async function updateMermaidTheme(theme) {
+
+	const diagrams =
+		document.querySelectorAll(".mermaid");
+
+	if (!diagrams.length) {
+		return;
+	}
+
+	mermaid.initialize({
+		startOnLoad: false,
+		theme:
+			theme === "dark"
+				? "dark"
+				: "default"
+	});
+
+	diagrams.forEach(diagram => {
+
+		const source =
+			diagram.dataset.mermaidSource;
+
+		if (!source) {
+			console.warn(
+				"No se encontró el código fuente Mermaid:",
+				diagram
+			);
+			return;
+		}
+
+		// Eliminar el SVG generado anteriormente
+		diagram.innerHTML = "";
+
+		diagram.removeAttribute("data-processed");
+
+		// Restaurar el código Mermaid ORIGINAL
+		diagram.textContent = source;
+
+	});
+
+	await mermaid.run({
+		nodes: diagrams
+	});
+}
 
 // Agrega un scroll suave
 document.querySelectorAll('a[href^="#"]').forEach(link => {
