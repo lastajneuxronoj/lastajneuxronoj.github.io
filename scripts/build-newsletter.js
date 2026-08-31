@@ -37,7 +37,7 @@ async function buildNewsletters() {
 
 
     const buildAll =
-        process.argv.includes("--all");
+        process.argv.includes("--all"); // Hacer un build de todos los newsletters
 
 
     function t(lang, key) {
@@ -173,11 +173,16 @@ ${t(
     }
 
 
-    const newslettersToBuild =
-        buildAll
-            ? newsletters
-            : [newsletters.at(-1)];
-
+    const newslettersToBuild = buildAll
+        ? newsletters
+        : [
+            newsletters.reduce(
+                (latest, newsletter) =>
+                    newsletter.id > latest.id
+                        ? newsletter
+                        : latest
+            )
+        ];
 
     for (const newsletter of newslettersToBuild) {
 

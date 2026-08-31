@@ -9,7 +9,7 @@ function renderNewsletterSignup(lang) {
 <section class="newsletter-signup">
 
     <h2>
-        📬 Abonu al la bulteno
+        📬 Abonu la bultenon
     </h2>
 
     <p>

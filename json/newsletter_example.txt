@@ -1,0 +1,21 @@
+[
+    {
+        "id": 0,
+        "date": "2026-07-27",
+
+        "title": "Bulteno #000",
+        "message": "<p>Saluton!</p><p>Jen la unua oficiala bulteno de Lastaj Neŭronoj.</p>",
+        "posts": []
+    },
+    {
+        "id": 1,
+        "date": "2026-08-03",
+
+        "title": "Bulteno #001",
+        intro: "",
+        "posts": [
+            "019"
+        ],
+        "outro":""
+    }
+]

@@ -9,14 +9,30 @@
             <link>https://lastajneuxronoj.github.io</link>
         </image>
         <generator>Lastaj Neŭronoj Static Generator</generator>
-        <lastBuildDate>Mon, 03 Aug 2026 05:10:46 GMT</lastBuildDate>
+        <lastBuildDate>Mon, 31 Aug 2026 21:38:21 GMT</lastBuildDate>
         <atom:link href="https://lastajneuxronoj.github.io/blog/rss-es.xml" rel="self" type="application/rss+xml"/>
-        <pubDate>Mon, 03 Aug 2026 05:10:46 GMT</pubDate>
+        <pubDate>Mon, 31 Aug 2026 21:38:21 GMT</pubDate>
         <copyright><![CDATA[Lastaj Neŭronoj]]></copyright>
         <language><![CDATA[es]]></language>
         <managingEditor><![CDATA[Tomás]]></managingEditor>
         <webMaster><![CDATA[Tomás]]></webMaster>
         <ttl>60</ttl>
+        <item>
+            <title><![CDATA[Cuando las Cucharas se Agotan]]></title>
+            <description><![CDATA[
+				<img
+					src="https://lastajneuxronoj.github.io/covers/020.jpg"
+					alt=""
+					style="max-width:100%;height:auto;">
+				<p>¿Qué sucede cuando la vida cotidiana exige más energía de la que tenemos? Desde el origen de la teoría de las cucharas hasta el estudio científico del burnout autista, este artículo explora el esfuerzo invisible, el enmascaramiento y la tensión acumulada que pueden conducir a un agotamiento profundo.</p>
+			  ]]></description>
+            <link>https://lastajneuxronoj.github.io/blog/020-es.html</link>
+            <guid isPermaLink="false">https://lastajneuxronoj.github.io/blog/020-es.html</guid>
+            <category><![CDATA[Divulgación]]></category>
+            <dc:creator><![CDATA[Tomĉjo]]></dc:creator>
+            <pubDate>Mon, 31 Aug 2026 00:00:00 GMT</pubDate>
+            <enclosure url="https://lastajneuxronoj.github.io/covers/020.jpg" length="0" type="image/jpeg"/>
+        </item>
         <item>
             <title><![CDATA[Epifanía morfea]]></title>
             <description><![CDATA[

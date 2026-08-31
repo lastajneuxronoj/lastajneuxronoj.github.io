@@ -1,5 +1,46 @@
 [
 	{
+		"number": "020",
+		"emoji": "🥄",
+		"cover": "/covers/020.jpg",
+		"title": {
+			"eo": "Kiam la Kuleroj Elĉerpiĝas",
+			"es": "Cuando las Cucharas se Agotan"
+		},
+		"file": {
+			"eo": "eo/020_eo.md",
+			"es": "es/020_es.md"
+		},
+		"type": {
+			"eo": "Disvastigo",
+			"es": "Divulgación"
+		},
+		"category": "divulgation",
+		"author_id": "tomas",
+		"author": {
+			"eo": "Tomĉjo",
+			"es": "Tomĉjo"
+		},
+		"date": "2026-08-31",
+		"excerpt": {
+			"eo": "Kio okazas kiam la ĉiutaga vivo postulas pli da energio ol ni havas? De la origino de la kulero-teorio ĝis la scienca studado de aŭtisma burnout, ĉi tiu artikolo esploras la nevideblan penadon, maskadon kaj akumulitan streĉon, kiuj povas konduki al profunda elĉerpiĝo.",
+			"es": "¿Qué sucede cuando la vida cotidiana exige más energía de la que tenemos? Desde el origen de la teoría de las cucharas hasta el estudio científico del burnout autista, este artículo explora el esfuerzo invisible, el enmascaramiento y la tensión acumulada que pueden conducir a un agotamiento profundo."
+		},
+		"music": [
+			{
+				"title": "Heaven Knows I'm Miserable Now - The Smiths",
+				"url": "https://youtu.be/TjPhzgxe3L0?si=wxN2C2bays_8TQdh"
+			}
+		],
+		"podcast": [
+			{	
+				"lang": "eo",
+				"title": "Kiam la Kuleroj Elĉerpiĝas",
+				"url": "https://open.spotify.com/episode/4Ruww2U2xujA7AI2azVVmP?si=LryKgTksTIeEySmqbtAY5A"
+			}
+		]
+	},
+	{
 		"number": "019",
 		"emoji": "😴",
 		"cover": "/covers/019.webp",

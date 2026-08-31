@@ -1,4 +1,16 @@
 {
+  "divulgation": {
+    "count": {
+      "eo": 9,
+      "es": 7
+    },
+    "emoji": "🧪",
+    "color": "#43A047",
+    "description": {
+      "es": "Artículos de divulgación científica, análisis de investigaciones y reflexiones sobre biología, química, neurociencias, farmacología, psicología y otras áreas del conocimiento",
+      "eo": "Artikoloj pri sciencdisvastigo, analizoj de esploroj kaj reflektoj pri biologio, ĥemio, neŭroscienco, farmakologio, psiĥologio kaj aliaj fampoj de scio."
+    }
+  },
   "memoirs": {
     "count": {
       "eo": 5,
@@ -9,18 +21,6 @@
     "description": {
       "es": "Los textos de esta categoría son relatos personales, recuerdos y reflexiones autobiográficas.",
       "eo": "La verkaĵoj de ĉi tiu kategorio estas personalaj rakontoj, memoroj kaj aŭtobiografiaj reflektoj."
-    }
-  },
-  "divulgation": {
-    "count": {
-      "eo": 8,
-      "es": 6
-    },
-    "emoji": "🧪",
-    "color": "#43A047",
-    "description": {
-      "es": "Artículos de divulgación científica, análisis de investigaciones y reflexiones sobre biología, química, neurociencias, farmacología, psicología y otras áreas del conocimiento",
-      "eo": "Artikoloj pri sciencdisvastigo, analizoj de esploroj kaj reflektoj pri biologio, ĥemio, neŭroscienco, farmakologio, psiĥologio kaj aliaj fampoj de scio."
     }
   },
   "translation": {

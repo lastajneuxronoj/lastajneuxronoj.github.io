@@ -1,10 +1,23 @@
 [
     {
+    "id": 1,
+    "date": "2026-08-31",
+
+    "title": "Bulteno #020",
+    "message": {
+        "eo": "<p>En la nova artikolo de Lastaj Neŭronoj, mi esploras la kulero-teorion kaj ĝian uzadon en la aŭtisma komunumo.</p><p>De la rakonto de <b>Christine Miserandino</b> ĝis la moderna scienca literaturo pri aŭtisma <em>burnout</em>, la artikolo esploras kiel nevidebla penado, maskado kaj akumulita stresiĝo povas konduki al profunda elĉerpiĝo. Mi ankaŭ pritraktas la konceptojn <em>meltdown</em>, <em>shutdown</em> kaj <em>burnout</em>, kaj la manieron kiel la aŭtisma komunumo helpis formi la lingvon uzatan por priskribi ĉi tiujn spertojn.</p><p>La kulero-teorio ne estas scienca modelo, sed ĝi proponas intuician manieron kompreni sperton, kiun multaj homoj rekonas. Kaj kelkfoje la komunumo trovas la vortojn antaŭ ol la scienco trovas la difinojn.</p><p>Legu la novan artikolon ĉe <a href='https://lastajneuxronoj.github.io/'>Lastaj Neŭronoj</a>!</p>",
+        "es": "<p>En el nuevo artículo de Lastaj Neŭronoj, exploro la teoría de las cucharas y su uso en la comunidad autista.</p><p>Desde la historia de <b>Christine Miserandino</b> hasta la literatura científica moderna sobre el burnout autista, el artículo explora cómo el esfuerzo invisible, el enmascaramiento y el estrés acumulado pueden conducir a un agotamiento profundo. También trato los conceptos de <em>meltdown</em>, <em>shutdown</em> y <em>burnout</em>, y la manera en que la comunidad autista ha ayudado a formar el lenguaje utilizado para describir estas experiencias.</p><p>La teoría de las cucharas no es un modelo científico, pero propone una forma intuitiva de comprender una experiencia que muchas personas reconocen. Y a veces la comunidad encuentra las palabras antes de que la ciencia encuentre las definiciones.</p><p>Lee el nuevo artículo en <a href='https://lastajneuxronoj.github.io/'>Lastaj Neŭronoj</a>!</p>"
+    },
+    "posts": [
+        "020"
+    ]
+},
+    {
         "id": 0,
-        "date": "2026-07-27",
+        "date": "2026-08-07",
 
         "title": "Bulteno #000",
-        "message": "<p>Jen la unua [nova] bulteno de Lastaj Neŭronoj.</p><p>Vi ricevas ĉi tiun retpoŝtaĵon, ĉar vi abonis la bultenon de la malnova versio de Lastaj Neŭronoj (<a href='https://lastajneuxronoj.wordpress.com/'>ĉe WordPress</a>). Mi translokigas la blogon al nova platformo, GitHub Pages, por havi pli grandan liberecon pri la dezajno de la retejo... Kaj mi devas anonci, ke <strong>la nova retejo jam disponeblas</strong>, kaj ĝi nun estas plurlingva (reale, dulingva nun).</p><p>Se vi volas plu sekvi Lastajn Neŭronojn, vi ne bezonas fari ion ajn: via abono restas aktiva. Kompreneble, vi povos malaboni iam ajn per la ligilo ĉe la fino de la retpoŝtaĵo.</p> <p>Vizitu la <a href='https://lastajneuxronoj.github.io/'>novan retejon</a>!</p>",
+        "message": "<p>Jen la unua [nova] bulteno de Lastaj Neŭronoj.</p><p>Vi ricevas ĉi tiun retpoŝtaĵon, ĉar vi abonis la bultenon de la malnova versio de Lastaj Neŭronoj (<a href='https://lastajneuxronoj.wordpress.com/'>ĉe WordPress</a>). Mi translokigas la blogon al nova platformo, GitHub Pages, por havi pli grandan liberecon pri la dezajno de la retejo... Kaj mi ĝojas anonci, ke <strong>la nova retejo jam disponeblas</strong>, kaj ĝi nun estas plurlingva (fakte, dulingva nun).</p><p>Se vi volas plu sekvi Lastajn Neŭronojn, vi ne bezonas fari ion ajn: via abono restas aktiva. Kompreneble, vi povos malaboni iam ajn per la ligilo ĉe la fino de la retpoŝtaĵo.</p> <p>Vizitu la <a href='https://lastajneuxronoj.github.io/'>novan retejon</a>! Jen la <a href='https://www.tiktok.com/@lastaj.neuxronoj/video/7670340153264672017'>prezento de la nova versio</a> per TikTok.</p>",
         "posts": []
     }
 ]

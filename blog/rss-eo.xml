@@ -9,14 +9,30 @@
             <link>https://lastajneuxronoj.github.io</link>
         </image>
         <generator>Lastaj Neŭronoj Static Generator</generator>
-        <lastBuildDate>Mon, 03 Aug 2026 05:10:46 GMT</lastBuildDate>
+        <lastBuildDate>Mon, 31 Aug 2026 21:38:21 GMT</lastBuildDate>
         <atom:link href="https://lastajneuxronoj.github.io/blog/rss-eo.xml" rel="self" type="application/rss+xml"/>
-        <pubDate>Mon, 03 Aug 2026 05:10:46 GMT</pubDate>
+        <pubDate>Mon, 31 Aug 2026 21:38:21 GMT</pubDate>
         <copyright><![CDATA[Lastaj Neŭronoj]]></copyright>
         <language><![CDATA[eo]]></language>
         <managingEditor><![CDATA[Tomás]]></managingEditor>
         <webMaster><![CDATA[Tomás]]></webMaster>
         <ttl>60</ttl>
+        <item>
+            <title><![CDATA[Kiam la Kuleroj Elĉerpiĝas]]></title>
+            <description><![CDATA[
+				<img
+					src="https://lastajneuxronoj.github.io/covers/020.jpg"
+					alt=""
+					style="max-width:100%;height:auto;">
+				<p>Kio okazas kiam la ĉiutaga vivo postulas pli da energio ol ni havas? De la origino de la kulero-teorio ĝis la scienca studado de aŭtisma burnout, ĉi tiu artikolo esploras la nevideblan penadon, maskadon kaj akumulitan streĉon, kiuj povas konduki al profunda elĉerpiĝo.</p>
+			  ]]></description>
+            <link>https://lastajneuxronoj.github.io/blog/020-eo.html</link>
+            <guid isPermaLink="false">https://lastajneuxronoj.github.io/blog/020-eo.html</guid>
+            <category><![CDATA[Disvastigo]]></category>
+            <dc:creator><![CDATA[Tomĉjo]]></dc:creator>
+            <pubDate>Mon, 31 Aug 2026 00:00:00 GMT</pubDate>
+            <enclosure url="https://lastajneuxronoj.github.io/covers/020.jpg" length="0" type="image/jpeg"/>
+        </item>
         <item>
             <title><![CDATA[Morfea Manifestiĝo]]></title>
             <description><![CDATA[
