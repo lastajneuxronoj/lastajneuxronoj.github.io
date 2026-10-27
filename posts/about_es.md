@@ -9,21 +9,57 @@ Así que en este blog podrás encontrar mis intereses: divulgación científica 
 
 <p style="text-align:center;"><i>Las entradas de blog son escritas principalmente en esperanto y después son traducidas. Por esa razón, no todo artículo estará disponible en cada idioma.</i></p>
 
-<details>
-<summary><b>Contacto:</b></summary>
-<div class="details-content">
-
-- 📘 [**Facebook:**](https://www.facebook.com/lastajneuxronoj/)
-
-- 🎵 [**TikTok:**](https://www.tiktok.com/@lastaj.neuxronoj)
-
-- 📧 [**Correo electrónico:**](mailto:lastajneuxronoj@gmail.com)
-
-- 🖥️ [**GitHub:**](https://github.com/lastajneuxronoj)
-
-- 📡 [**RSS [ES]:**](https://lastajneuxronoj.github.io/rss-es.xml)
-
-</div>
-</details>
-
 <div class="post-signature">—Tomĉjo (·𐑑𐑩𐑫𐑗𐑢𐑩).</div>
+
+<div class="precontact">
+    <p>Contacto:</p>
+    <hr>
+</div>
+
+<div class="contact" aria-label="Kontaktaj kanaloj">
+    <a href="https://www.facebook.com/lastajneuxronoj/"
+       target="_blank" rel="noopener noreferrer"
+       aria-label="Facebook">
+        <span class="contact-content">
+            <img src="/svg/facebook.svg" alt="">
+            <span>Facebook</span>
+        </span>
+    </a>
+    <a href="https://www.tiktok.com/@lastaj.neuxronoj"
+       target="_blank" rel="noopener noreferrer"
+       aria-label="TikTok">
+        <span class="contact-content">
+            <img src="/svg/tiktok.svg" alt="">
+            <span>TikTok</span>
+        </span>
+    </a>
+    <a href="https://open.spotify.com/show/6Rzy8fC49uySZ30kX4LbnM?si=1136087605b74d83"
+       target="_blank" rel="noopener noreferrer"
+       aria-label="Spotify">
+        <span class="contact-content">
+            <img src="/svg/spotify.svg" alt="">
+            <span>Spotify</span>
+        </span>
+    </a>
+    <a href="mailto:lastajneuxronoj@gmail.com"
+       aria-label="Retpoŝto">
+        <span class="contact-content">
+            <img src="/svg/mail.svg" alt="">
+            <span>Retpoŝto</span>
+        </span>
+    </a>
+    <a href="https://www.twitch.tv/tomcxjo"
+       target="_blank" rel="noopener noreferrer"
+       aria-label="Twitch">
+        <span class="contact-content">
+            <img src="/svg/twitch.svg" alt="">
+            <span>Twitch</span>
+        </span>
+    </a>
+    <a id="rss-link" href="#" aria-label="RSS-fluo">
+        <span class="contact-content">
+            <img src="/svg/rss.svg" alt="">
+            <span>RSS [EO]</span>
+        </span>
+    </a>
+</div>

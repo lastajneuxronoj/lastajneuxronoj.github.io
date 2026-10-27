@@ -9,25 +9,59 @@ Ankaŭ mi interesiĝis pri la **ŝava** (specife la starlingŝava) alfabeto, pro
 
 Do, en ĉi tiu blogo vi povos legi pri miaj interesoj, t.e: sciencdisvastigo, remaĉaĵoj miaj, eltiraĵoj tradukitaj de mi, ktp.; preskaŭ ĉiu blogaĵo kune kun sia respektiva podkastaĵo per [Spotify](https://open.spotify.com/show/6Rzy8fC49uySZ30kX4LbnM?si=glbe-ZwPQNGSegRc2SwX3w). Aldone, [mi tradukas librojn](projects/translations/books-eo.html) al Esperanto, estante disponebla la libro **La Pordoj de la Perceptado** (*The Doors of Perception*) de Aldous Huxley. Nu, se vi interesiĝas pri psiĥedelio restu atenta.
 
-<p style="text-align:center;"><i>La blogaĵoj estas ĉefe verkitaj en Esperanto, kaj poste tradukitaj. Tial, ne ĉiu blogaĵo estos disponeblaj en ĉiu lingvo.</i></p>
-
-<details>
-<summary><b>Kontakto</b></summary>
-<div class="details-content">
-
-- 📘 [**Facebook:**](https://www.facebook.com/lastajneuxronoj/)
-
-- 🎵 [**TikTok:**](https://www.tiktok.com/@lastaj.neuxronoj)
-
-- 🟢 [**Spotify:**](https://open.spotify.com/show/6Rzy8fC49uySZ30kX4LbnM?si=1136087605b74d83)
-
-- 📧 [**Retpoŝtadreso:**](mailto:lastajneuxronoj@gmail.com)
-
-- 🖥️ [**GitHub:**](https://github.com/lastajneuxronoj)
-
-- 📡 [**RSS [EO]:**](https://lastajneuxronoj.github.io/rss-eo.xml)
-
-</div>
-</details>
+<p style="text-align:center;"><i>La blogaĵoj estas ĉefe verkitaj en Esperanto, kaj poste tradukitaj. Tial, ne ĉiuj blogaĵoj estos disponeblaj en ĉiu lingvo.</i></p>
 
 <div class="post-signature">—Tomĉjo (·𐑑𐑩𐑫𐑗𐑢𐑩).</div>
+
+<div class="precontact">
+    <p>Kontaktado:</p>
+    <hr>
+</div>
+
+<div class="contact" aria-label="Kontaktaj kanaloj">
+    <a href="https://www.facebook.com/lastajneuxronoj/"
+       target="_blank" rel="noopener noreferrer"
+       aria-label="Facebook">
+        <span class="contact-content">
+            <img src="/svg/facebook.svg" alt="">
+            <span>Facebook</span>
+        </span>
+    </a>
+    <a href="https://www.tiktok.com/@lastaj.neuxronoj"
+       target="_blank" rel="noopener noreferrer"
+       aria-label="TikTok">
+        <span class="contact-content">
+            <img src="/svg/tiktok.svg" alt="">
+            <span>TikTok</span>
+        </span>
+    </a>
+    <a href="https://open.spotify.com/show/6Rzy8fC49uySZ30kX4LbnM?si=1136087605b74d83"
+       target="_blank" rel="noopener noreferrer"
+       aria-label="Spotify">
+        <span class="contact-content">
+            <img src="/svg/spotify.svg" alt="">
+            <span>Spotify</span>
+        </span>
+    </a>
+    <a href="mailto:lastajneuxronoj@gmail.com"
+       aria-label="Retpoŝto">
+        <span class="contact-content">
+            <img src="/svg/mail.svg" alt="">
+            <span>Retpoŝto</span>
+        </span>
+    </a>
+    <a href="https://www.twitch.tv/tomcxjo"
+       target="_blank" rel="noopener noreferrer"
+       aria-label="Twitch">
+        <span class="contact-content">
+            <img src="/svg/twitch.svg" alt="">
+            <span>Twitch</span>
+        </span>
+    </a>
+    <a id="rss-link" href="#" aria-label="RSS-fluo">
+        <span class="contact-content">
+            <img src="/svg/rss.svg" alt="">
+            <span>RSS [EO]</span>
+        </span>
+    </a>
+</div>

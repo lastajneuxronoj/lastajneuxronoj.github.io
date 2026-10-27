@@ -1037,8 +1037,8 @@ function buildSocialDropdown() {
         <a href="mailto:lastajneuxronoj@gmail.com">
             <img src="/svg/mail.svg" alt="Correo">
         </a>
-        <a href="https://github.com/lastajneuxronoj" target="_blank" rel="noopener noreferrer">
-            <img src="/svg/github.svg" alt="GitHub">
+        <a href="https://www.twitch.tv/tomcxjo" target="_blank" rel="noopener noreferrer">
+            <img src="/svg/twitch.svg" alt="Twitch">
         </a>
         <a id="rss-link" href="#">
             <img src="/svg/rss.svg" alt="RSS">
