@@ -1,10 +1,15 @@
 function renderNewsletterSignup(lang, translations) {
 
+    const text = translations[lang].ui.push;
+
+    const capitalizeLanguageName = name =>
+    name
+        ? name.charAt(0).toLocaleUpperCase() + name.slice(1)
+        : name;
+
     if (lang !== "eo" && lang !== "es") {
         return "";
     }
-
-    const text = translations[lang].ui.push;
 
     return `
 
@@ -53,7 +58,7 @@ function renderNewsletterSignup(lang, translations) {
             class="push-language-flag"
             aria-hidden="true"
         >
-        <span>${text[lang]}</span>
+        <span>${capitalizeLanguageName(text[lang])}</span>
         <span class="push-language-arrow" aria-hidden="true">▾</span>
     </button>
 
@@ -76,7 +81,7 @@ function renderNewsletterSignup(lang, translations) {
                     class="push-language-flag"
                     aria-hidden="true"
                 >
-                <span>${text[language]}</span>
+                <span>${capitalizeLanguageName(text[language])}</span>
             </button>
         `.trim()).join("\n")}
     </div>

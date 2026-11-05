@@ -50,6 +50,12 @@
 		return translations[lang] ? lang : "eo";
 	}
 
+	function capitalizeLanguageName(name) {
+		if (!name) return name;
+
+		return name.charAt(0).toLocaleUpperCase() + name.slice(1);
+	}
+
 	function base64UrlToUint8Array(value) {
 		const padded =
 			`${value}${"=".repeat((4 - value.length % 4) % 4)}`;
@@ -234,7 +240,7 @@
 					flag.setAttribute("aria-hidden", "true");
 				
 					const name = document.createElement("span");
-					name.textContent = text[selectedLanguage];
+					name.textContent = capitalizeLanguageName(text[selectedLanguage]);
 				
 					const arrow = document.createElement("span");
 					arrow.className = "push-language-arrow";
@@ -267,7 +273,7 @@
 					flag.setAttribute("aria-hidden", "true");
 				
 					const name = document.createElement("span");
-					name.textContent = text[language];
+					name.textContent = capitalizeLanguageName(text[language]);
 				
 					option.append(flag, name);
 				
@@ -494,7 +500,7 @@
 		flag.setAttribute("aria-hidden", "true");
 
 		const text = document.createElement("span");
-		text.textContent = label;
+		text.textContent = capitalizeLanguageName(label);
 
 		wrapper.append(checkbox, flag, text);
 		container.append(wrapper);
@@ -610,7 +616,7 @@ function updateLanguageButton(language) {
 	languageButton.append(flag);
 
 	const name = document.createElement("span");
-	name.textContent = text[language];
+	name.textContent = capitalizeLanguageName(text[language]);
 	languageButton.append(name);
 
 	const arrow = document.createElement("span");
@@ -638,7 +644,7 @@ function updateLanguageButton(language) {
 		option.append(flag);
 
 		const name = document.createElement("span");
-		name.textContent = text[language];
+		name.textContent = capitalizeLanguageName(text[language]);
 		option.append(name);
 
 		option.addEventListener("click", () => {
@@ -773,7 +779,9 @@ function updateLanguageButton(language) {
 		
 			articleButton.setAttribute(
 				"aria-label",
-				selected.map(input => text[input.value]).join(", ")
+				selected.map(input =>
+					capitalizeLanguageName(text[input.value])
+				).join(", ")
 			);
 		}
 
