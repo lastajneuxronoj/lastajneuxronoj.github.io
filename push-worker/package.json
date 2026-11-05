@@ -1,0 +1,17 @@
+{
+  "name": "lastajneuxronoj-push-worker",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "keys": "node scripts/generate-vapid-keys.mjs",
+    "test-push": "node scripts/send-test-push.mjs"
+  },
+  "dependencies": {
+    "@mmmike/web-push": "^1.5.0"
+  },
+  "devDependencies": {
+    "wrangler": "^4.0.0"
+  }
+}

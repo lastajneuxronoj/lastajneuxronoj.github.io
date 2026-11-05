@@ -1,0 +1,13 @@
+name = "lastaj-neuronoj-push"
+main = "src/index.js"
+compatibility_date = "2026-10-27"
+
+[vars]
+ALLOWED_ORIGIN = "https://lastajneuxronoj.github.io"
+SUPPORTED_LANGUAGES = "eo,es"
+DRY_RUN = "true"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "lastaj-neuronoj-push-db"
+database_id = "b706dc1b-1880-4c36-bc94-66a997331d76"

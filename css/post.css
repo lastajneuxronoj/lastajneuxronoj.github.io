@@ -378,13 +378,13 @@
 
     border-radius: 16px;
 
-    background: #111111;
-    color: #ffffff;
+    background: var(--primary-color);
+    color: var(--background-color);
 }
 
 .dark .newsletter-signup {
-    background: #f5f5f5;
-    color: #111111;
+	background: var(--primary-color);
+    color: var(--background-color);
 }
 
 .newsletter-signup h2 {
@@ -429,32 +429,79 @@
     color: white;
 }
 
-#newsletter-submit {
-	padding: 0.8rem 1.2rem;
-	gap: 1em;
-	border: none;
-	border-radius: 8px;
+.embeddable-buttondown-form {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.6rem;
+}
 
-	font: inherit;
+.embeddable-buttondown-form label {
+    flex-basis: 100%;
+    color: var(--background-color);
 	font-weight: 600;
+	font-family: var(--font-ui);
+	font-size: 1rem;
 
-	cursor: pointer;
-
-	background: var(--secondary-color);
-	color: var(--background-color);
 }
 
-.newsletter-powered {
-    margin-top: 1rem;
-    margin-bottom: 0;
+.embeddable-buttondown-form input[type="email"],
+.embeddable-buttondown-form select {
+    flex: 1;
+    min-width: 180px;
+    padding: 0.65rem 0.85rem;
 
-    font-size: 0.85rem;
-    opacity: 0.75;
+    padding: 0.65rem 0.7rem;
+    border: 1px solid var(--border-color, #ccc);
+    border-radius: 6px;
+    background-color: var(--primary-color);
+    color: var(--background-color);
+    font-family: var(--font-ui);
+    font-size: 1rem;
+
+    transition: border-color 0.2s, box-shadow 0.2s;
 }
 
-.newsletter-powered a {
-    color: inherit;
+.embeddable-buttondown-form input[type="email"]:focus,
+.embeddable-buttondown-form select:focus {
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 0 2px var(--quaternary-color);
 }
+
+.embeddable-buttondown-form input[type="submit"] {
+    padding: 0.65rem 1rem;
+
+    margin-top: 0.25rem;
+    padding: 0.65rem 0.75rem;
+    border: 1px solid var(--background-color);
+    border-radius: 8px;
+    background-color: var(--background-color);
+    color: var(--primary-color);
+    font-family: var(--font-ui);
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+}
+
+.embeddable-buttondown-form input[type="submit"]:hover {
+    background: var(--tertiary-color);
+    border-color: var(--tertiary-color);
+}
+
+.embeddable-buttondown-form input[type="submit"]:focus-visible {
+    outline: 2px solid var(--quaternary-color);
+    outline-offset: 3px;
+}
+
+
+
+/* ==========================================
+   MERMAID
+   (diagramas de flujo y otros gráficos) */
 
 .mermaid-figure {
 	text-align: center;
@@ -587,6 +634,15 @@ html:not(.dark) .contact img {
 .contact a:focus-visible {
     outline: 2px solid var(--background-color);
     outline-offset: 2px;
+}
+
+.newsletter-language-selector {
+    flex: 1;
+    min-width: 0;
+}
+
+#newsletter-submit {
+    margin-left: auto;
 }
 
 /* PC: icono y texto en la misma línea */

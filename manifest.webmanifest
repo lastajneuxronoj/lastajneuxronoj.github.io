@@ -1,0 +1,19 @@
+{
+  "name": "Lastaj Neŭronoj",
+  "short_name": "LN",
+  "description": "Blogo pri sciencdisvastigo, lingvoj, tradukoj kaj personaj tekstoj.",
+  "lang": "eo",
+  "start_url": "/index.html",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#f7f4ed",
+  "theme_color": "#1f2d2c",
+  "icons": [
+    {
+      "src": "/svg/logo-mark.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

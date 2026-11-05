@@ -45,6 +45,12 @@ const { LANGUAGE_NAMES } = require("./config");
 const findCoverImage = require("./utils/find-cover-image");
 const buildSearchIndex = require("./build-search-index");
 
+const katexStrict = errorCode => {
+    return errorCode === "unicodeTextInMathMode"
+        ? "ignore"
+        : "warn";
+};
+
 const { 
 	buildJsonCategories,
  	buildCategoriesIndex,
@@ -276,7 +282,7 @@ function renderReferences(html, referenceMap = {}, lang, translations) {
 			(_, formula) => {
 				return katex.renderToString(
 					formula.trim(),
-					{ displayMode: false, throwOnError: false }
+					{ displayMode: false, throwOnError: false, strict: katexStrict }
 				);
 			}
 		);
@@ -299,7 +305,8 @@ function renderReferences(html, referenceMap = {}, lang, translations) {
 						<div class="equation-content">
 							${katex.renderToString(ref.formula, {
 								displayMode: true,
-								throwOnError: false
+								throwOnError: false,
+								strict: katexStrict
 							})}
 						</div>
 						<div class="equation-number">${labels.equation} ${ref.number}${ref.description ? `: ${ref.description}` : ""}</div>
@@ -1110,7 +1117,7 @@ async function renderPage({ type, data }) {
 				rssLink,
 				mediaMenu: hasMedia ? mediaMenu : "",
 				newsletterSignup:
-    				renderNewsletterSignup(data.lang),
+				    renderNewsletterSignup(data.lang, data.translations),
 			});
 		}
 

@@ -8,6 +8,7 @@ Thumbs.db
 # Archivos de configuración local
 .env
 *.code-workspace
+push-worker/.dev.vars
 
 # Logs
 *.log
@@ -33,3 +34,6 @@ data/goatcounter/
 
 #newsletter
 blog/newsletter/*.html
+
+# Cloudflare Wrangler
+push-worker/.wrangler/

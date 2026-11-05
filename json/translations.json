@@ -15,6 +15,48 @@
 				"podcast": "Podcast",
 				"play": "Escuchar"
 			},
+			"push": {
+				"notifications": "Activar notificaciones",
+				"subscribe": "Activar notificaciones",
+				"subscribed": "Notificaciones activadas",
+				"install": "Instalar aplicación web",
+				"menu": "Opciones de la aplicación",
+				"unavailable": "Las notificaciones no están disponibles en este navegador.",
+				"denied": "Bloqueaste las notificaciones en el navegador.",
+				"error": "No se pudieron activar los avisos. Inténtalo más tarde.",
+				"notConfigured": "Las notificaciones aún no están configuradas.",
+				"manageNotifications": "Administrar notificaciones",
+				"changePreferences": "Cambiar preferencias de notificación",
+				"notificationLanguage": "Idioma de las notificaciones",
+				"articleLanguages": "Idiomas de los artículos que quieres recibir",
+				"savePreferences": "Guardar preferencias",
+				"disableNotifications": "Desactivar notificaciones",
+				"preferencesSaved": "Preferencias guardadas.",
+				"preferencesError": "No se pudieron guardar.",
+				"disabled": "Notificaciones desactivadas.",
+				"disableError": "No se pudieron desactivar las notificaciones.",
+				"selectArticleLanguage": "Selecciona al menos un idioma de los artículos.",
+				"eo": "esperanto",
+				"es": "español",
+				"tok": "oki Pona",
+				"newsletterTitle": "Suscríbete al boletín",
+				"newsletterDescription": "Recibe un aviso cuando se publiquen nuevos artículos de Lastaj Neŭronoj.",
+				"newsletterEmail": "Correo electrónico:",
+				"newsletterPreferredLanguage": "Idioma preferido:",
+				"newsletterSubscribe": "Suscribirme",
+				"newsletterPowered": "Boletín distribuido mediante",
+				"newsletterSuccess": "¡Gracias por suscribirte!",
+				"messages": {
+					"newPost": {
+						"title": "Nuevo artículo: {title}",
+						"body": "Ya está disponible en Lastaj Neŭronoj en {languages}."
+					},
+					"newTranslation": {
+						"title": "Nueva traducción: {title}",
+						"body": "Ya puedes leer esta traducción en Lastaj Neŭronoj en {languages}."
+					}
+				}
+			},
 			"categories": {
 				"title": "CATEGORIES",
 				"subtitle": "> Categorías",
@@ -56,12 +98,14 @@
 			"media": "Multimedia"
 		},
 		"languageNames": {
-			"es": "Español",
-			"eo": "Esperanto"
+			"es": "español",
+			"eo": "esperanto",
+			"tok": "toki Pona"
 		},
 		"languageNameMin": {
 			"es": "es",
-			"eo": "eo"
+			"eo": "eo",
+			"tok": "tok"
 		},
 		"errors": {
 			"onlyAvailableIn": "La siguiente entrada o página está disponible sólo en:",
@@ -100,6 +144,48 @@
 				"music": "Muziko",
 				"podcast": "Podkastaĵo",
 				"play": "Aŭskulti"
+			},
+			"push": {
+				"notifications": "Aktivigi sciigojn",
+				"subscribe": "Aktivigi sciigojn",
+				"subscribed": "Sciigoj aktivigitaj",
+				"install": "Instali retan aplikaĵon",
+				"menu": "Aplikaĵaj opcioj",
+				"unavailable": "Sciigoj ne estas disponeblaj en ĉi tiu retumilo.",
+				"denied": "Vi blokis sciigojn en la retumilo.",
+				"error": "Ne eblis aktivigi sciigojn. Provu denove poste.",
+				"notConfigured": "Sciigoj ankoraŭ ne estas agorditaj.",
+				"manageNotifications": "Administri sciigojn",
+				"changePreferences": "Ŝanĝi sciigajn preferojn",
+				"notificationLanguage": "Lingvo de la sciigoj",
+				"articleLanguages": "Lingvoj de la artikoloj, kiujn vi volas ricevi",
+				"savePreferences": "Konservi preferojn",
+				"disableNotifications": "Malaktivigi sciigojn",
+				"preferencesSaved": "Preferoj konservitaj.",
+				"preferencesError": "Ne eblis konservi la preferojn.",
+				"disabled": "Sciigoj malaktivigitaj.",
+				"disableError": "Ne eblis malaktivigi la sciigojn.",
+				"selectArticleLanguage": "Elektu almenaŭ unu lingvon de la artikoloj.",
+				"eo": "Esperanto",
+				"es": "la hispana",
+				"tok": "tokipono",
+				"newsletterTitle": "Abonu la bultenon",
+				"newsletterDescription": "Ricevu sciigon kiam aperas novaj artikoloj de Lastaj Neŭronoj.",
+				"newsletterEmail": "Retpoŝtadreso:",
+				"newsletterPreferredLanguage": "Preferata lingvo:",
+				"newsletterSubscribe": "Aboni",
+				"newsletterPowered": "Bulteno liverata per",
+				"newsletterSuccess": "Dankon pro via abono!",
+				"messages": {
+				"newPost": {
+					"title": "Nova blogaĵo: {title}",
+					"body": "Ĝi nun disponeblas ĉe Lastaj Neŭronoj en {languages}."
+				},
+				"newTranslation": {
+					"title": "Nova traduko: {title}",
+					"body": "Vi nun povas legi ĉi tiun tradukon ĉe Lastaj Neŭronoj en {languages}."
+				}
+				}
 			},
 			"categories": {
 				"title": "CATEGORIES",
@@ -142,12 +228,14 @@
 			"media": "Plurmedio"
 		},
 		"languageNames": {
-			"es": "La hispana",
-			"eo": "Esperanto"
+			"es": "la hispana",
+			"eo": "Esperanto",
+			"tok": "tokipono"
 		},
 		"languageNameMin": {
 			"es": "es",
-			"eo": "eo"
+			"eo": "eo",
+			"tok": "tok"
 		},
 		"errors": {
 			"onlyAvailableIn": "La sekva blogaĵo aŭ retpaĝo disponeblas nur en la jenaj lingvoj:",

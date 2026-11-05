@@ -1,0 +1,31 @@
+name: Avisar nuevas entradas
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "json/posts.json"
+      - "blog/**"
+
+permissions:
+  contents: read
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    # Las notificaciones se activan cuando existe la URL del Worker.
+    if: ${{ vars.PUSH_API_URL != '' }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Avisar de las entradas añadidas
+        env:
+          PUSH_API_URL: ${{ vars.PUSH_API_URL }}
+          PUSH_NOTIFY_TOKEN: ${{ secrets.PUSH_NOTIFY_TOKEN }}
+        run: node scripts/notify-new-posts.js "${{ github.event.before }}"

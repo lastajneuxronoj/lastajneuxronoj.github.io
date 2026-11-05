@@ -4,6 +4,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     await loadHeader();
 	await loadFooter();
 
+    if (window.setupPushControls) {
+        await window.setupPushControls();
+    }
+
     if (document.getElementById("post-list")) {
             loadPosts();
         }

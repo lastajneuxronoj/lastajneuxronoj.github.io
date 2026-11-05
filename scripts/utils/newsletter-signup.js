@@ -1,19 +1,21 @@
-function renderNewsletterSignup(lang) {
+function renderNewsletterSignup(lang, translations) {
 
-    if (lang !== "eo") {
+    if (lang !== "eo" && lang !== "es") {
         return "";
     }
+
+    const text = translations[lang].ui.push;
 
     return `
 
 <section class="newsletter-signup">
 
     <h2>
-        📬 Abonu la bultenon
+        📬 ${text.newsletterTitle}
     </h2>
 
     <p>
-        Ricevu sciigon kiam aperas novaj artikoloj de Lastaj Neŭronoj.
+        ${text.newsletterDescription}
     </p>
 
     <form
@@ -23,7 +25,7 @@ function renderNewsletterSignup(lang) {
     >
 
         <label for="bd-email">
-            Retpoŝto:
+            ${text.newsletterEmail}
         </label>
 
         <input
@@ -33,23 +35,79 @@ function renderNewsletterSignup(lang) {
             required
         >
 
+        <label>
+    ${text.newsletterPreferredLanguage}
+</label>
+
+<div class="push-language-selector newsletter-language-selector">
+
+    <button
+        type="button"
+        class="push-language-button"
+        aria-haspopup="listbox"
+        aria-expanded="false"
+    >
+        <img
+            src="/svg/flag_${lang}.svg"
+            alt=""
+            class="push-language-flag"
+            aria-hidden="true"
+        >
+        <span>${text[lang]}</span>
+        <span class="push-language-arrow" aria-hidden="true">▾</span>
+    </button>
+
+    <div
+        class="push-language-menu"
+        role="listbox"
+        hidden
+    >
+        ${["eo", "es"].map(language => `
+            <button
+                type="button"
+                class="push-language-option"
+                role="option"
+                data-language="${language}"
+                aria-selected="${language === lang}"
+            >
+                <img
+                    src="/svg/flag_${language}.svg"
+                    alt=""
+                    class="push-language-flag"
+                    aria-hidden="true"
+                >
+                <span>${text[language]}</span>
+            </button>
+        `.trim()).join("\n")}
+    </div>
+
+    <input
+        type="hidden"
+        name="metadata__language"
+        value="${lang}"
+        id="newsletter-language"
+    >
+
+</div>
+
         <input
             type="submit"
-            value="Aboni"
+            value="${text.newsletterSubscribe}"
             id="newsletter-submit"
         >
 
     </form>
+
     <p class="newsletter-powered">
-    Bulteno liverata per
+        ${text.newsletterPowered}
         <a
+            class="buttondown"
             href="https://buttondown.com/refer/lastajneuxronoj"
             target="_blank"
             rel="noopener noreferrer"
-        >
-            Buttondown
-        </a>
+        >Buttondown</a>.
     </p>
+
 </section>
 
 `;

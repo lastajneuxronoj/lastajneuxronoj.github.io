@@ -42,10 +42,10 @@ Así que en este blog podrás encontrar mis intereses: divulgación científica 
         </span>
     </a>
     <a href="mailto:lastajneuxronoj@gmail.com"
-       aria-label="Retpoŝto">
+       aria-label="Correo electrónico">
         <span class="contact-content">
             <img src="/svg/mail.svg" alt="">
-            <span>Retpoŝto</span>
+            <span>Correo electrónico</span>
         </span>
     </a>
     <a href="https://www.twitch.tv/tomcxjo"

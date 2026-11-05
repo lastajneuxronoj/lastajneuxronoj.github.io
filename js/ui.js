@@ -530,7 +530,7 @@ function setupDetailsAnimation() {
 				setTimeout(() => {
 					details.removeAttribute("open");
 					details.classList.remove("closing");
-				}, 200);
+				}, 300);
 
 			} else {
 				details.setAttribute("open", "");
@@ -1183,6 +1183,74 @@ function setupProjectLinks() {
 		});
 
 }
+
+
+document.addEventListener("click", event => {
+    const selector = event.target.closest(
+        ".newsletter-language-selector"
+    );
+
+    // Cerrar al hacer clic fuera.
+    if (!selector) {
+        document.querySelectorAll(
+            ".newsletter-language-selector"
+        ).forEach(item => {
+            const menu = item.querySelector(".push-language-menu");
+            const button = item.querySelector(".push-language-button");
+
+            menu.hidden = true;
+            button.setAttribute("aria-expanded", "false");
+        });
+
+        return;
+    }
+
+    const button = selector.querySelector(".push-language-button");
+    const menu = selector.querySelector(".push-language-menu");
+    const input = selector.querySelector(
+        'input[name="metadata__language"]'
+    );
+
+    const option = event.target.closest(".push-language-option");
+
+    // Seleccionar idioma.
+    if (option) {
+        const language = option.dataset.language;
+
+        input.value = language;
+
+        button.querySelector(".push-language-flag").src =
+            `/svg/flag_${language}.svg`;
+
+        button.querySelector(
+            "span:not(.push-language-arrow)"
+        ).textContent = option.querySelector("span").textContent;
+
+        menu.querySelectorAll(".push-language-option")
+            .forEach(item => {
+                item.setAttribute(
+                    "aria-selected",
+                    String(item === option)
+                );
+            });
+
+        menu.hidden = true;
+        button.setAttribute("aria-expanded", "false");
+
+        return;
+    }
+
+    // Abrir o cerrar selector.
+    if (event.target.closest(".push-language-button")) {
+        menu.hidden = !menu.hidden;
+
+        button.setAttribute(
+            "aria-expanded",
+            String(!menu.hidden)
+        );
+    }
+});
+
 
 function setupSocialDropdown() {
 

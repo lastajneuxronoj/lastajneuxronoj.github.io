@@ -44,7 +44,7 @@ Do, en ĉi tiu blogo vi povos legi pri miaj interesoj, t.e: sciencdisvastigo, re
         </span>
     </a>
     <a href="mailto:lastajneuxronoj@gmail.com"
-       aria-label="Retpoŝto">
+       aria-label="Retpoŝtadreso">
         <span class="contact-content">
             <img src="/svg/mail.svg" alt="">
             <span>Retpoŝto</span>
