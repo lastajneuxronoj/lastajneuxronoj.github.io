@@ -258,6 +258,8 @@ function openSearch() {
 
 
 
+	window.closeSearch = closeSearch;
+
 	button.addEventListener(
 		"click",
 		openSearch
