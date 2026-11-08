@@ -2255,6 +2255,10 @@ tbody tr:hover {
 
 /* SELECTOR VISUAL DE IDIOMAS Y AYUDA DE ATAJOS */
 
+.language-picker-overlay {
+	z-index: 2100;
+}
+
 .language-picker-modal {
 	max-width: 360px;
 }
