@@ -1,5 +1,5 @@
 
-const CACHE_NAME = "lastaj-neuronoj-v3";
+const CACHE_NAME = "lastaj-neuronoj-v4";
 const ARTICLES_CACHE_NAME = "lastaj-neuronoj-articles-v1";
 const MERMAID_CACHE_NAME = "lastaj-neuronoj-mermaid-v1";
 const TWEMOJI_CACHE_NAME = "lastaj-neuronoj-twemoji-v1";
