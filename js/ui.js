@@ -546,6 +546,7 @@ function setupLanguagePicker() {
 	}
 
 	async function openPicker() {
+		if (pickerOpen) return;
 		const translations = await getTranslations();
 		const currentLang = getCurrentLang();
 		const page = document.body.dataset.page;
@@ -558,6 +559,8 @@ function setupLanguagePicker() {
 		}
 
 		const t = translations[currentLang] || translations[DEFAULT_LANG];
+		const pickerTitle = document.getElementById("language-picker-title");
+		if (pickerTitle) pickerTitle.textContent = t.ui?.keyboardShortcuts?.language || "Language";
 		list.innerHTML = "";
 
 		available.forEach(code => {
@@ -637,15 +640,20 @@ function setupKeyboardShortcuts() {
 	}
 
 	async function openHelp() {
+		if (!helpOverlay.classList.contains("hidden")) return;
 		const translations = await getTranslations();
 		const t = translations[getCurrentLang()]?.ui?.keyboardShortcuts
 			|| translations[DEFAULT_LANG]?.ui?.keyboardShortcuts || {};
+		const helpTitle = document.getElementById("shortcuts-modal-title");
+		if (helpTitle) helpTitle.textContent = t.title || "Keyboard shortcuts";
 		const shortcuts = [
 			{ keys: "?", label: t.help },
 			{ keys: "Ctrl + Shift + L", label: t.language },
-			{ keys: "Ctrl + Shift + S", label: t.share },
 			{ keys: "Alt + Shift + H", label: t.home }
 		];
+		if (document.body.dataset.page === "post") {
+			shortcuts.splice(2, 0, { keys: "Ctrl + Shift + S", label: t.share });
+		}
 
 		if (document.body.dataset.page === "post") {
 			shortcuts.push(
@@ -689,6 +697,7 @@ function setupKeyboardShortcuts() {
 		}
 		try {
 			await navigator.clipboard.writeText(url);
+			const translations = await getTranslations();
 			console.info(translations[getCurrentLang()]?.ui?.keyboardShortcuts?.copied || "Enlace copiado");
 		} catch {
 			window.prompt("Copia el enlace del artículo:", url);
