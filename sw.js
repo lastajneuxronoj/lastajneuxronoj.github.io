@@ -62,6 +62,8 @@ const APP_SHELL = [
 	"/svg/search_b.svg",
 	"/svg/social_w.svg",
 	"/svg/social_b.svg",
+	"/svg/flag_eo.svg",
+	"/svg/flag_es.svg",
 	"/svg/facebook.svg",
 	"/svg/tiktok.svg",
 	"/svg/spotify.svg",
