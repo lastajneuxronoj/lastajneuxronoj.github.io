@@ -77,6 +77,17 @@ async function initHeaderFeatures() {
 
 let menuOpen = false;
 
+let modalZIndex = 3000;
+
+function bringModalToFront(modal) {
+	if (!modal) return;
+
+	modalZIndex++;
+	modal.style.zIndex = modalZIndex;
+}
+
+window.bringModalToFront = bringModalToFront;
+
 
 function updateMenuIcon() {
 	const menuIcon = document.getElementById("menu-icon");
@@ -609,6 +620,7 @@ function setupLanguagePicker() {
 
 		if (!available.length) return;
 		overlay.classList.remove("hidden");
+		bringModalToFront(overlay);
 		pickerOpen = true;
 		window.closeLanguagePicker = closePicker;
 		overlay.addEventListener("click", onOverlayClick);
@@ -636,47 +648,78 @@ function setupKeyboardShortcuts() {
 		helpClose.removeEventListener("click", closeHelp);
 		helpOverlay.removeEventListener("click", onHelpOverlayClick);
 	}
+
 	function onHelpOverlayClick(event) {
 		if (event.target === helpOverlay) closeHelp();
 	}
 
+	function goHome() {
+		window.location.href = "/index.html";
+	}
+
+	function goToPreviousPost() {
+		document.querySelector("a.prev-post")?.click();
+	}
+
+	function goToNextPost() {
+		document.querySelector("a.next-post")?.click();
+	}
+
 	async function openHelp() {
 		if (!helpOverlay.classList.contains("hidden")) return;
+
 		const translations = await getTranslations();
 		const t = translations[getCurrentLang()]?.ui?.keyboardShortcuts
 			|| translations[DEFAULT_LANG]?.ui?.keyboardShortcuts || {};
+
 		const helpTitle = document.getElementById("shortcuts-modal-title");
 		if (helpTitle) helpTitle.textContent = t.title || "Keyboard shortcuts";
+
 		const shortcuts = [
-			{ keys: "?", label: t.help },
-			{ keys: "Ctrl + Shift + L", label: t.language },
-			{ keys: "Alt + Shift + H", label: t.home }
+			{ keys: "?", label: t.help, action: () => {} },
+			{ keys: "Ctrl + K", label: t.search, action: () => window.openSearch?.() },
+			{ keys: "Ctrl + Shift + L", label: t.language, action: () => window.openLanguagePicker?.() },
+			{ keys: "Ctrl + Shift + H", label: t.home, action: goHome }
 		];
-		if (document.body.dataset.page === "post") {
-			shortcuts.splice(2, 0, { keys: "Ctrl + Shift + S", label: t.share });
-		}
 
 		if (document.body.dataset.page === "post") {
+			shortcuts.splice(2, 0, {
+				keys: "Ctrl + Shift + S",
+				label: t.share,
+				action: shareCurrentArticle
+			});
+
 			shortcuts.push(
-				{ keys: "Alt + Shift + ←", label: t.previous },
-				{ keys: "Alt + Shift + →", label: t.next }
+				{ keys: "Alt + Shift + ←", label: t.previous, action: goToPreviousPost },
+				{ keys: "Alt + Shift + →", label: t.next, action: goToNextPost }
 			);
 		}
-		shortcuts.push({ keys: "Esc", label: t.close });
+
+		shortcuts.push({ keys: "Esc", label: t.close, action: closeHelp });
 
 		helpList.innerHTML = "";
+
 		shortcuts.forEach(shortcut => {
 			if (!shortcut.label) return;
+
 			const item = document.createElement("li");
-			const key = document.createElement("kbd");
+			const key = document.createElement(shortcut.action ? "button" : "kbd");
 			const description = document.createElement("span");
+
 			key.textContent = shortcut.keys;
 			description.textContent = shortcut.label;
+
+			if (shortcut.action) {
+				key.type = "button";
+				key.addEventListener("click", shortcut.action);
+			}
+
 			item.append(key, description);
 			helpList.appendChild(item);
 		});
 
 		helpOverlay.classList.remove("hidden");
+		bringModalToFront(helpOverlay);
 		helpClose.focus();
 		helpClose.addEventListener("click", closeHelp);
 		helpOverlay.addEventListener("click", onHelpOverlayClick);
@@ -684,6 +727,7 @@ function setupKeyboardShortcuts() {
 
 	async function shareCurrentArticle() {
 		if (document.body.dataset.page !== "post") return;
+
 		const title = document.querySelector('meta[property="og:title"]')?.content || document.title;
 		const text = document.querySelector('meta[property="og:description"]')?.content || "";
 		const url = document.querySelector('link[rel="canonical"]')?.href || location.href;
@@ -692,10 +736,13 @@ function setupKeyboardShortcuts() {
 			try {
 				await navigator.share({ title, text, url });
 			} catch (error) {
-				if (error.name !== "AbortError") console.error("No se pudo compartir:", error);
+				if (error.name !== "AbortError") {
+					console.error("No se pudo compartir:", error);
+				}
 			}
 			return;
 		}
+
 		try {
 			await navigator.clipboard.writeText(url);
 			const translations = await getTranslations();
@@ -705,32 +752,50 @@ function setupKeyboardShortcuts() {
 		}
 	}
 
-	function closeOpenOverlays(event) {
-		const search = document.getElementById("search-overlay");
-		const picker = document.getElementById("language-picker-overlay");
-		const unavailable = document.getElementById("lang-modal-overlay");
-
-		// Cerrar solamente la capa superior por pulsación.
-		if (!helpOverlay.classList.contains("hidden")) {
-			closeHelp();
-		} else if (typeof window.closeLanguagePicker === "function") {
-			window.closeLanguagePicker();
-		} else if (picker && !picker.classList.contains("hidden")) {
-			picker.classList.add("hidden");
-		} else if (search && !search.classList.contains("hidden")) {
-			if (typeof window.closeSearch === "function") window.closeSearch();
-			else search.classList.add("hidden");
-		} else if (typeof window.closeLangUnavailableModal === "function") {
-			window.closeLangUnavailableModal();
-		} else if (unavailable && !unavailable.classList.contains("hidden")) {
-			unavailable.classList.add("hidden");
-		} else {
-			return;
+function closeOpenOverlays(event) {
+	const overlays = [
+		{
+			element: helpOverlay,
+			close: closeHelp
+		},
+		{
+			element: document.getElementById("language-picker-overlay"),
+			close: window.closeLanguagePicker
+		},
+		{
+			element: document.getElementById("search-overlay"),
+			close: window.closeSearch
+		},
+		{
+			element: document.getElementById("lang-modal-overlay"),
+			close: window.closeLangUnavailableModal
 		}
+	];
 
-		event.preventDefault();
-		event.stopImmediatePropagation();
+	const openOverlays = overlays
+		.filter(item =>
+			item.element &&
+			!item.element.classList.contains("hidden")
+		)
+		.sort((a, b) => {
+			const zA = parseInt(getComputedStyle(a.element).zIndex) || 0;
+			const zB = parseInt(getComputedStyle(b.element).zIndex) || 0;
+			return zB - zA;
+		});
+
+	const topOverlay = openOverlays[0];
+
+	if (!topOverlay) return;
+
+	if (typeof topOverlay.close === "function") {
+		topOverlay.close();
+	} else {
+		topOverlay.element.classList.add("hidden");
 	}
+
+	event.preventDefault();
+	event.stopImmediatePropagation();
+}
 
 	document.addEventListener("keydown", event => {
 		if (event.key === "Escape") {
@@ -743,6 +808,7 @@ function setupKeyboardShortcuts() {
 			target.isContentEditable ||
 			target.closest("input, textarea, select, [contenteditable='true']")
 		);
+
 		if (editable || event.metaKey) return;
 
 		if (event.key === "?" && !event.ctrlKey && !event.altKey) {
@@ -750,38 +816,44 @@ function setupKeyboardShortcuts() {
 			openHelp();
 			return;
 		}
+
+		if (event.ctrlKey && !event.shiftKey && event.key.toLowerCase() === "k") {
+			event.preventDefault();
+			window.openSearch?.();
+			return;
+		}
+
 		if (event.ctrlKey && event.shiftKey && event.key.toLowerCase() === "l") {
 			event.preventDefault();
 			window.openLanguagePicker?.();
 			return;
 		}
+
 		if (event.ctrlKey && event.shiftKey && event.key.toLowerCase() === "s" && document.body.dataset.page === "post") {
 			event.preventDefault();
 			shareCurrentArticle();
 			return;
 		}
-		if (event.altKey && event.shiftKey && event.key.toLowerCase() === "h") {
+
+		if (event.ctrlKey && event.shiftKey && event.key.toLowerCase() === "h") {
 			event.preventDefault();
-			window.location.href = "/index.html";
+			goHome();
 			return;
 		}
+
 		if (event.altKey && event.shiftKey && event.key === "ArrowLeft") {
-			const previous = document.querySelector("a.prev-post");
-			if (previous) {
-				event.preventDefault();
-				previous.click();
-			}
+			event.preventDefault();
+			goToPreviousPost();
 			return;
 		}
+
 		if (event.altKey && event.shiftKey && event.key === "ArrowRight") {
-			const next = document.querySelector("a.next-post");
-			if (next) {
-				event.preventDefault();
-				next.click();
-			}
+			event.preventDefault();
+			goToNextPost();
 		}
 	});
 }
+
 
 
 function setupDetailsAnimation() {

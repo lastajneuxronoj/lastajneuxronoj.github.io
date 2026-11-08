@@ -88,8 +88,9 @@
 				"home": "Volver a la portada",
 				"previous": "Artículo anterior",
 				"next": "Artículo siguiente",
-				"close": "Cerrar ventanas y menús",
-				"copied": "Enlace del artículo copiado."
+				"close": "Cerrar menús",
+				"copied": "Enlace del artículo copiado.",
+				"search": "Abrir buscador"
 			}
 		},
 		"posts": {
@@ -240,8 +241,9 @@
 				"home": "Reiri al la ĉefpaĝo",
 				"previous": "Antaŭa artikolo",
 				"next": "Sekva artikolo",
-				"close": "Fermi fenestrojn kaj menuojn",
-				"copied": "Ligilo de la artikolo kopiita."
+				"close": "Fermi menuojn",
+				"copied": "Ligilo de la artikolo kopiita.",
+				"search": "Malfermi serĉilon"
 			}
 		},
 		"posts": {

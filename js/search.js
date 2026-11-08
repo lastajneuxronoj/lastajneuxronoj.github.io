@@ -244,9 +244,11 @@ function openSearch() {
 	}
 
 	overlay.classList.remove("hidden");
+	window.bringModalToFront?.(overlay);
 	input.focus();
 }
 
+window.openSearch = openSearch;
 
 
 	function closeSearch() {
