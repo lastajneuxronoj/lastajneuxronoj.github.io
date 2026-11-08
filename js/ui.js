@@ -575,7 +575,7 @@ function setupLanguagePicker() {
 			button.setAttribute("aria-current", code === currentLang ? "true" : "false");
 
 			flag.className = "lang-modal-flag";
-			flag.src = \`/svg/flag_\${code}.svg\`;
+			flag.src = "/svg/flag_" + code + ".svg";
 			flag.alt = "";
 			flag.setAttribute("aria-hidden", "true");
 
@@ -698,7 +698,7 @@ function setupKeyboardShortcuts() {
 		try {
 			await navigator.clipboard.writeText(url);
 			const translations = await getTranslations();
-			console.info(translations[getCurrentLang()]?.ui?.keyboardShortcuts?.copied || "Enlace copiado");
+			window.alert(translations[getCurrentLang()]?.ui?.keyboardShortcuts?.copied || "Enlace copiado");
 		} catch {
 			window.prompt("Copia el enlace del artículo:", url);
 		}
@@ -708,35 +708,27 @@ function setupKeyboardShortcuts() {
 		const search = document.getElementById("search-overlay");
 		const picker = document.getElementById("language-picker-overlay");
 		const unavailable = document.getElementById("lang-modal-overlay");
-		let closed = false;
 
-		if (search && !search.classList.contains("hidden")) {
-			if (typeof window.closeSearch === "function") window.closeSearch();
-			else search.classList.add("hidden");
-			closed = true;
-		}
-		if (typeof window.closeLanguagePicker === "function") {
-			window.closeLanguagePicker();
-			closed = true;
-		} else if (picker && !picker.classList.contains("hidden")) {
-			picker.classList.add("hidden");
-			closed = true;
-		}
-		if (typeof window.closeLangUnavailableModal === "function") {
-			window.closeLangUnavailableModal();
-			closed = true;
-		} else if (unavailable && !unavailable.classList.contains("hidden")) {
-			unavailable.classList.add("hidden");
-			closed = true;
-		}
+		// Cerrar solamente la capa superior por pulsación.
 		if (!helpOverlay.classList.contains("hidden")) {
 			closeHelp();
-			closed = true;
+		} else if (search && !search.classList.contains("hidden")) {
+			if (typeof window.closeSearch === "function") window.closeSearch();
+			else search.classList.add("hidden");
+		} else if (typeof window.closeLanguagePicker === "function") {
+			window.closeLanguagePicker();
+		} else if (picker && !picker.classList.contains("hidden")) {
+			picker.classList.add("hidden");
+		} else if (typeof window.closeLangUnavailableModal === "function") {
+			window.closeLangUnavailableModal();
+		} else if (unavailable && !unavailable.classList.contains("hidden")) {
+			unavailable.classList.add("hidden");
+		} else {
+			return;
 		}
-		if (closed) {
-			event.preventDefault();
-			event.stopImmediatePropagation();
-		}
+
+		event.preventDefault();
+		event.stopImmediatePropagation();
 	}
 
 	document.addEventListener("keydown", event => {
@@ -762,7 +754,7 @@ function setupKeyboardShortcuts() {
 			window.openLanguagePicker?.();
 			return;
 		}
-		if (event.ctrlKey && event.shiftKey && event.key.toLowerCase() === "s") {
+		if (event.ctrlKey && event.shiftKey && event.key.toLowerCase() === "s" && document.body.dataset.page === "post") {
 			event.preventDefault();
 			shareCurrentArticle();
 			return;
