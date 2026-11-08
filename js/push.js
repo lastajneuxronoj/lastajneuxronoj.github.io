@@ -1131,9 +1131,18 @@ function updateLanguageButton(language) {
 				return;
 			}
 
-			await navigator.serviceWorker.register("/sw.js", {
-				scope: "/"
+			const registration = await navigator.serviceWorker.register("/sw.js", {
+			    scope: "/"
 			});
+
+			// Esperamos a que el service worker esté activo.
+			const readyRegistration = await navigator.serviceWorker.ready;
+
+			// Comunicamos si este cliente está funcionando como PWA.
+			if (window.setupOfflineMode) {
+			    await window.setupOfflineMode(readyRegistration);
+			}
+
 
 			if (canUsePush()) {
 				pushRegistration = await navigator.serviceWorker.ready;

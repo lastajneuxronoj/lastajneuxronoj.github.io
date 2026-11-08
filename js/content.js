@@ -4,7 +4,83 @@ function renderEmojiImg(emoji) {
 	return twemoji.parse(emoji, {
 		folder: "svg",
 		ext: ".svg",
+		base: "/twemoji/14.0.2/",
 	});
+}
+
+// COMPROBACIÓN DE DISPONIBILIDAD OFFLINE
+
+const ARTICLES_CACHE_NAME = "lastaj-neuronoj-articles-v1";
+const ARTICLE_TTL = 30 * 24 * 60 * 60 * 1000;
+
+async function updateArticleCardAvailability() {
+    const cards = document.querySelectorAll(
+        ".post-card[data-article-url]"
+    );
+
+    // Mientras haya conexión, todas las tarjetas se ven normalmente.
+    if (navigator.onLine) {
+        cards.forEach(card => {
+            card.classList.remove("post-card-unavailable");
+        });
+
+        return;
+    }
+
+    try {
+        const cache = await caches.open(ARTICLES_CACHE_NAME);
+
+        await Promise.all(
+            [...cards].map(async card => {
+                const response = await cache.match(
+                    card.dataset.articleUrl
+                );
+
+                const lastAccess = Number(
+                    response?.headers.get("X-Lastaj-Last-Access")
+                );
+
+                const isAvailable =
+                    response &&
+                    lastAccess > 0 &&
+                    Date.now() - lastAccess <= ARTICLE_TTL;
+
+                card.classList.toggle(
+                    "post-card-unavailable",
+                    !isAvailable
+                );
+            })
+        );
+
+    } catch (error) {
+        console.error(
+            "No se pudo comprobar la disponibilidad de los artículos:",
+            error
+        );
+
+        cards.forEach(card => {
+            card.classList.add("post-card-unavailable");
+        });
+    }
+}
+
+// Evitamos registrar los mismos eventos varias veces.
+let offlineAvailabilityListenersInitialized = false;
+
+function setupOfflineAvailabilityListeners() {
+    if (offlineAvailabilityListenersInitialized) return;
+
+    window.addEventListener(
+        "offline",
+        updateArticleCardAvailability
+    );
+
+    window.addEventListener(
+        "online",
+        updateArticleCardAvailability
+    );
+
+    offlineAvailabilityListenersInitialized = true;
 }
 
 function loadPosts() {
@@ -100,14 +176,20 @@ function loadPosts() {
 
 			`;
 
-			card.onclick = () => {
-				location.href =
-					`/blog/${post.number}-${lang}.html`;
-			};
+				const articleUrl = `/blog/${post.number}-${lang}.html`;
+
+				card.dataset.articleUrl = articleUrl;
+
+				card.onclick = () => {
+					location.href = articleUrl;
+				};
 
 			postList.appendChild(card);
 
 		});
+		
+		setupOfflineAvailabilityListeners();
+		updateArticleCardAvailability();
 	});
 }
 

@@ -1,16 +1,26 @@
 // Inicialización de la página
 document.addEventListener("DOMContentLoaded", async () => {
-	/*await getTranslations();*/
-    await loadHeader();
-	await loadFooter();
 
+    const pwa = window.isPWA();
+    
+    // Estructura común del sitio.
+    await loadHeader();
+    await loadFooter();
+    
+    // Aviso de desconexión exclusivo de la PWA.
+    if (pwa && window.setupOfflineNotice) {
+        await window.setupOfflineNotice();
+    }
+
+    // Se ejecuta en ambos contextos para registrar
+    // el Service Worker y comunicar el modo del cliente.
     if (window.setupPushControls) {
         await window.setupPushControls();
     }
 
     if (document.getElementById("post-list")) {
-            loadPosts();
-        }
+        loadPosts();
+    }
 
     if (document.getElementById("about-content")) {
         loadAboutContent();
@@ -28,13 +38,13 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 // Cambio de idioma
 window.addEventListener("languageChanged", () => {
-	updateLanguageDependentLinks();
+    updateLanguageDependentLinks();
 
-	if (document.getElementById("post-list")) {
-		loadPosts();
-	}
+    if (document.getElementById("post-list")) {
+        loadPosts();
+    }
 
-	if (document.getElementById("about-content")) {
-		loadAboutContent();
-	}
+    if (document.getElementById("about-content")) {
+        loadAboutContent();
+    }
 });

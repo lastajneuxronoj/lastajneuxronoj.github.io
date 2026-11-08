@@ -641,6 +641,7 @@ function renderEmojiImg(emoji) {
 	return twemoji.parse(emoji, {
 		folder: "svg",
 		ext: ".svg",
+		base: "/twemoji/14.0.2/",
 	});
 }
 

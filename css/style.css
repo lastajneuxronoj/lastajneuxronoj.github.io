@@ -247,9 +247,26 @@ main {
 }
 
 @keyframes postEnter {
+	from {
+	    opacity: 0;
+	    transform: translateX(20px);
+	}
+
 	to {
-		opacity: 1;
-		transform: translateY(0);
+	    opacity: 1;
+	    transform: translateX(0);
+	}
+}
+
+@keyframes postEnterUnavailable {
+	from {
+	    opacity: 0;
+	    transform: translateX(20px);
+	}
+
+	to {
+	    opacity: 0.4;
+	    transform: translateX(0);
 	}
 }
 
@@ -2186,6 +2203,12 @@ tbody tr:hover {
     margin: 1.5rem auto;
     border: none;
     border-radius: 8px;
+}
+
+/* ARTÍCULOS NO DISPONIBLES OFFLINE */
+.post-card-unavailable {
+    animation-name: postEnterUnavailable;
+    opacity: 0.4;
 }
 
 @keyframes search-spin {

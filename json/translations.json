@@ -57,6 +57,17 @@
 					}
 				}
 			},
+			"offline": {
+				"title": "Sin conexión",
+				"message": "Estás viendo contenido guardado que podría no estar actualizado."
+			},
+			"offlineFallback": {
+				"articleTitle": "Artículo no disponible",
+				"articleMessage": "Este artículo todavía no está guardado en tu dispositivo. Conéctate a Internet y visita el artículo para que se descargue automáticamente y puedas leerlo sin conexión.",
+				"pageTitle": "Página no disponible",
+				"pageMessage": "Esta página solo está disponible con conexión a Internet. En modo offline puedes consultar la portada y los artículos que hayas visitado previamente.",
+				"homeLink": "Volver a la portada"
+			},
 			"categories": {
 				"title": "CATEGORIES",
 				"subtitle": "> Categorías",
@@ -186,6 +197,17 @@
 					"body": "Vi nun povas legi ĉi tiun tradukon ĉe Lastaj Neŭronoj en {languages}."
 				}
 				}
+			},
+			"offline": {
+			    "title": "Senkonekte",
+			    "message": "Vi estas vidanta konservitan enhavon, kiu povus ne esti ĝisdata."
+			},
+			"offlineFallback": {
+			    "articleTitle": "La artikolo ne disponeblas",
+			    "articleMessage": "Ĉi tiu artikolo ankoraŭ ne estas konservita en via aparato. Konektiĝu al Interreto kaj vizitu la artikolon, por ke ĝi aŭtomate elŝutiĝu kaj vi povu legi ĝin senkonekte.",
+			    "pageTitle": "Ĉi tiu retpaĝo ne disponeblas",
+			    "pageMessage": "Ĉi tiu retpaĝo disponeblas nur kun interreta konekto. Senkonekte vi povas vidi la ĉefpaĝon kaj la artikolojn, kiujn vi antaŭe vizitis.",
+			    "homeLink": "Reiri al la ĉefpaĝo"
 			},
 			"categories": {
 				"title": "CATEGORIES",
