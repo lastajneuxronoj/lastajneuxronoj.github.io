@@ -79,7 +79,18 @@
 					"test": "Prueba"
 				}
 			},
-			"search": "Buscar..."
+			"search": "Buscar...",
+			"keyboardShortcuts": {
+				"title": "Atajos de teclado",
+				"help": "Mostrar esta ayuda",
+				"language": "Seleccionar idioma",
+				"share": "Compartir artículo",
+				"home": "Volver a la portada",
+				"previous": "Artículo anterior",
+				"next": "Artículo siguiente",
+				"close": "Cerrar ventanas y menús",
+				"copied": "Enlace del artículo copiado."
+			}
 		},
 		"posts": {
 			"label_bg": "POSTS",
@@ -123,11 +134,11 @@
 			"noResults": "Sin resultados"
 		},
 		"callouts": {
-    		"note": "Nota",
-    		"warning": "Advertencia",
-    		"tip": "Consejo",
-    		"definition": "Definición",
-    		"example": "Ejemplo"
+			"note": "Nota",
+			"warning": "Advertencia",
+			"tip": "Consejo",
+			"definition": "Definición",
+			"example": "Ejemplo"
 		},
 		"backToHome": "VOLVER AL INICIO",
 		"newsletter": {
@@ -188,26 +199,26 @@
 				"newsletterPowered": "Bulteno liverata per",
 				"newsletterSuccess": "Dankon pro via abono!",
 				"messages": {
-				"newPost": {
-					"title": "Nova blogaĵo: {title}",
-					"body": "Ĝi nun disponeblas ĉe Lastaj Neŭronoj en {languages}."
-				},
-				"newTranslation": {
-					"title": "Nova traduko: {title}",
-					"body": "Vi nun povas legi ĉi tiun tradukon ĉe Lastaj Neŭronoj en {languages}."
-				}
+					"newPost": {
+						"title": "Nova blogaĵo: {title}",
+						"body": "Ĝi nun disponeblas ĉe Lastaj Neŭronoj en {languages}."
+					},
+					"newTranslation": {
+						"title": "Nova traduko: {title}",
+						"body": "Vi nun povas legi ĉi tiun tradukon ĉe Lastaj Neŭronoj en {languages}."
+					}
 				}
 			},
 			"offline": {
-			    "title": "Senkonekte",
-			    "message": "Vi estas vidanta konservitan enhavon, kiu povus ne esti ĝisdata."
+				"title": "Senkonekte",
+				"message": "Vi estas vidanta konservitan enhavon, kiu povus ne esti ĝisdata."
 			},
 			"offlineFallback": {
-			    "articleTitle": "La artikolo ne disponeblas",
-			    "articleMessage": "Ĉi tiu artikolo ankoraŭ ne estas konservita en via aparato. Konektiĝu al Interreto kaj vizitu la artikolon, por ke ĝi aŭtomate elŝutiĝu kaj vi povu legi ĝin senkonekte.",
-			    "pageTitle": "Ĉi tiu retpaĝo ne disponeblas",
-			    "pageMessage": "Ĉi tiu retpaĝo disponeblas nur kun interreta konekto. Senkonekte vi povas vidi la ĉefpaĝon kaj la artikolojn, kiujn vi antaŭe vizitis.",
-			    "homeLink": "Reiri al la ĉefpaĝo"
+				"articleTitle": "La artikolo ne disponeblas",
+				"articleMessage": "Ĉi tiu artikolo ankoraŭ ne estas konservita en via aparato. Konektiĝu al Interreto kaj vizitu la artikolon, por ke ĝi aŭtomate elŝutiĝu kaj vi povu legi ĝin senkonekte.",
+				"pageTitle": "Ĉi tiu retpaĝo ne disponeblas",
+				"pageMessage": "Ĉi tiu retpaĝo disponeblas nur kun interreta konekto. Senkonekte vi povas vidi la ĉefpaĝon kaj la artikolojn, kiujn vi antaŭe vizitis.",
+				"homeLink": "Reiri al la ĉefpaĝo"
 			},
 			"categories": {
 				"title": "CATEGORIES",
@@ -220,7 +231,18 @@
 					"test": "Provo"
 				}
 			},
-			"search": "Serĉi..."
+			"search": "Serĉi...",
+			"keyboardShortcuts": {
+				"title": "Klavaraj ŝparvojoj",
+				"help": "Montri ĉi tiun helpon",
+				"language": "Elekti lingvon",
+				"share": "Kunhavigi la artikolon",
+				"home": "Reiri al la ĉefpaĝo",
+				"previous": "Antaŭa artikolo",
+				"next": "Sekva artikolo",
+				"close": "Fermi fenestrojn kaj menuojn",
+				"copied": "Ligilo de la artikolo kopiita."
+			}
 		},
 		"posts": {
 			"label_bg": "POSTS",
@@ -264,11 +286,11 @@
 			"noResults": "Neniuj rezultoj estis trovitaj"
 		},
 		"callouts": {
-    		"note": "Noto",
-    		"warning": "Averto",
-    		"tip": "Konsilo",
-    		"definition": "Difino",
-    		"example": "Ekzemplo"
+			"note": "Noto",
+			"warning": "Averto",
+			"tip": "Konsilo",
+			"definition": "Difino",
+			"example": "Ekzemplo"
 		},
 		"backToHome": "REVENI AL LA ĈEFPAĜO",
 		"newsletter": {
