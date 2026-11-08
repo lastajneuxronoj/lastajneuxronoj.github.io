@@ -1,4 +1,5 @@
 let mermaidInitialized = false;
+let keyboardShortcutsInitialized = false;
 
 async function loadHeader() {
 	const container = document.getElementById("header-container");
@@ -50,6 +51,8 @@ async function initHeaderFeatures() {
 	setupMenu();
 	setupTheme();
 	setupLangToggle();
+	setupLanguagePicker();
+	setupKeyboardShortcuts();
 
 	applyTranslations();
 	updateLanguageDependentLinks();
@@ -468,6 +471,7 @@ async function showLangUnavailableError(availableLangs, buildLinkForLang) {
 	
 	function close() {
 		overlay.classList.add("hidden");
+		if (window.closeLangUnavailableModal === close) window.closeLangUnavailableModal = null;
 	
 		closeBtn.removeEventListener(
 			"click",
@@ -497,6 +501,8 @@ async function showLangUnavailableError(availableLangs, buildLinkForLang) {
 		}
 	}
 	
+	window.closeLangUnavailableModal = close;
+
 	closeBtn.addEventListener(
 		"click",
 		close
@@ -514,6 +520,268 @@ async function showLangUnavailableError(availableLangs, buildLinkForLang) {
 }
 
 // Muestra animación para <details>
+
+// SELECTOR VISUAL DE IDIOMAS
+function setupLanguagePicker() {
+	const trigger = document.getElementById("lang-switch");
+	const overlay = document.getElementById("language-picker-overlay");
+	const list = document.getElementById("language-picker-list");
+	const closeButton = document.getElementById("language-picker-close");
+	if (!trigger || !overlay || !list || !closeButton) return;
+
+	let pickerOpen = false;
+
+	function closePicker() {
+		if (!pickerOpen) return;
+		overlay.classList.add("hidden");
+		pickerOpen = false;
+		trigger.focus();
+		overlay.removeEventListener("click", onOverlayClick);
+		closeButton.removeEventListener("click", closePicker);
+		if (window.closeLanguagePicker === closePicker) window.closeLanguagePicker = null;
+	}
+
+	function onOverlayClick(event) {
+		if (event.target === overlay) closePicker();
+	}
+
+	async function openPicker() {
+		const translations = await getTranslations();
+		const currentLang = getCurrentLang();
+		const page = document.body.dataset.page;
+		let available = LANGUAGES.filter(code => translations[code]);
+
+		if (page === "post" || page === "page" || page === "category") {
+			const pageLanguages = (document.body.dataset.availableLangs || "")
+				.split(",").map(code => code.trim()).filter(Boolean);
+			available = available.filter(code => pageLanguages.includes(code));
+		}
+
+		const t = translations[currentLang] || translations[DEFAULT_LANG];
+		list.innerHTML = "";
+
+		available.forEach(code => {
+			const item = document.createElement("li");
+			const button = document.createElement("button");
+			const flag = document.createElement("img");
+			const name = document.createElement("span");
+
+			button.type = "button";
+			button.className = "language-picker-option";
+			button.dataset.lang = code;
+			button.setAttribute("aria-current", code === currentLang ? "true" : "false");
+
+			flag.className = "lang-modal-flag";
+			flag.src = \`/svg/flag_\${code}.svg\`;
+			flag.alt = "";
+			flag.setAttribute("aria-hidden", "true");
+
+			name.className = "lang-modal-lang";
+			name.textContent = t.languageNames?.[code] || code;
+			button.append(flag, name);
+
+			if (code === currentLang) {
+				const current = document.createElement("span");
+				current.className = "language-picker-current";
+				current.textContent = "✓";
+				current.setAttribute("aria-hidden", "true");
+				button.appendChild(current);
+			}
+
+			button.addEventListener("click", async () => {
+				if (code === currentLang) {
+					closePicker();
+					return;
+				}
+				setLanguage(code);
+				closePicker();
+				await updateLanguageDependentLinks(true);
+				await applyTranslations();
+			});
+
+			item.appendChild(button);
+			list.appendChild(item);
+		});
+
+		if (!available.length) return;
+		overlay.classList.remove("hidden");
+		pickerOpen = true;
+		window.closeLanguagePicker = closePicker;
+		overlay.addEventListener("click", onOverlayClick);
+		closeButton.addEventListener("click", closePicker);
+		(list.querySelector('[aria-current="true"]') || list.querySelector("button"))?.focus();
+	}
+
+	window.openLanguagePicker = openPicker;
+}
+
+
+// AYUDA Y ATAJOS DE TECLADO
+function setupKeyboardShortcuts() {
+	if (keyboardShortcutsInitialized) return;
+
+	const helpOverlay = document.getElementById("shortcuts-modal-overlay");
+	const helpList = document.getElementById("shortcuts-modal-list");
+	const helpClose = document.getElementById("shortcuts-modal-close");
+	if (!helpOverlay || !helpList || !helpClose) return;
+
+	keyboardShortcutsInitialized = true;
+
+	function closeHelp() {
+		helpOverlay.classList.add("hidden");
+		helpClose.removeEventListener("click", closeHelp);
+		helpOverlay.removeEventListener("click", onHelpOverlayClick);
+	}
+	function onHelpOverlayClick(event) {
+		if (event.target === helpOverlay) closeHelp();
+	}
+
+	async function openHelp() {
+		const translations = await getTranslations();
+		const t = translations[getCurrentLang()]?.ui?.keyboardShortcuts
+			|| translations[DEFAULT_LANG]?.ui?.keyboardShortcuts || {};
+		const shortcuts = [
+			{ keys: "?", label: t.help },
+			{ keys: "Ctrl + Shift + L", label: t.language },
+			{ keys: "Ctrl + Shift + S", label: t.share },
+			{ keys: "Alt + Shift + H", label: t.home }
+		];
+
+		if (document.body.dataset.page === "post") {
+			shortcuts.push(
+				{ keys: "Alt + Shift + ←", label: t.previous },
+				{ keys: "Alt + Shift + →", label: t.next }
+			);
+		}
+		shortcuts.push({ keys: "Esc", label: t.close });
+
+		helpList.innerHTML = "";
+		shortcuts.forEach(shortcut => {
+			if (!shortcut.label) return;
+			const item = document.createElement("li");
+			const key = document.createElement("kbd");
+			const description = document.createElement("span");
+			key.textContent = shortcut.keys;
+			description.textContent = shortcut.label;
+			item.append(key, description);
+			helpList.appendChild(item);
+		});
+
+		helpOverlay.classList.remove("hidden");
+		helpClose.focus();
+		helpClose.addEventListener("click", closeHelp);
+		helpOverlay.addEventListener("click", onHelpOverlayClick);
+	}
+
+	async function shareCurrentArticle() {
+		if (document.body.dataset.page !== "post") return;
+		const title = document.querySelector('meta[property="og:title"]')?.content || document.title;
+		const text = document.querySelector('meta[property="og:description"]')?.content || "";
+		const url = document.querySelector('link[rel="canonical"]')?.href || location.href;
+
+		if (navigator.share) {
+			try {
+				await navigator.share({ title, text, url });
+			} catch (error) {
+				if (error.name !== "AbortError") console.error("No se pudo compartir:", error);
+			}
+			return;
+		}
+		try {
+			await navigator.clipboard.writeText(url);
+			console.info(translations[getCurrentLang()]?.ui?.keyboardShortcuts?.copied || "Enlace copiado");
+		} catch {
+			window.prompt("Copia el enlace del artículo:", url);
+		}
+	}
+
+	function closeOpenOverlays(event) {
+		const search = document.getElementById("search-overlay");
+		const picker = document.getElementById("language-picker-overlay");
+		const unavailable = document.getElementById("lang-modal-overlay");
+		let closed = false;
+
+		if (search && !search.classList.contains("hidden")) {
+			if (typeof window.closeSearch === "function") window.closeSearch();
+			else search.classList.add("hidden");
+			closed = true;
+		}
+		if (typeof window.closeLanguagePicker === "function") {
+			window.closeLanguagePicker();
+			closed = true;
+		} else if (picker && !picker.classList.contains("hidden")) {
+			picker.classList.add("hidden");
+			closed = true;
+		}
+		if (typeof window.closeLangUnavailableModal === "function") {
+			window.closeLangUnavailableModal();
+			closed = true;
+		} else if (unavailable && !unavailable.classList.contains("hidden")) {
+			unavailable.classList.add("hidden");
+			closed = true;
+		}
+		if (!helpOverlay.classList.contains("hidden")) {
+			closeHelp();
+			closed = true;
+		}
+		if (closed) {
+			event.preventDefault();
+			event.stopImmediatePropagation();
+		}
+	}
+
+	document.addEventListener("keydown", event => {
+		if (event.key === "Escape") {
+			closeOpenOverlays(event);
+			return;
+		}
+
+		const target = event.target;
+		const editable = target instanceof HTMLElement && (
+			target.isContentEditable ||
+			target.closest("input, textarea, select, [contenteditable='true']")
+		);
+		if (editable || event.metaKey) return;
+
+		if (event.key === "?" && !event.ctrlKey && !event.altKey) {
+			event.preventDefault();
+			openHelp();
+			return;
+		}
+		if (event.ctrlKey && event.shiftKey && event.key.toLowerCase() === "l") {
+			event.preventDefault();
+			window.openLanguagePicker?.();
+			return;
+		}
+		if (event.ctrlKey && event.shiftKey && event.key.toLowerCase() === "s") {
+			event.preventDefault();
+			shareCurrentArticle();
+			return;
+		}
+		if (event.altKey && event.shiftKey && event.key.toLowerCase() === "h") {
+			event.preventDefault();
+			window.location.href = "/index.html";
+			return;
+		}
+		if (event.altKey && event.shiftKey && event.key === "ArrowLeft") {
+			const previous = document.querySelector("a.prev-post");
+			if (previous) {
+				event.preventDefault();
+				previous.click();
+			}
+			return;
+		}
+		if (event.altKey && event.shiftKey && event.key === "ArrowRight") {
+			const next = document.querySelector("a.next-post");
+			if (next) {
+				event.preventDefault();
+				next.click();
+			}
+		}
+	});
+}
+
+
 function setupDetailsAnimation() {
 	document.querySelectorAll("details").forEach((details) => {
 		const summary = details.querySelector("summary");
