@@ -5,7 +5,7 @@ async function loadHeader() {
 	const container = document.getElementById("header-container");
 	if (!container) return;
 
-	let html = sessionStorage.getItem("header");
+	let html = sessionStorage.getItem("header-v2");
 
 	if (!html) {
 		const res = await fetch("/components/header.html");
@@ -16,7 +16,7 @@ async function loadHeader() {
 		}
 
 		html = await res.text();
-		sessionStorage.setItem("header", html);
+		sessionStorage.setItem("header-v2", html);
 	}
 
 	container.innerHTML = html;
