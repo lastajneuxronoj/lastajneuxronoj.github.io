@@ -557,6 +557,7 @@ function setupLanguagePicker() {
 				.split(",").map(code => code.trim()).filter(Boolean);
 			available = available.filter(code => pageLanguages.includes(code));
 		}
+		available.sort((a, b) => a === currentLang ? -1 : b === currentLang ? 1 : 0);
 
 		const t = translations[currentLang] || translations[DEFAULT_LANG];
 		const pickerTitle = document.getElementById("language-picker-title");
@@ -712,13 +713,13 @@ function setupKeyboardShortcuts() {
 		// Cerrar solamente la capa superior por pulsación.
 		if (!helpOverlay.classList.contains("hidden")) {
 			closeHelp();
-		} else if (search && !search.classList.contains("hidden")) {
-			if (typeof window.closeSearch === "function") window.closeSearch();
-			else search.classList.add("hidden");
 		} else if (typeof window.closeLanguagePicker === "function") {
 			window.closeLanguagePicker();
 		} else if (picker && !picker.classList.contains("hidden")) {
 			picker.classList.add("hidden");
+		} else if (search && !search.classList.contains("hidden")) {
+			if (typeof window.closeSearch === "function") window.closeSearch();
+			else search.classList.add("hidden");
 		} else if (typeof window.closeLangUnavailableModal === "function") {
 			window.closeLangUnavailableModal();
 		} else if (unavailable && !unavailable.classList.contains("hidden")) {
