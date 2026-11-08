@@ -2251,3 +2251,113 @@ tbody tr:hover {
         margin-right: 0.2rem;
     }
 }
+
+
+/* SELECTOR VISUAL DE IDIOMAS Y AYUDA DE ATAJOS */
+
+.language-picker-modal {
+	max-width: 360px;
+}
+
+.language-picker-option {
+	width: 100%;
+	position: relative;
+	display: flex;
+	align-items: center;
+	gap: var(--gap-sm);
+	padding: var(--gap-sm) var(--gap-md);
+	border: 1px solid var(--tertiary-color);
+	border-radius: 4px;
+	background: var(--background-color);
+	color: var(--secondary-color);
+	font: inherit;
+	text-align: left;
+	cursor: pointer;
+	transition: background var(--transition-speed), color var(--transition-speed);
+}
+
+.language-picker-option:hover,
+.language-picker-option:focus-visible {
+	background: var(--lang-modal-hover-bg);
+	color: var(--primary-color);
+}
+
+.language-picker-option[aria-current="true"] {
+	border-color: var(--primary-color);
+	font-weight: 700;
+}
+
+.language-picker-current {
+	margin-left: auto;
+}
+
+.shortcuts-modal-overlay {
+	position: fixed;
+	inset: 0;
+	z-index: 2200;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 1rem;
+	background: rgba(0, 0, 0, 0.35);
+}
+
+.shortcuts-modal-overlay.hidden {
+	display: none;
+}
+
+.shortcuts-modal {
+	position: relative;
+	width: min(440px, 92vw);
+	padding: var(--gap-lg);
+	border: 2px solid var(--primary-color);
+	border-radius: 8px;
+	background: var(--base-color);
+	color: var(--primary-color);
+	font-family: var(--font-ui);
+	box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+}
+
+.shortcuts-modal h2 {
+	margin: 0 2rem 1.25rem 0;
+	font-size: 1.25rem;
+}
+
+.shortcuts-modal-list {
+	display: flex;
+	flex-direction: column;
+	gap: 0.7rem;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.shortcuts-modal-list li {
+	display: grid;
+	grid-template-columns: minmax(125px, auto) 1fr;
+	align-items: center;
+	gap: 1rem;
+}
+
+.shortcuts-modal-list kbd {
+	display: inline-block;
+	width: fit-content;
+	padding: 0.25rem 0.45rem;
+	border: 1px solid var(--tertiary-color);
+	border-radius: 4px;
+	background: var(--background-color);
+	color: var(--secondary-color);
+	font: 0.8rem var(--font-ui);
+	white-space: nowrap;
+}
+
+.shortcuts-modal-list span {
+	font-size: 0.9rem;
+}
+
+@media (max-width: 420px) {
+	.shortcuts-modal-list li {
+		grid-template-columns: 1fr;
+		gap: 0.2rem;
+	}
+}
