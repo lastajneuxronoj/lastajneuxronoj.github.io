@@ -12,6 +12,8 @@
 
 const fs = require("fs/promises");
 const path = require("path");
+const cheerio = require("cheerio");
+const crypto = require("crypto");
 
 
 function countWords(text) {
@@ -22,98 +24,175 @@ function countWords(text) {
 		.length;
 }
 
+function extractContentStats(html) {
 
-async function collectPostStats(posts) {
+    function extractText(source, removeDetails = false) {
 
-	const stats = [];
+        const $ = cheerio.load(source);
 
-	for (const post of posts) {
+        // Evitar contar dos veces las fórmulas de KaTeX.
+        $(".katex-mathml").remove();
 
-		for (const [lang, filename] of Object.entries(post.file || {})) {
+        // Excluir contenido que no forma parte del texto editorial.
+        $("script, style, noscript, template").remove();
 
-			const md = await fs.readFile(
-				path.join("posts", filename),
-				"utf8"
-			);
+        // Excluir desplegables cuando se calcula el texto normal.
+        if (removeDetails) {
+            $("details").remove();
+        }
 
-			const words = countWords(md);
+        return $.root()
+            .html()
+            .replace(/<[^>]*>/g, " ")
+            .replace(/&nbsp;/g, " ")
+            .replace(/\s+/g, " ")
+            .trim();
+    }
 
-			stats.push({
-				number: post.number,
-				title: post.title?.[lang],
-				lang,
-				words
-			});
-		}
-	}
+    const totalText = extractText(html);
 
-	return stats;
+	const contentHash = crypto
+    .createHash("sha256")
+    .update(totalText, "utf8")
+    .digest("hex");
+
+    const normalText = extractText(html, true);
+
+    const words = countWords(totalText);
+    const normalWords = countWords(normalText);
+    const detailsWords = Math.max(0, words - normalWords);
+
+    const readingMinutesMin =
+        Math.ceil(normalWords / 200);
+
+    const readingMinutesMax =
+        Math.ceil(words / 200);
+
+    const readingTime =
+        readingMinutesMin === readingMinutesMax
+            ? `${readingMinutesMin} min`
+            : `${readingMinutesMin}–${readingMinutesMax} min`;
+
+    return {
+        words,
+        normalWords,
+        detailsWords,
+		contentHash,
+        readingMinutesMin,
+        readingMinutesMax,
+        readingTime,
+        readingMinutes: readingMinutesMax
+    };
+}
+
+async function collectPostStats() {
+
+    const statsPath = path.join(
+        __dirname,
+        "..",
+        "stats",
+        "posts.json"
+    );
+
+    const postStats = JSON.parse(
+        await fs.readFile(statsPath, "utf8")
+    );
+
+    return postStats;
 }
 
 function generateContentStatistics(postStats) {
 
-	if (!postStats.length) {
-		return null;
-	}
+    if (!postStats.length) {
+        return null;
+    }
 
-    const readingMinutes =
-    	postStats.map(post =>
-    		Math.ceil(post.words / 200)
-    	);
+    // Tiempo de lectura por entrada.
+    const readingMinutesMin =
+        postStats.map(post =>
+            post.readingMinutesMin ??
+            Math.ceil((post.normalWords ?? post.words) / 200)
+        );
 
-    const totalReadingMinutes =
-    	readingMinutes.reduce(
-    		(sum, minutes) => sum + minutes,
-    		0
-    	);
+    const readingMinutesMax =
+        postStats.map(post =>
+            post.readingMinutesMax ??
+            Math.ceil(post.words / 200)
+        );
+
+    const totalReadingMinutesMin =
+        readingMinutesMin.reduce(
+            (sum, minutes) => sum + minutes,
+            0
+        );
+
+    const totalReadingMinutesMax =
+        readingMinutesMax.reduce(
+            (sum, minutes) => sum + minutes,
+            0
+        );
+
+    // Conservamos los campos originales.
+    const totalReadingMinutes = totalReadingMinutesMax;
 
     const averageReadingMinutes =
-    	totalReadingMinutes / postStats.length;
+        totalReadingMinutes / postStats.length;
 
-	const totalWords =
-		postStats.reduce(
-			(sum, post) => sum + post.words,
-			0
-		);
+    const totalWords =
+        postStats.reduce(
+            (sum, post) => sum + post.words,
+            0
+        );
 
+    const totalNormalWords =
+        postStats.reduce(
+            (sum, post) => sum + (post.normalWords ?? post.words),
+            0
+        );
 
-	const averageWords =
-		totalWords / postStats.length;
+    const totalDetailsWords =
+        postStats.reduce(
+            (sum, post) => sum + (post.detailsWords ?? 0),
+            0
+        );
 
+    const averageWords =
+        totalWords / postStats.length;
 
-	const longest =
-		postStats.reduce(
-			(max, post) =>
-				post.words > max.words ? post : max
-		);
+    const longest =
+        postStats.reduce(
+            (max, post) =>
+                post.words > max.words ? post : max
+        );
 
+    const shortest =
+        postStats.reduce(
+            (min, post) =>
+                post.words < min.words ? post : min
+        );
 
-	const shortest =
-		postStats.reduce(
-			(min, post) =>
-				post.words < min.words ? post : min
-		);
+    const wordsByLanguage = {};
 
+    postStats.forEach(post => {
 
-	const wordsByLanguage = {};
+        wordsByLanguage[post.lang] =
+            (wordsByLanguage[post.lang] || 0)
+            + post.words;
+    });
 
-	postStats.forEach(post => {
-
-		wordsByLanguage[post.lang] =
-			(wordsByLanguage[post.lang] || 0)
-			+ post.words;
-	});
-
-
-	return {
-		totalWords,
-		averageWords,
-		longest,
-		shortest,
-		wordsByLanguage,
-		totalReadingMinutes,
-        averageReadingMinutes
-	};
+    return {
+        totalWords,
+        totalNormalWords,
+        totalDetailsWords,
+        averageWords,
+        longest,
+        shortest,
+        wordsByLanguage,
+        totalReadingMinutes,
+        averageReadingMinutes,
+        totalReadingMinutesMin,
+        totalReadingMinutesMax
+    };
 }
 
 function getContentStatisticsReport(postStats) {
@@ -545,12 +624,13 @@ function createReport(lines) {
 }
 
 module.exports = {
-	buildStatistics,
-	generateStatistics,
-	collectPostStats,
-	generateContentStatistics,
-	getContentStatisticsReport,
-	getTranslationStatsReport
+    buildStatistics,
+    generateStatistics,
+    collectPostStats,
+    generateContentStatistics,
+    extractContentStats,
+    getContentStatisticsReport,
+    getTranslationStatsReport
 };
 
 if (require.main === module) {

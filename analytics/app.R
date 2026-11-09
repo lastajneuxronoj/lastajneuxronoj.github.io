@@ -11,6 +11,7 @@ library(leaflet)
 library(countrycode)
 library(sf)
 library(rnaturalearth)
+library(tidyr)
 
 # ==========================================
 # 1. CARGAR DATOS Y FUNCIONES
@@ -70,6 +71,7 @@ source(file.path(APP_DIR, "modules", "traffic.R"))
 source(file.path(APP_DIR, "modules", "languages.R"))
 source(file.path(APP_DIR, "modules", "articles.R"))
 source(file.path(APP_DIR, "modules", "sources.R"))
+source(file.path(APP_DIR, "modules", "editorial.R"))
 
 # ==========================================
 # 2. INTERFAZ
@@ -85,34 +87,39 @@ ui <- page_sidebar(
 	
 	tags$head(
 		tags$style(HTML("
-        .traffic-transition {
-            transition: opacity 120ms ease-in-out;
-        }
+			.traffic-transition {
+				transition: opacity 120ms ease-in-out;
+			}
 
-        .traffic-transition.transitioning {
-            opacity: 0;
-        }
-    ")),
+			.traffic-transition.transitioning {
+				opacity: 0;
+			}
+
+			/* Tarjetas de la cronología editorial */
+			.editorial-value-box .value-box-showcase {
+				padding-top: 0.75rem;
+			}
+		")),
 		
 		tags$script(HTML("
-    $(document).on('shiny:inputchanged', function(event) {
+			$(document).on('shiny:inputchanged', function(event) {
 
-        if (event.name !== 'include_wordpress') return;
+				if (event.name !== 'include_wordpress') return;
 
-        const container = document.getElementById(
-            'daily_traffic_container'
-        );
+				const container = document.getElementById(
+					'daily_traffic_container'
+				);
 
-        if (!container) return;
+				if (!container) return;
 
-        container.classList.add('transitioning');
+				container.classList.add('transitioning');
 
-        setTimeout(function() {
-            container.classList.remove('transitioning');
-        }, 140);
+				setTimeout(function() {
+					container.classList.remove('transitioning');
+				}, 140);
 
-    });
-"))
+			});
+		"))
 	),
 	
 	sidebar = sidebar(
@@ -200,7 +207,8 @@ ui <- page_sidebar(
 		traffic_ui,
 		languages_ui,
 		articles_ui,
-		sources_ui
+		sources_ui,
+		editorial_ui
 	)
 )
 
@@ -348,6 +356,12 @@ server <- function(input, output, session) {
 		session = session,
 		filtered_referrer_data = filtered_referrer_data
 	)
+	
+	# Servidor del módulo de Editorial
+	editorial_server(
+		input,
+		output
+		)
 	
 }
 

@@ -57,3 +57,13 @@ PROJECT_ROOT <- dirname(dirname(CONFIG_FILE))
 DATA_DIR <- file.path(PROJECT_ROOT, "data")
 RAW_DATA_DIR <- file.path(DATA_DIR, "goatcounter")
 PROCESSED_DATA_DIR <- file.path(DATA_DIR, "processed")
+
+# ==========================================
+# HISTORIAL EDITORIAL
+# ==========================================
+
+HISTORY_JSON_PATH <- file.path(
+	PROJECT_ROOT,
+	"stats",
+	"history.json"
+)

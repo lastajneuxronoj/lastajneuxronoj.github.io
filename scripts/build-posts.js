@@ -64,13 +64,20 @@ const {
 
 const ROOT = path.resolve(__dirname, "..");
 
-const {generateStatistics} = require("./stats");
+const {
+    generateStatistics,
+    extractContentStats
+} = require("./stats");
+
 const {
 	POSTS_JSON_PATH,
 	PAGES_JSON_PATH,
 	OUTPUT_DIR,
 	TRANSLATIONS_JSON_PATH,
-	SITEMAP_EXTRA_PATH
+	POSTS_MD_DIR,
+	STATS_DIR,
+	SITEMAP_EXTRA_PATH,
+	POSTS_STATS_PATH
 } = require("./config");
 
 
@@ -78,7 +85,6 @@ const {
     renderNewsletterSignup
 } = require("./utils/newsletter-signup");
 
-const POSTS_MD_DIR = path.join(ROOT, "posts");
 const ABOUT_MD_DIR = path.join(ROOT, "posts");
 
 const SITEMAP_PATH = path.join(ROOT, "sitemap.xml");
@@ -457,16 +463,15 @@ async function main() {
 				post.title[lang]
 			);
 
-			const readingTime = estimateReadingTime(htmlContent);
-
-			const words = countWords(htmlContent);
+			const contentStats = extractContentStats(htmlContent);
+			const readingTime = contentStats.readingTime;
 
 			postStats.push({
-				number: post.number,
-				lang,
-				author_id: post.author_id || "unknown",
-				words,
-				readingMinutes: Math.ceil(words / 200)
+			    number: post.number,
+			    title: post.title?.[lang],
+			    lang,
+			    author_id: post.author_id || "unknown",
+			    ...contentStats
 			});
 
 			const coverImage = await findCoverImage(post.number);
@@ -511,6 +516,16 @@ async function main() {
 	generatedPages += await buildCategoriesIndex(translations);
 
 	await buildSitemap(posts, pages);
+
+	await fs.mkdir(STATS_DIR, { recursive: true });
+
+	await fs.writeFile(
+	    POSTS_STATS_PATH,
+	    JSON.stringify(postStats, null, 2),
+	    "utf-8"
+	);
+
+console.log(`✔ Estadísticas individuales guardadas: ${POSTS_STATS_PATH}`);
 
 	generateStatistics(
 	posts,
@@ -1219,53 +1234,6 @@ async function renderPage({ type, data }) {
 		}
 
 	throw new Error("Unknown type: " + type);
-}
-
-// Calcula tiempo estimado en minutos de lectura de un HTML, considerando el texto visible y el texto dentro de los elementos <details> (desplegables).
-function estimateReadingTime(html) {
-	// Extraer texto visible
-	const normalText = html
-		.replace(/<details[\s\S]*?<\/details>/gi, "")
-		.replace(/<[^>]*>/g, " ")
-		.replace(/\s+/g, " ")
-		.trim();
-
-	// Extraer texto dentro de desplegables
-	const detailsText = [...html.matchAll(/<details[\s\S]*?<\/details>/gi)]
-		.map(match => match[0])
-		.join(" ")
-		.replace(/<[^>]*>/g, " ")
-		.replace(/\s+/g, " ")
-		.trim();
-
-	const countWords = text =>
-		text ? text.split(/\s+/).length : 0;
-
-	const normalWords = countWords(normalText);
-	const detailsWords = countWords(detailsText);
-
-	const wordsPerMinute = 200;
-
-	const normalTime = Math.ceil(normalWords / wordsPerMinute);
-	const detailsTime = Math.ceil(detailsWords / wordsPerMinute);
-
-
-	if (detailsTime > 0) {
-		return `${normalTime}–${normalTime + detailsTime} min`;
-	}
-
-	return `${normalTime} min`;
-}
-
-function countWords(html) {
-	const text = html
-		.replace(/<[^>]*>/g, " ")
-		.replace(/\s+/g, " ")
-		.trim();
-
-	return text
-		? text.split(/\s+/).length
-		: 0;
 }
 
 function processHeadings(html, lang, translations = {}, pageTitle = "") {

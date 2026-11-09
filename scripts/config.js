@@ -96,6 +96,9 @@ module.exports = {
 	STATS_DIR:
 		path.join(ROOT, "stats"),
 	
+	POSTS_STATS_PATH:
+    	path.join(ROOT, "stats", "posts.json"),
+	
 	STATS_JSON_PATH:
 		path.join(ROOT, "stats", "stats.json"),
 	
