@@ -161,33 +161,45 @@ editorial_ui <- nav_panel(
 	
 	card(
 		card_header("Desarrollo editorial"),
-		selectInput(
-			"editorial_chart_type",
-			NULL,
-			choices = c(
-				"Evolución" = "evolution",
-				"Distribución actual" = "distribution",
-				"Actividad trimestral" = "activity",
-				"Producción trimestral" = "production"
+		
+		div(
+			class = "d-flex align-items-center gap-3 flex-wrap",
+			
+			selectInput(
+				"editorial_chart_type",
+				NULL,
+				choices = c(
+					"Evolución" = "evolution",
+					"Distribución actual" = "distribution",
+					"Actividad trimestral" = "activity"
+				),
+				selected = "evolution",
+				width = "220px"
 			),
-			selected = "evolution",
-			width = "220px"
+			
+			conditionalPanel(
+				condition = "input.editorial_chart_type == 'evolution'",
+				checkboxInput(
+					"show_quarterly_growth",
+					"Mostrar variación trimestral de la producción",
+					value = FALSE
+				)
+			)
 		),
+		
 		conditionalPanel(
 			condition = "input.editorial_chart_type == 'evolution'",
 			plotlyOutput("editorial_words_chart", height = "450px")
 		),
+		
 		conditionalPanel(
 			condition = "input.editorial_chart_type == 'distribution'",
 			plotlyOutput("editorial_language_distribution", height = "450px")
 		),
+		
 		conditionalPanel(
 			condition = "input.editorial_chart_type == 'activity'",
 			plotlyOutput("editorial_activity_chart", height = "450px")
-		),
-		conditionalPanel(
-			condition = "input.editorial_chart_type == 'production'",
-			plotlyOutput("editorial_production_chart", height = "450px")
 		)
 	)
 )
@@ -386,6 +398,21 @@ editorial_server <- function(input, output) {
 		) %>%
 		arrange(quarter_date, lang)
 	
+	# Calcular variación porcentual trimestral
+	growth_data <- production_data %>%
+		group_by(lang) %>%
+		arrange(quarter_date) %>%
+		mutate(
+			previous_words = lag(words),
+			growth = ifelse(
+				previous_words > 0,
+				(words - previous_words) / previous_words * 100,
+				NA_real_
+			),
+			language_label = unname(LANGUAGE_LABELS[lang])
+		) %>%
+		ungroup()
+	
 	output$editorial_versions <- renderText({
 		format(current$versions, big.mark = ".", decimal.mark = ",")
 	})
@@ -482,6 +509,46 @@ editorial_server <- function(input, output) {
 				)
 		}
 		
+		# Añadir variación porcentual trimestral
+		if (isTRUE(input$show_quarterly_growth)) {
+			
+			for (lang in unique(growth_data$lang)) {
+				
+				if (!(lang %in% selected_languages)) next
+				
+				lang_data <- growth_data %>%
+					filter(lang == !!lang)
+				
+				lang_label <- lang_data$language_label[[1]]
+				lang_color <- unname(LANGUAGE_COLORS[lang])
+				
+				p <- p %>%
+					add_trace(
+						data = lang_data,
+						x = ~quarter_date,
+						y = ~growth,
+						type = "bar",
+						name = paste("Variación", lang_label),
+						marker = list(
+							color = lang_color,
+							opacity = 0.7
+						),
+						yaxis = "y2",
+						text = ~ifelse(
+							is.na(growth),
+							"",
+							paste0(
+								ifelse(growth > 0, "+", ""),
+								round(growth),
+								"%"
+							)
+						),
+						textposition = "outside",
+						hoverinfo = "text"
+					)
+			}
+		}
+		
 		# Añadir marcadores de publicaciones y traducciones
 		for (lang in unique(event_markers$lang)) {
 			
@@ -539,11 +606,22 @@ editorial_server <- function(input, output) {
 					title = "Palabras acumuladas",
 					rangemode = "tozero"
 				),
+				yaxis2 = list(
+					title = "Variación trimestral (%)",
+					overlaying = "y",
+					side = "right",
+					zeroline = TRUE,
+					automargin = TRUE
+				),
 				legend = list(
 					title = list(text = "Idioma"),
-					traceorder = "normal"
+					traceorder = "normal",
+					orientation = "h",
+					y = -0.2,
+					x = 0.5,
+					xanchor = "center"
 				),
-				hovermode = "closest"
+				hovermode = "x unified"
 			)
 	})
 	
@@ -636,56 +714,6 @@ editorial_server <- function(input, output) {
 				),
 				legend = list(
 					title = list(text = "Tipo de evento")
-				)
-			)
-	})
-		
-	# Gráfico de producción de palabras por trimestre
-	output$editorial_production_chart <- renderPlotly({
-		
-		p <- plot_ly()
-		
-		for (lang in unique(production_data$lang)) {
-			
-			lang_data <- production_data %>%
-				filter(lang == !!lang)
-			
-			lang_label <- lang_data$language_label[[1]]
-			lang_color <- unname(LANGUAGE_COLORS[lang])
-			
-			p <- p %>%
-				add_trace(
-					data = lang_data,
-					x = ~quarter,
-					y = ~words,
-					type = "bar",
-					name = lang_label,
-					marker = list(color = lang_color),
-					text = ~paste0(
-						lang_label,
-						": ",
-						format(words, big.mark = ".", decimal.mark = ","),
-						" palabras"
-					),
-					hoverinfo = "text"
-				)
-		}
-		
-		p %>%
-			layout(
-				barmode = "stack",
-				xaxis = list(
-					title = "Trimestre",
-					categoryorder = "array",
-					categoryarray = unique(production_data$quarter)
-				),
-				yaxis = list(
-					title = "Palabras incorporadas",
-					rangemode = "tozero",
-					tickformat = ",.0f"
-				),
-				legend = list(
-					title = list(text = "Idioma")
 				)
 			)
 	})
