@@ -7,12 +7,19 @@ library(readr)
 library(dplyr)
 library(lubridate)
 
-source(
-	file.path(
-		dirname(normalizePath(sys.frame(1)$ofile)),
-		"config.R"
-	)
-)
+if (!exists("RAW_DATA_DIR")) {
+	APP_DIR <- if (!is.null(sys.frame(1)$ofile)) {
+		dirname(normalizePath(
+			sys.frame(1)$ofile,
+			winslash = "/",
+			mustWork = TRUE
+		))
+	} else {
+		normalizePath(getwd(), winslash = "/", mustWork = TRUE)
+	}
+	
+	source(file.path(APP_DIR, "config.R"))
+}
 
 
 # ==========================================

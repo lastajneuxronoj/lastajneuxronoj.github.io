@@ -16,13 +16,21 @@ library(rnaturalearth)
 # 1. CARGAR DATOS Y FUNCIONES
 # ==========================================
 
-APP_DIR <- dirname(
+APP_DIR <- if (!is.null(sys.frame(1)$ofile)) {
+	dirname(
+		normalizePath(
+			sys.frame(1)$ofile,
+			winslash = "/",
+			mustWork = TRUE
+		)
+	)
+} else {
 	normalizePath(
-		sys.frame(1)$ofile,
+		getwd(),
 		winslash = "/",
 		mustWork = TRUE
 	)
-)
+}
 
 source(file.path(APP_DIR, "config.R"))
 

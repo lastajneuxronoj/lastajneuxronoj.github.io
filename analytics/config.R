@@ -42,11 +42,15 @@ SOURCE_COLORS <- c(
 # RUTAS DEL PROYECTO
 # ==========================================
 
-CONFIG_FILE <- normalizePath(
-	sys.frame(1)$ofile,
-	winslash = "/",
-	mustWork = TRUE
-)
+if (exists("APP_DIR", inherits = FALSE)) {
+	CONFIG_FILE <- file.path(APP_DIR, "config.R")
+} else {
+	CONFIG_FILE <- normalizePath(
+		sys.frame(1)$ofile,
+		winslash = "/",
+		mustWork = TRUE
+	)
+}
 
 PROJECT_ROOT <- dirname(dirname(CONFIG_FILE))
 
