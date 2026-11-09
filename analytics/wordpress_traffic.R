@@ -1,7 +1,7 @@
 # Análisis de tráfico histórico de Lastaj Neŭronoj
 #
 # Fuente:
-# data/worpress/posts_views_daily_wp.csv
+# data/wordpress/posts_views_daily_wp.csv
 #
 # Objetivo:
 # Explorar visitas históricas importadas desde Wordpress
@@ -17,6 +17,13 @@ library(lubridate)
 library(ggplot2)
 library(jsonlite)
 
+source(
+  file.path(
+    dirname(normalizePath(sys.frame(1)$ofile)),
+    "config.R"
+  )
+)
+
 
 # ==========================================
 # 1. Importar datos
@@ -28,26 +35,26 @@ read_wp_traffic <- function(file) {
     mutate(
       date = ymd(date),
       type = as.character(type),
-      id = paste0("wp-", id),
+      id = as.character(id),
+      content_id = paste0("wp-", id),
       title = as.character(title),
-      views = as.numeric(views)
+      views = as.numeric(views),
+      language = "eo",
+      platform = "WordPress"
     )
 }
 
+traffic_wp <- read_wp_traffic(
+  file.path(PROJECT_ROOT, "data", "wordpress", "posts_views_daily_wp.csv")
+)
 
-# ==========================================
-# 2. Limpieza y formato
-# ==========================================
+glimpse(traffic_wp)
 
-traffic_wp <- traffic_wp |>
-  mutate(
-    date = ymd(date),
-    type = as.character(type),
-    id = as.character(id),
-    title = as.character(title),
-    views = as.numeric(views)
-  )
+count(traffic_wp, type)
 
+range(traffic_wp$date, na.rm = TRUE)
+
+sum(is.na(traffic_wp$date))
 
 # Revisar estructura
 glimpse(traffic_wp)
@@ -60,7 +67,7 @@ glimpse(traffic_wp)
 # Total de visitas históricas
 total_views <- traffic_wp |>
   summarise(
-    total = sum(views)
+    total = sum(views, na.rm = TRUE)
   )
 
 total_views
@@ -92,20 +99,22 @@ number_posts
 daily_views <- traffic_wp |>
   group_by(date) |>
   summarise(
-    views = sum(views),
+    views = sum(views, na.rm = TRUE),
     .groups = "drop"
   )
 
 
 # Gráfico visitas diarias
 
-ggplot(daily_views, aes(date, views)) +
-  geom_line() +
-  labs(
-    title = "Visitas diarias del blog",
-    x = "Fecha",
-    y = "Visitas"
-  )
+print(
+  ggplot(daily_views, aes(date, views)) +
+    geom_line() +
+    labs(
+      title = "Visitas diarias del blog",
+      x = "Fecha",
+      y = "Visitas"
+    )
+)
 
 
 # ==========================================
@@ -127,42 +136,46 @@ post_ranking
 
 # Gráfico top 10 posts
 
-post_ranking |>
-  slice_head(n = 10) |>
-  ggplot(
-    aes(
-      x = reorder(title, total_views),
-      y = total_views
+print(
+  post_ranking |>
+    slice_head(n = 10) |>
+    ggplot(
+      aes(
+        x = reorder(title, total_views),
+        y = total_views
+      )
+    ) +
+    geom_col() +
+    coord_flip() +
+    labs(
+      title = "Posts más visitados",
+      x = NULL,
+      y = "Visitas"
     )
-  ) +
-  geom_col() +
-  coord_flip() +
-  labs(
-    title = "Posts más visitados",
-    x = NULL,
-    y = "Visitas"
-  )
+)
 
 
 # ==========================================
 # 6. Evolución de posts individuales
 # ==========================================
 
-traffic_wp |>
-  filter(type == "post") |>
-  ggplot(
-    aes(
-      x = date,
-      y = views,
-      color = title
+print(
+  traffic_wp |>
+    filter(type == "post") |>
+    ggplot(
+      aes(
+        x = date,
+        y = views,
+        color = title
+      )
+    ) +
+    geom_line() +
+    labs(
+      title = "Evolución de visitas por post",
+      x = "Fecha",
+      y = "Visitas"
     )
-  ) +
-  geom_line() +
-  labs(
-    title = "Evolución de visitas por post",
-    x = "Fecha",
-    y = "Visitas"
-  )
+)
 
 
 # ==========================================
@@ -170,17 +183,17 @@ traffic_wp |>
 # ==========================================
 
 dir.create(
-  "data/processed",
+  PROCESSED_DATA_DIR,
   recursive = TRUE,
   showWarnings = FALSE
 )
 
 write_csv(
   daily_views,
-  "data/processed/daily_views_wp.csv"
+  file.path(PROCESSED_DATA_DIR, "daily_views_wp.csv")
 )
 
 write_csv(
   post_ranking,
-  "data/processed/post_ranking_wp.csv"
+  file.path(PROCESSED_DATA_DIR, "post_ranking_wp.csv")
 )

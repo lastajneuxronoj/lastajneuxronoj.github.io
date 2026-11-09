@@ -20,6 +20,13 @@ library(lubridate)
 library(ggplot2)
 library(readr)
 
+source(
+  file.path(
+    dirname(normalizePath(sys.frame(1)$ofile)),
+    "config.R"
+  )
+)
+
 
 # ==========================================
 # 1. Importar datos
@@ -29,7 +36,9 @@ read_content_history <- function(file) {
   fromJSON(file, simplifyVector = FALSE)
 }
 
-history_raw <- read_content_history("stats/history.json")
+history_raw <- read_content_history(
+  file.path(PROJECT_ROOT, "stats", "history.json")
+)
 
 
 # ==========================================
@@ -227,17 +236,17 @@ shortest_track
 # ==========================================
 
 dir.create(
-  "data/processed",
+  PROCESSED_DATA_DIR,
   recursive = TRUE,
   showWarnings = FALSE
 )
 
 write_csv(
   content_history,
-  "data/processed/content_history.csv"
+  file.path(PROCESSED_DATA_DIR, "content_history.csv")
 )
 
 write_csv(
   words_by_lang,
-  "data/processed/words_by_lang.csv"
+  file.path(PROCESSED_DATA_DIR, "words_by_lang.csv")
 )

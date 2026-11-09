@@ -31,6 +31,7 @@ stats-report.txt
 *.xlsx
 *.xls
 data/goatcounter/
+data/processed/
 
 #newsletter
 blog/newsletter/*.html
