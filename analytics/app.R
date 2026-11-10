@@ -12,6 +12,7 @@ library(countrycode)
 library(sf)
 library(rnaturalearth)
 library(tidyr)
+library(shinyjs)
 
 # ==========================================
 # 1. CARGAR DATOS Y FUNCIONES
@@ -35,11 +36,12 @@ APP_DIR <- if (!is.null(sys.frame(1)$ofile)) {
 
 source(file.path(APP_DIR, "config.R"))
 
-source(file.path(APP_DIR, "goatcounter_data.R"))
-
-source(file.path(APP_DIR, "wordpress_data.R"))
-
+# Cargar funciones reutilizables
 source(file.path(APP_DIR, "goatcounter_functions.R"))
+
+# Cargar y preparar datos
+source(file.path(APP_DIR, "goatcounter_data.R"))
+source(file.path(APP_DIR, "wordpress_data.R"))
 
 goatcounter <- add_country_names(goatcounter)
 
@@ -47,7 +49,7 @@ goatcounter <- add_country_names(goatcounter)
 source(file.path(APP_DIR, "combined_data.R"))
 
 # Normalizar datos
-wordpress_normalized <- normalize_wordpress(traffic_wp)
+wordpress_normalized <- normalize_wordpress(traffic_wp, wordpress_articles)
 
 goatcounter_normalized <- normalize_goatcounter(goatcounter)
 
@@ -79,6 +81,9 @@ source(file.path(APP_DIR, "modules", "editorial.R"))
 # ==========================================
 
 ui <- page_sidebar(
+	
+	shinyjs::useShinyjs(),
+	
 	title = "Lastaj Neŭronoj — Estadísticas",
 	
 	theme = bs_theme(
@@ -101,50 +106,41 @@ ui <- page_sidebar(
 				padding-top: 0.75rem;
 			}
 			
-			.bslib-sidebar-layout.summary-active > .collapse-toggle {
-				display: none !important;
-			}
 		")),
 		
 		tags$script(HTML("
-			$(document).on('shiny:inputchanged', function(event) {
+    $(document).on('shiny:inputchanged', function(event) {
+        if (event.name !== 'include_wordpress') return;
 
-				if (event.name === 'main_tabs') {
+        const container = document.getElementById(
+            'daily_traffic_container'
+        );
 
-					const sidebar = document.getElementById('main_sidebar');
-					const layout = sidebar?.closest('.bslib-sidebar-layout');
+        if (!container) return;
 
-					if (layout) {
-						layout.classList.toggle(
-						'summary-active',
-						event.value === 'Resumen'
-					);
-				}
+        container.classList.add('transitioning');
 
-				return;
-			}
-
-			if (event.name !== 'include_wordpress') return;
-
-				const container = document.getElementById(
-					'daily_traffic_container'
-				);
-
-				if (!container) return;
-
-				container.classList.add('transitioning');
-
-				setTimeout(function() {
-					container.classList.remove('transitioning');
-				}, 140);
-
-			});
-		"))
+        setTimeout(function() {
+            container.classList.remove('transitioning');
+        }, 140);
+    });
+"))
 	),
 	
 	sidebar = sidebar(
 		id = "main_sidebar",
 		title = "Filtros",
+		
+		# Período
+		selectInput(
+			inputId = "summary_year",
+			label = "Período",
+			choices = c("Todos" = "all"),
+			selected = "all",
+			width = "100%"
+		),
+		
+		hr(),
 		
 		selectizeInput(
 			inputId = "exclude_countries",
@@ -169,16 +165,6 @@ ui <- page_sidebar(
 			"Selecciona un país en el mapa o en el gráfico para destacarlo."
 		),
 		
-		dateRangeInput(
-			inputId = "date_range",
-			label = "Período de visitas",
-			start = as.Date(min(combined_data$date)),
-			end = as.Date(max(combined_data$date)),
-			min = as.Date(min(combined_data$date)),
-			max = as.Date(max(combined_data$date)),
-			language = "es",
-			separator = " hasta "
-		),
 		
 		selectizeInput(
 			inputId = "language",
@@ -217,7 +203,7 @@ ui <- page_sidebar(
 		checkboxInput(
 			inputId = "include_wordpress",
 			label = "Incluir WordPress",
-			value = FALSE
+			value = TRUE
 		)
 		
 	),
@@ -250,26 +236,68 @@ server <- function(input, output, session) {
 		)
 	})
 	
-	# Mostrar u ocultar pestañas según la fuente de datos
-	observeEvent(input$include_wordpress, {
+	# Controlar disponibilidad de la casilla WordPress
+	observeEvent(input$summary_year, {
 		
-		if (isTRUE(input$include_wordpress)) {
+		if (isTRUE(input$summary_year %in% c("2024", "2025"))) {
 			
-			# Si estamos en una pestaña que desaparecerá,
-			# seleccionar primero Tráfico
-			if (input$main_tabs %in% c("Geografía", "Fuentes")) {
-				nav_select("main_tabs", "Tráfico")
-			}
+			updateCheckboxInput(
+				session,
+				"include_wordpress",
+				value = TRUE
+			)
 			
-			nav_hide("main_tabs", "Geografía")
-			nav_hide("main_tabs", "Fuentes")
+			shinyjs::disable("include_wordpress")
 			
 		} else {
 			
-			nav_show("main_tabs", "Geografía")
-			nav_show("main_tabs", "Fuentes")
+			shinyjs::enable("include_wordpress")
 			
 		}
+		
+	}, ignoreInit = FALSE)
+	
+	# Controlar disponibilidad de pestañas según la fuente de datos
+	observeEvent(input$include_wordpress, {
+		
+		wordpress_enabled <- isTRUE(input$include_wordpress)
+		
+		# Si se activa WordPress estando en una pestaña
+		# que quedará deshabilitada, cambiar primero a Tráfico.
+		if (
+			wordpress_enabled &&
+			input$main_tabs %in% c("Geografía")
+		) {
+			nav_select("main_tabs", "Tráfico")
+		}
+		
+		# Deshabilitar o habilitar las pestañas mediante JavaScript.
+		disabled_js <- if (wordpress_enabled) "true" else "false"
+		
+		shinyjs::runjs(sprintf("
+        (function() {
+            const root = document.getElementById('main_tabs');
+            if (!root) return;
+
+            ['Geografía'].forEach(function(value) {
+                const tab = root.querySelector(
+                    '.nav-link[data-value=\"' + value + '\"]'
+                );
+
+                if (!tab) return;
+
+                tab.classList.toggle('disabled', %s);
+
+                if (%s) {
+                    tab.setAttribute('aria-disabled', 'true');
+                    tab.setAttribute('tabindex', '-1');
+                } else {
+                    tab.removeAttribute('aria-disabled');
+                    tab.removeAttribute('tabindex');
+                }
+            });
+        })();
+    ", disabled_js, disabled_js))
 		
 	}, ignoreInit = FALSE)
 	
@@ -279,11 +307,15 @@ server <- function(input, output, session) {
 		data <- goatcounter
 		
 		# Filtrar por período
-		data <- data %>%
-			filter(
-				Date >= as.POSIXct(input$date_range[1], tz = "UTC"),
-				Date < as.POSIXct(input$date_range[2] + 1, tz = "UTC")
-			)
+		if (!is.null(input$summary_year) &&
+			input$summary_year != "all") {
+			
+			data <- data %>%
+				filter(
+					format(Date, "%Y", tz = "UTC") == input$summary_year
+				)
+			
+		}
 		
 		# Filtrar por idioma
 		if (length(input$language) > 0) {
@@ -326,11 +358,15 @@ server <- function(input, output, session) {
 		}
 		
 		# Filtrar por período
-		data <- data %>%
-			filter(
-				date >= as.Date(input$date_range[1]),
-				date <= as.Date(input$date_range[2])
-			)
+		if (!is.null(input$summary_year) &&
+			input$summary_year != "all") {
+			
+			data <- data %>%
+				filter(
+					format(date, "%Y") == input$summary_year
+				)
+			
+		}
 		
 		# Filtrar por idioma
 		if (length(input$language) > 0) {
@@ -353,9 +389,12 @@ server <- function(input, output, session) {
 	
 	# Servidor del módulo de Tráfico
 	traffic_server(
+		input = input,
 		output = output,
 		filtered_data = filtered_data,
-		filtered_combined_data = filtered_combined_data
+		filtered_combined_data = filtered_combined_data,
+		goatcounter = goatcounter,
+		wordpress_monthly_visits = wordpress_monthly_visits
 	)
 	
 	# Servidor del módulo de Geografía
@@ -385,7 +424,8 @@ server <- function(input, output, session) {
 		input = input,
 		output = output,
 		session = session,
-		filtered_referrer_data = filtered_referrer_data
+		filtered_referrer_data = filtered_referrer_data,
+		wordpress_sources = wordpress_sources
 	)
 	
 	# Servidor del módulo de Editorial
@@ -400,7 +440,9 @@ server <- function(input, output, session) {
 		output = output,
 		session = session,
 		goatcounter = goatcounter,
-		goatcounter_normalized = goatcounter_normalized
+		goatcounter_normalized = goatcounter_normalized,
+		wordpress_monthly_visits = wordpress_monthly_visits,
+		wordpress_yearly_countries = wordpress_yearly_countries
 	)
 	
 }

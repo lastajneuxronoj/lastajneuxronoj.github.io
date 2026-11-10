@@ -70,9 +70,13 @@ articles_server <- function(input, output, filtered_combined_data) {
 			) %>%
 			select(article_id, article_label)
 		
-		# Contar visitas por artículo e idioma
+		# Sumar visitas por artículo e idioma
 		data %>%
-			count(article_id, article_language, name = "visits") %>%
+			group_by(article_id, article_language) %>%
+			summarise(
+				visits = sum(visits, na.rm = TRUE),
+				.groups = "drop"
+			) %>%
 			left_join(article_titles, by = "article_id") %>%
 			group_by(article_id) %>%
 			mutate(

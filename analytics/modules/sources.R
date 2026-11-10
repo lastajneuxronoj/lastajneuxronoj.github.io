@@ -27,7 +27,13 @@ sources_ui <- nav_panel(
 	)
 )
 
-sources_server <- function(input, output, session, filtered_referrer_data) {
+sources_server <- function(
+		input,
+		output,
+		session,
+		filtered_referrer_data,
+		wordpress_sources
+) {
 	
 	# Categoría de fuente seleccionada
 	selected_source <- reactiveVal(NULL)
@@ -122,9 +128,71 @@ sources_server <- function(input, output, session, filtered_referrer_data) {
 	)
 	
 	# Distribución de fuentes
+	# Datos combinados de fuentes
+	sources_combined_data <- reactive({
+		
+		# GoatCounter: desde el 1 de agosto de 2026
+		gc_data <- filtered_referrer_data() %>%
+			filter(date >= as.Date("2026-08-01")) %>%
+			count(source_platform, source_category, name = "visits")
+		
+		# WordPress histórico
+		wp_data <- wordpress_sources %>%
+			mutate(
+				source_platform = case_when(
+					source == "Wordpress" & year <= 2025 ~
+						"Lastaj Neŭronoj",
+					source == "Wordpress" & year >= 2026 ~
+						"Lastaj Neŭronoj (WordPress)",
+					TRUE ~ source
+				),
+				source_category = classify_source_category(source_platform)
+			)
+		
+		# Aplicar el filtro de período
+		if (!is.null(input$summary_year) &&
+			input$summary_year != "all") {
+			
+			wp_data <- wp_data %>%
+				filter(year == as.integer(input$summary_year))
+		}
+		
+		# La casilla controla los datos de WordPress de 2026
+		if (!isTRUE(input$include_wordpress)) {
+			wp_data <- wp_data %>%
+				filter(year != 2026)
+		}
+		
+		# No mezclar datos históricos con filtros
+		# que WordPress no permite aplicar
+		if (
+			length(input$language) > 0 ||
+			length(input$exclude_countries) > 0
+		) {
+			wp_data <- wp_data %>%
+				slice(0)
+		}
+		
+		# Aplicar el filtro de categorías
+		if (length(input$source_category_filter) > 0) {
+			wp_data <- wp_data %>%
+				filter(source_category %in% input$source_category_filter)
+		}
+		
+		wp_data <- wp_data %>%
+			select(source_platform, source_category, visits)
+		
+		# Combinar y consolidar
+		bind_rows(gc_data, wp_data) %>%
+			group_by(source_platform, source_category) %>%
+			summarise(visits = sum(visits), .groups = "drop")
+	})
+	
+	# Distribución de fuentes
 	sources_distribution_data <- reactive({
-		filtered_referrer_data() %>%
-			count(source_category, name = "visits") %>%
+		sources_combined_data() %>%
+			group_by(source_category) %>%
+			summarise(visits = sum(visits), .groups = "drop") %>%
 			arrange(desc(visits))
 	})
 	
@@ -176,8 +244,7 @@ sources_server <- function(input, output, session, filtered_referrer_data) {
 		)
 		
 		event_register(p, "plotly_click")
-	}) %>%
-		bindCache(filtered_referrer_data())
+	}) %>% bindCache(sources_combined_data())
 	
 	outputOptions(
 		output,
@@ -188,23 +255,31 @@ sources_server <- function(input, output, session, filtered_referrer_data) {
 	# Referentes específicos
 	sources_referrers_data <- reactive({
 		
-		filtered_referrer_data() %>%
+		data <- sources_combined_data() %>%
 			filter(
 				!source_platform %in% c(
 					"Sin referente",
 					"Lastaj Neŭronoj",
+					"Lastaj Neŭronoj (WordPress)",
 					"Entorno de administración y pruebas",
 					"Campaña propia"
 				)
+			)
+		
+		# Aplicar selección de categoría
+		selected <- selected_source()
+		
+		if (!is.null(selected) && length(selected) > 0) {
+			data <- data %>%
+				filter(source_category %in% selected)
+		}
+		
+		data %>%
+			group_by(source_platform) %>%
+			summarise(
+				visits = sum(visits, na.rm = TRUE),
+				.groups = "drop"
 			) %>%
-			{
-				if (!is.null(selected_source())) {
-					filter(., source_category == selected_source())
-				} else {
-					.
-				}
-			} %>%
-			count(source_platform, name = "visits") %>%
 			arrange(desc(visits)) %>%
 			slice_head(n = 15) %>%
 			mutate(
@@ -249,11 +324,7 @@ sources_server <- function(input, output, session, filtered_referrer_data) {
 				yaxis = list(title = ""),
 				showlegend = FALSE
 			)
-	}) %>%
-		bindCache(
-			filtered_referrer_data(),
-			selected_source()
-		)
+	}) %>% bindCache(sources_combined_data(), selected_source())
 	
 	# Evolución temporal de las fuentes
 	sources_evolution_data <- reactive({

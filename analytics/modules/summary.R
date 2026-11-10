@@ -2,22 +2,6 @@
 summary_ui <- nav_panel(
 	"Resumen",
 	
-	# Filtro temporal
-	card(
-		card_header("Período"),
-		div(
-			class = "d-flex align-items-center gap-3",
-			strong("Año"),
-			selectInput(
-				"summary_year",
-				NULL,
-				choices = c("Todos" = "all"),
-				selected = "all",
-				width = "200px"
-			)
-		)
-	),
-	
 	# Indicadores generales
 	layout_column_wrap(
 		width = 1/3,
@@ -53,6 +37,24 @@ summary_ui <- nav_panel(
 		)
 	),
 	
+	# Estadísticas geográficas
+	layout_column_wrap(
+		width = 1/2,
+		
+		card(
+			card_header("Distribución geográfica de visitas"),
+			leafletOutput(
+				"summary_country_map",
+				height = "450px"
+			)
+		),
+		
+		card(
+			card_header("Países con más visitas"),
+			DT::DTOutput("summary_top_countries")
+		)
+	),
+	
 	# Estadísticas de tráfico
 	layout_column_wrap(
 		width = 1/2,
@@ -72,7 +74,7 @@ summary_ui <- nav_panel(
 	)
 )
 
-summary_server <- function(input, output, session, goatcounter, goatcounter_normalized) {
+summary_server <- function(input, output, session, goatcounter, goatcounter_normalized, wordpress_monthly_visits, wordpress_yearly_countries) {
 	
 	editorial_data <- load_editorial_data()
 	current <- editorial_data$current
@@ -86,6 +88,10 @@ summary_server <- function(input, output, session, goatcounter, goatcounter_norm
 				tz = "UTC"
 			),
 			format(
+				wordpress_monthly_visits$date,
+				"%Y"
+			),
+			format(
 				editorial_data$snapshots$date,
 				"%Y"
 			)
@@ -94,15 +100,7 @@ summary_server <- function(input, output, session, goatcounter, goatcounter_norm
 	)
 	
 	# Seleccionar el año actual por defecto
-	current_year <- format(Sys.Date(), "%Y")
-	
-	selected_year <- if (current_year %in% years) {
-		current_year
-	} else if (length(years) > 0) {
-		years[1]
-	} else {
-		"all"
-	}
+	selected_year <- "all"
 	
 	# Actualizar el selector
 	observe({
@@ -158,40 +156,269 @@ summary_server <- function(input, output, session, goatcounter, goatcounter_norm
 	
 	# Visitas
 	output$summary_visits <- renderText({
+		
+		# Visitas históricas de WordPress
+		wp_data <- wordpress_monthly_visits %>%
+			filter(
+				date <= as.Date("2026-07-01")
+			)
+		
+		# Visitas de GoatCounter
+		gc_data <- goatcounter %>%
+			filter(
+				as.Date(Date, tz = "UTC") >= as.Date("2026-07-31")
+			)
+		
+		# Aplicar año seleccionado
+		if (!is.null(input$summary_year) &&
+			input$summary_year != "all") {
+			
+			wp_data <- wp_data %>%
+				filter(
+					format(date, "%Y") == input$summary_year
+				)
+			
+			gc_data <- gc_data %>%
+				filter(
+					format(Date, "%Y", tz = "UTC") == input$summary_year
+				)
+			
+		}
+		
+		# WordPress de 2026 es opcional
+		if (!isTRUE(input$include_wordpress)) {
+			
+			wp_data <- wp_data %>%
+				filter(
+					format(date, "%Y") != "2026"
+				)
+			
+		}
+		
+		total_visits <- sum(wp_data$visits) + nrow(gc_data)
+		
 		format(
-			nrow(summary_data()),
+			total_visits,
 			big.mark = ".",
 			scientific = FALSE
 		)
+		
 	})
 	
 	# Países alcanzados acumulados
 	output$summary_countries <- renderText({
 		
-		data <- goatcounter %>%
-			mutate(
-				year = format(Date, "%Y", tz = "UTC")
-			)
+		wp_data <- wordpress_yearly_countries
 		
-		# Incluir todos los años hasta el seleccionado
-		if (!is.null(input$summary_year) &&
-			input$summary_year != "all") {
+		gc_data <- goatcounter %>%
+			mutate(year = format(Date, "%Y", tz = "UTC"))
+		
+		if (!is.null(input$summary_year) && input$summary_year != "all") {
+			wp_data <- wp_data %>%
+				filter(year <= as.integer(input$summary_year))
 			
-			data <- data %>%
-				filter(year <= input$summary_year)
+			gc_data <- gc_data %>%
+				filter(as.integer(year) <= as.integer(input$summary_year))
 		}
 		
-		countries <- data %>%
+		# WordPress de 2026 es opcional
+		if (!isTRUE(input$include_wordpress)) {
+			wp_data <- wp_data %>%
+				filter(year != 2026)
+		}
+		
+		wp_countries <- wp_data %>%
 			filter(
 				!is.na(country),
+				country != "",
 				country != "País no identificado"
 			) %>%
 			distinct(country)
 		
-		format(
-			nrow(countries),
-			big.mark = ".",
-			scientific = FALSE
+		gc_countries <- gc_data %>%
+			filter(
+				!is.na(country),
+				country != "",
+				country != "País no identificado"
+			) %>%
+			distinct(country)
+		
+		total_countries <- bind_rows(wp_countries, gc_countries) %>%
+			distinct(country) %>%
+			nrow()
+		
+		format(total_countries, big.mark = ".", scientific = FALSE)
+	})
+	
+	# Distribución geográfica de visitas
+	summary_country_data <- reactive({
+		
+		# Visitas históricas de WordPress
+		wp_data <- wordpress_yearly_countries
+		
+		# Visitas individuales de GoatCounter
+		gc_data <- goatcounter %>%
+			mutate(
+				year = format(Date, "%Y", tz = "UTC")
+			) %>%
+			count(year, country, name = "visits")
+		
+		# Aplicar el año seleccionado
+		if (!is.null(input$summary_year) &&
+			input$summary_year != "all") {
+			
+			selected_year <- as.integer(input$summary_year)
+			
+			wp_data <- wp_data %>%
+				filter(year == selected_year)
+			
+			gc_data <- gc_data %>%
+				filter(as.integer(year) == selected_year)
+		}
+		
+		# WordPress de 2026 es opcional
+		if (!isTRUE(input$include_wordpress)) {
+			wp_data <- wp_data %>%
+				filter(year != 2026)
+		}
+		
+		# Combinar ambas fuentes
+		bind_rows(
+			wp_data %>% select(country, visits),
+			gc_data %>% select(country, visits)
+		) %>%
+			filter(
+				!is.na(country),
+				country != "",
+				country != "País no identificado"
+			) %>%
+			group_by(country) %>%
+			summarise(
+				visits = sum(visits, na.rm = TRUE),
+				.groups = "drop"
+			) %>%
+			arrange(desc(visits))
+	})
+	
+	# Datos geográficos para el mapa
+	summary_country_map_data <- reactive({
+		
+		data <- summary_country_data() %>%
+			mutate(
+				iso3c = countrycode::countrycode(
+					country,
+					origin = "country.name.es",
+					destination = "iso3c",
+					warn = FALSE
+				)
+			) %>%
+			filter(!is.na(iso3c))
+		
+		world_data <- world %>%
+			mutate(
+				map_iso3c = if_else(
+					iso_a3 == "-99",
+					adm0_a3,
+					iso_a3
+				)
+			)
+		
+		world_data %>%
+			left_join(
+				data,
+				by = c("map_iso3c" = "iso3c")
+			) %>%
+			mutate(
+				visits = tidyr::replace_na(visits, 0)
+			)
+	})
+	
+	# Mapa mundial de visitas
+	output$summary_country_map <- renderLeaflet({
+		
+		data <- summary_country_map_data()
+		
+		# Escala de colores
+		pal <- leaflet::colorNumeric(
+			palette = "YlOrRd",
+			domain = data$visits,
+			na.color = "#eeeeee"
+		)
+		
+		leaflet(data = data) %>%
+			addTiles(
+			    urlTemplate = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+			    attribution = paste(
+			        "&copy; <a href='https://www.openstreetmap.org/copyright'>",
+			        "OpenStreetMap</a> contributors"
+			    )
+			) %>%
+			addPolygons(
+				fillColor = ~pal(visits),
+				fillOpacity = 0.8,
+				color = "#777777",
+				weight = 0.4,
+				opacity = 1,
+				label = ~paste0(
+					name,
+					": ",
+					format(
+						visits,
+						big.mark = ".",
+						scientific = FALSE
+					),
+					" visitas"
+				),
+				highlightOptions = highlightOptions(
+					weight = 2,
+					color = "#333333",
+					fillOpacity = 0.9,
+					bringToFront = TRUE
+				)
+			) %>%
+			addLegend(
+				position = "bottomright",
+				pal = pal,
+				values = ~visits,
+				title = "Visitas",
+				labFormat = labelFormat(
+					big.mark = "."
+				),
+				opacity = 0.8
+			) %>%
+			setView(
+				lng = 0,
+				lat = 20,
+				zoom = 2
+			)
+	})
+	
+	# Tabla de los países con más visitas
+	output$summary_top_countries <- DT::renderDT({
+		
+		data <- summary_country_data() %>%
+			slice_head(n = 15) %>%
+			mutate(
+				Porcentaje = round(
+					visits / sum(summary_country_data()$visits) * 100,
+					1
+				)
+			) %>%
+			transmute(
+				País = country,
+				Visitas = visits,
+				`Porcentaje (%)` = Porcentaje
+			)
+		
+		DT::datatable(
+			data,
+			rownames = FALSE,
+			options = list(
+				dom = "t",
+				ordering = FALSE,
+				autoWidth = TRUE,
+				pageLength = 15
+			)
 		)
 	})
 	
@@ -256,8 +483,25 @@ summary_server <- function(input, output, session, goatcounter, goatcounter_norm
 	# Preparar datos de artículos destacados
 	summary_articles_data <- reactive({
 		
-		data <- goatcounter_normalized %>%
-			filter(type == "Artículo") %>%
+		# Estadísticas históricas de WordPress
+		wp_data <- wordpress_articles %>%
+			filter(
+				year != 2026 | isTRUE(input$include_wordpress)
+			) %>%
+			transmute(
+				year = as.character(year),
+				article_id,
+				article_language = "eo",
+				article_title = title,
+				visits
+			)
+		
+		# Estadísticas de GoatCounter
+		gc_data <- goatcounter_normalized %>%
+			filter(
+				type == "Artículo",
+				date >= as.Date("2026-08-01")
+			) %>%
 			mutate(
 				year = format(date, "%Y"),
 				article_id = sub(
@@ -270,11 +514,22 @@ summary_server <- function(input, output, session, goatcounter, goatcounter_norm
 					" \\| Lastaj Neŭronoj$",
 					"",
 					title
-				)
+				),
+				visits = 1
 			) %>%
 			filter(
 				article_language %in% names(LANGUAGE_LABELS)
+			) %>%
+			select(
+				year,
+				article_id,
+				article_language,
+				article_title,
+				visits
 			)
+		
+		# Combinar ambas fuentes
+		data <- bind_rows(wp_data, gc_data)
 		
 		# Aplicar el año seleccionado
 		if (!is.null(input$summary_year) &&
@@ -282,7 +537,6 @@ summary_server <- function(input, output, session, goatcounter, goatcounter_norm
 			
 			data <- data %>%
 				filter(year == input$summary_year)
-			
 		}
 		
 		# Obtener el título de cada artículo.
@@ -304,9 +558,13 @@ summary_server <- function(input, output, session, goatcounter, goatcounter_norm
 				.groups = "drop"
 			)
 		
-		# Contar visitas totales por artículo
+		# Sumar visitas de ambas fuentes
 		data %>%
-			count(article_id, name = "visits") %>%
+			group_by(article_id) %>%
+			summarise(
+				visits = sum(visits, na.rm = TRUE),
+				.groups = "drop"
+			) %>%
 			left_join(article_titles, by = "article_id") %>%
 			left_join(article_languages, by = "article_id") %>%
 			arrange(desc(visits), as.integer(article_id)) %>%

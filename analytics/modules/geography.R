@@ -164,9 +164,13 @@ geography_server <- function(input, output, filtered_data, world) {
 			domain = data$visits
 		)
 		
-		leaflet(data) %>%
-			addProviderTiles(
-				providers$CartoDB.Positron
+		leaflet(data = data) %>%
+			addTiles(
+				urlTemplate = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+				attribution = paste(
+					"&copy; <a href='https://www.openstreetmap.org/copyright'>",
+					"OpenStreetMap</a> contributors"
+				)
 			) %>%
 			addPolygons(
 				fillColor = ~pal(visits),

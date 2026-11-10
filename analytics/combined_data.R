@@ -8,33 +8,47 @@ library(dplyr)
 # 1. Normalizar datos de WordPress
 # ------------------------------------------
 
-normalize_wordpress <- function(data) {
+
+normalize_wordpress <- function(data, historical_articles) {
 	
-	data %>%
+	# Estadísticas anuales de 2024 y 2025
+	historical <- historical_articles %>%
+		filter(year %in% c(2024, 2025)) %>%
+		transmute(
+			date = as.Date(sprintf("%d-01-01", year)),
+			content_id = paste0(
+				"article-",
+				sprintf("%03d", as.integer(article_id))
+			),
+			title = title,
+			type_original = "post",
+			type = "Artículo",
+			language = "eo",
+			platform = "WordPress",
+			visits = visits,
+			source_category = NA_character_,
+			source_platform = NA_character_
+		)
+	
+	# Estadísticas diarias de 2026
+	current <- data %>%
 		transmute(
 			date = date,
-			
 			content_id = case_when(
 				type == "post" ~ paste0(
 					"article-",
-					sprintf(
-						"%03d",
-						as.integer(if_else(type == "post", id, "0"))
-					)
+					sprintf("%03d", as.integer(id))
 				),
 				TRUE ~ paste0("wp-", id)
 			),
-			
 			title = title,
 			type_original = type,
-			
 			type = case_when(
 				type == "post" ~ "Artículo",
 				type == "page" ~ "Página informativa",
 				type == "index" ~ "Índice",
 				TRUE ~ "Otras"
 			),
-			
 			language = language,
 			platform = platform,
 			visits = views,
@@ -42,7 +56,9 @@ normalize_wordpress <- function(data) {
 			source_platform = NA_character_
 		)
 	
+	bind_rows(historical, current)
 }
+
 
 # ------------------------------------------
 # 2. Normalizar datos de GoatCounter
