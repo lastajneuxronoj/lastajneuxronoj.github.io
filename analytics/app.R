@@ -66,6 +66,7 @@ world <- rnaturalearth::ne_countries(
 
 # Cargar módulos
 
+source(file.path(APP_DIR, "modules", "summary.R"))
 source(file.path(APP_DIR, "modules", "geography.R"))
 source(file.path(APP_DIR, "modules", "traffic.R"))
 source(file.path(APP_DIR, "modules", "languages.R"))
@@ -99,12 +100,31 @@ ui <- page_sidebar(
 			.editorial-value-box .value-box-showcase {
 				padding-top: 0.75rem;
 			}
+			
+			.bslib-sidebar-layout.summary-active > .collapse-toggle {
+				display: none !important;
+			}
 		")),
 		
 		tags$script(HTML("
 			$(document).on('shiny:inputchanged', function(event) {
 
-				if (event.name !== 'include_wordpress') return;
+				if (event.name === 'main_tabs') {
+
+					const sidebar = document.getElementById('main_sidebar');
+					const layout = sidebar?.closest('.bslib-sidebar-layout');
+
+					if (layout) {
+						layout.classList.toggle(
+						'summary-active',
+						event.value === 'Resumen'
+					);
+				}
+
+				return;
+			}
+
+			if (event.name !== 'include_wordpress') return;
 
 				const container = document.getElementById(
 					'daily_traffic_container'
@@ -123,6 +143,7 @@ ui <- page_sidebar(
 	),
 	
 	sidebar = sidebar(
+		id = "main_sidebar",
 		title = "Filtros",
 		
 		selectizeInput(
@@ -203,6 +224,7 @@ ui <- page_sidebar(
 	
 	navset_card_tab(
 		id = "main_tabs",
+		summary_ui,
 		geography_ui,
 		traffic_ui,
 		languages_ui,
@@ -218,6 +240,15 @@ ui <- page_sidebar(
 # ==========================================
 
 server <- function(input, output, session) {
+	
+	# Ocultar el sidebar en la pestaña Resumen
+	observeEvent(input$main_tabs, {
+		bslib::toggle_sidebar(
+			id = "main_sidebar",
+			open = input$main_tabs != "Resumen",
+			session = session
+		)
+	})
 	
 	# Mostrar u ocultar pestañas según la fuente de datos
 	observeEvent(input$include_wordpress, {
@@ -362,6 +393,15 @@ server <- function(input, output, session) {
 		input,
 		output
 		)
+	
+	# Servidor del módulo de Resumen
+	summary_server(
+		input = input,
+		output = output,
+		session = session,
+		goatcounter = goatcounter,
+		goatcounter_normalized = goatcounter_normalized
+	)
 	
 }
 

@@ -44,6 +44,11 @@ load_editorial_data <- function() {
 			snapshot = i,
 			date = as.Date(substr(snapshot[["date"]], 1, 10)),
 			versions = length(snapshot[["posts"]]),
+			articles = length(unique(vapply(
+				snapshot[["posts"]],
+				function(post) as.character(post[["number"]]),
+				character(1)
+			))),
 			words = as.integer(content[["totalWords"]]),
 			normal_words = as.integer(content[["totalNormalWords"]]),
 			details_words = as.integer(content[["totalDetailsWords"]]),
@@ -682,7 +687,6 @@ editorial_server <- function(input, output) {
 			new_language = "Nuevos idiomas",
 			site_launch = "Lanzamientos",
 			work_release = "Lanzamientos"
-			
 		)
 		
 		activity_data <- activity_data %>%
@@ -718,4 +722,3 @@ editorial_server <- function(input, output) {
 			)
 	})
 }
-
