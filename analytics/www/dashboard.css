@@ -85,6 +85,33 @@ html,
 }
 
 /* ==========================================
+   SIDEBAR: IDENTIDAD VISUAL
+   ========================================== */
+
+/* Separadores */
+#main_sidebar hr {
+    border-color: var(--tertiary-color);
+    opacity: 0.6;
+}
+
+/* Etiquetas */
+#main_sidebar label {
+    color: var(--background-color);
+}
+
+/* Botón de actualizar */
+#main_sidebar .btn {
+    color: var(--background-color);
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+}
+
+#main_sidebar .btn:hover {
+    background-color: var(--tertiary-color);
+    border-color: var(--tertiary-color);
+}
+
+/* ==========================================
    TARJETAS Y CONTENEDORES
    ========================================== */
 
@@ -104,6 +131,44 @@ html,
 .plotly.html-widget {
     border-radius: var(--plot-corner-radius);
     overflow: hidden;
+}
+
+/* ==========================================
+   NAVEGACIÓN: PESTAÑAS
+   ========================================== */
+
+.nav-tabs {
+    color:white;
+    background-color: #E5E1DA;
+    border-color: transparent;
+}
+
+/* Pestañas inactivas */
+.nav-tabs .nav-link {
+    color: var(--secondary-color);
+    background-color: #E5E1DA;
+    border-bottom: 1px solid var(--tertiary-color);
+    transition: background-color 0.2s, color 0.2s;
+}
+
+/* Hover */
+.nav-tabs .nav-link:hover {
+    color:white !important;
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+}
+
+/* Pestaña activa */
+.nav-tabs .nav-link.active {
+    color: var(--background-color);
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+/* Foco de teclado */
+.nav-tabs .nav-link:focus-visible {
+    outline: 2px solid var(--tertiary-color);
+    outline-offset: 2px;
 }
 
 /* ==========================================
@@ -156,6 +221,34 @@ table.dataTable {
     margin-bottom: 0 !important;
 }
 
+/* Estado normal */
+.dataTables_wrapper .dataTables_paginate .page-link {
+    color: #222831;
+    background-color: #F4F1EC;
+    border-color: #948979;
+}
+
+/* Hover */
+.dataTables_wrapper .dataTables_paginate .page-link:hover {
+    color: #F4F1EC;
+    background-color: #393E46;
+    border-color: #393E46;
+}
+
+/* Página activa */
+.dataTables_wrapper .dataTables_paginate .page-item.active .page-link {
+    color: #F4F1EC;
+    background-color: #222831;
+    border-color: #222831;
+}
+
+/* Botones deshabilitados */
+.dataTables_wrapper .dataTables_paginate .page-item.disabled .page-link {
+    color: #948979;
+    background-color: #F4F1EC;
+    border-color: #DFD0B8;
+}
+
 /* Centrar verticalmente la tabla de artículos */
 .top-articles-card {
     display: flex;
@@ -186,10 +279,66 @@ table.dataTable {
     overflow: hidden;
 }
 
+/* ==========================================
+   TRÁFICO: DISTRIBUCIÓN DE TARJETAS
+   ========================================== */
+
+.traffic-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+    min-width: 0;
+}
+
+.traffic-grid > .card {
+    min-width: 0;
+    width: 100%;
+}
+
+/* Orientación vertical: una columna */
+@media (orientation: portrait) {
+    .traffic-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
 
 /* ==========================================
    GEOGRAFÍA: DISTRIBUCIÓN DE TARJETAS
    ========================================== */
+
+/* Controles DataTables: búsqueda a la izquierda y páginas a la derecha */
+#country_table_wrapper .row:last-child > div:first-child {
+    display: flex;
+    justify-content: flex-start;
+    text-align: left !important;
+}
+
+#country_table_wrapper .dataTables_filter {
+    width: 100%;
+    text-align: left !important;
+}
+
+#country_table_wrapper .dataTables_filter label {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.5rem;
+    margin: 0;
+}
+
+#country_table_wrapper .dataTables_filter input {
+    width: auto;
+}
+
+#country_table_wrapper .dataTables_filter {
+    text-align: left !important;
+}
+
+#country_table_wrapper .dataTables_paginate {
+    display: flex;
+    justify-content: flex-end;
+}
 
 /* Primera columna: dos tarjetas apiladas */
 .country-left-column {
@@ -231,3 +380,106 @@ table.dataTable {
     overflow: auto;
 }
 
+/* La tabla ocupa el espacio restante de la columna */
+#country_table_card {
+    display: flex;
+    flex: 1 1 0%;
+    flex-direction: column;
+    min-height: 0;
+    overflow: hidden;
+}
+
+#country_table_card .card-body {
+    display: flex;
+    flex: 1 1 0%;
+    flex-direction: column;
+    min-height: 0;
+    overflow: hidden;
+}
+
+
+/* ==========================================
+   EDITORIAL: DISTRIBUCIÓN DE GRÁFICOS
+   ========================================== */
+
+.editorial-charts-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+    grid-template-areas: "left distribution";
+    gap: 1rem;
+    align-items: stretch;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.editorial-charts-left {
+    grid-area: left;
+    display: grid;
+    grid-template-rows: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+    min-width: 0;
+    min-height: 0;
+}
+
+.editorial-distribution-card {
+    grid-area: distribution;
+}
+
+.editorial-chart-card {
+    min-width: 0;
+    min-height: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.editorial-chart-card .card-body {
+    flex: 1 1 0%;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* Contenedores de los gráficos */
+.editorial-chart-card .shiny-plot-output {
+    flex: 1 1 0%;
+    min-height: 0;
+    width: 100%;
+}
+
+.editorial-chart-card .plotly.html-widget {
+    height: 100% !important;
+    min-height: 0;
+}
+
+/* ==========================================
+   EDITORIAL: UNA COLUMNA EN ORIENTACIÓN VERTICAL
+   ========================================== */
+
+@media (orientation: portrait) {
+
+    .editorial-charts-grid {
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-rows: repeat(3, minmax(0, 1fr));
+        grid-template-areas:
+            "evolution"
+            "activity"
+            "distribution";
+        overflow: visible;
+    }
+
+    .editorial-charts-left {
+        display: contents;
+    }
+
+    .editorial-charts-left > :first-child {
+        grid-area: evolution;
+    }
+
+    .editorial-charts-left > :last-child {
+        grid-area: activity;
+    }
+
+}

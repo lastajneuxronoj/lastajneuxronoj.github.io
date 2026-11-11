@@ -578,6 +578,7 @@ geography_server <- function(
 			escape = FALSE,
 			selection = "single",
 			options = list(
+				dom = "t<'row align-items-center mt-2'<'col-md-6'f><'col-md-6'p>>",
 				pageLength = 10,
 				searching = TRUE,
 				ordering = TRUE,

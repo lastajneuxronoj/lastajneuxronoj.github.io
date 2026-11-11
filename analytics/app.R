@@ -297,19 +297,33 @@ ui <- page_sidebar(
 	),
 	
 	tags$head(
-		
 		tags$style(
 			sprintf(
 				":root {
-            --card-background: %s;
-            --plot-background: %s;
-            --card-corner-radius: %s;
-            --plot-corner-radius: %s;
-        }",
+                --card-background: %s;
+                --plot-background: %s;
+                --card-corner-radius: %s;
+                --plot-corner-radius: %s;
+
+                --background-color: %s;
+                --base-color: %s;
+                --base-color-solid: %s;
+                --primary-color: %s;
+                --secondary-color: %s;
+                --tertiary-color: %s;
+                --quaternary-color: %s;
+            }",
 				CARD_BACKGROUND,
 				PLOT_BACKGROUND,
 				CARD_CORNER_RADIUS,
-				PLOT_CORNER_RADIUS
+				PLOT_CORNER_RADIUS,
+				BACKGROUND_COLOR,
+				BASE_COLOR,
+				BASE_COLOR_SOLID,
+				PRIMARY_COLOR,
+				SECONDARY_COLOR,
+				TERTIARY_COLOR,
+				QUATERNARY_COLOR
 			)
 		),
 		
@@ -333,6 +347,8 @@ ui <- page_sidebar(
 	sidebar = sidebar(
 		id = "main_sidebar",
 		title = "Filtros",
+		bg = PRIMARY_COLOR,
+		fg = BACKGROUND_COLOR,
 		
 		# Período
 		selectInput(

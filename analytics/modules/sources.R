@@ -7,7 +7,7 @@ sources_ui <- nav_panel(
 	
 	# Distribución de fuentes y referentes específicos
 	layout_column_wrap(
-		width = 1/2,
+		width = "600px",
 		
 		card(
 			card_header("Distribución de fuentes"),

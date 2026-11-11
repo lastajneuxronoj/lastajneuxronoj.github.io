@@ -132,6 +132,7 @@ editorial_ui <- nav_panel(
 	
 	layout_column_wrap(
 		width = 1/5,
+		fill = FALSE,
 		
 		value_box(
 			title = "Versiones",
@@ -169,49 +170,47 @@ editorial_ui <- nav_panel(
 		)
 	),
 	
-	card(
-		card_header("Desarrollo editorial"),
+	
+	div(
+		class = "editorial-charts-grid",
 		
 		div(
-			class = "d-flex align-items-center gap-3 flex-wrap",
+			class = "editorial-charts-left",
 			
-			selectInput(
-				"editorial_chart_type",
-				NULL,
-				choices = c(
-					"Evolución" = "evolution",
-					"Distribución actual" = "distribution",
-					"Actividad trimestral" = "activity"
-				),
-				selected = "evolution",
-				width = "220px"
-			),
-			
-			conditionalPanel(
-				condition = "input.editorial_chart_type == 'evolution'",
+			card(
+				class = "editorial-chart-card",
+				card_header("Evolución de palabras"),
 				checkboxInput(
 					"show_quarterly_growth",
 					"Mostrar variación trimestral de la producción",
 					value = FALSE
+				),
+				plotlyOutput(
+					"editorial_words_chart",
+					height = "100%"
+				)
+			),
+			
+			card(
+				class = "editorial-chart-card",
+				card_header("Actividad editorial trimestral"),
+				plotlyOutput(
+					"editorial_activity_chart",
+					height = "100%"
 				)
 			)
 		),
 		
-		conditionalPanel(
-			condition = "input.editorial_chart_type == 'evolution'",
-			plotlyOutput("editorial_words_chart", height = "450px")
-		),
-		
-		conditionalPanel(
-			condition = "input.editorial_chart_type == 'distribution'",
-			plotlyOutput("editorial_language_distribution", height = "450px")
-		),
-		
-		conditionalPanel(
-			condition = "input.editorial_chart_type == 'activity'",
-			plotlyOutput("editorial_activity_chart", height = "450px")
+		card(
+			class = "editorial-chart-card editorial-distribution-card",
+			card_header("Distribución actual por idioma"),
+			plotlyOutput(
+				"editorial_language_distribution",
+				height = "100%"
+			)
 		)
 	)
+	
 )
 
 
@@ -523,10 +522,6 @@ editorial_server <- function(input, output) {
 	# Evolución de palabras por idioma
 	output$editorial_words_chart <- renderPlotly({
 		
-		if (input$editorial_chart_type != "evolution") {
-			return(NULL)
-		}
-		
 		# Leer la selección del sidebar
 		selected_languages <- input$language
 		
@@ -716,9 +711,6 @@ editorial_server <- function(input, output) {
 	# Distribución de palabras por idioma
 	output$editorial_language_distribution <- renderPlotly({
 		
-		if (input$editorial_chart_type != "distribution") {
-			return(NULL)
-		}
 		
 		data <- language_distribution() %>%
 			filter(words > 0) %>%
@@ -734,37 +726,84 @@ editorial_server <- function(input, output) {
 				   	))
 		}
 		
-		plot_ly(
-			data = data,
-			x = ~words,
-			y = ~reorder(language_label, words),
-			type = "bar",
-			orientation = "h",
-			marker = list(
-				color = ~color
-			),
-			text = ~paste0(
-				language_label,
-				": ",
-				format(words, big.mark = ".", decimal.mark = ","),
-				" palabras"
-			),
-			hoverinfo = "text"
-		) %>%
-			layout(
-				xaxis = list(
-					title = "Palabras",
-					tickformat = ",.0f",
-					rangemode = "tozero"
+		# Determinar la orientación según el ancho de la tarjeta
+		orientation <- input$editorial_distribution_orientation
+		
+		if (is.null(orientation)) {
+			orientation <- "vertical"
+		}
+		
+		# Construir el gráfico según la orientación
+		if (orientation == "horizontal") {
+			
+			p <- plot_ly(
+				data = data,
+				x = ~words,
+				y = ~reorder(language_label, words),
+				type = "bar",
+				orientation = "h",
+				marker = list(
+					color = ~color
 				),
-				yaxis = list(
-					title = ""
+				text = ~paste0(
+					language_label,
+					": ",
+					format(words, big.mark = ".", decimal.mark = ","),
+					" palabras"
 				),
-				showlegend = FALSE,
-				margin = list(
-					l = 100
+				hoverinfo = "text"
+			)
+			
+			p <- p %>%
+				layout(
+					xaxis = list(
+						title = "Palabras",
+						tickformat = ",.0f",
+						rangemode = "tozero"
+					),
+					yaxis = list(
+						title = ""
+					),
+					showlegend = FALSE,
+					margin = list(l = 100)
 				)
-			) %>%
+			
+		} else {
+			
+			p <- plot_ly(
+				data = data,
+				x = ~language_label,
+				y = ~words,
+				type = "bar",
+				marker = list(
+					color = ~color
+				),
+				text = ~paste0(
+					language_label,
+					": ",
+					format(words, big.mark = ".", decimal.mark = ","),
+					" palabras"
+				),
+				hoverinfo = "text"
+			)
+			
+			p <- p %>%
+				layout(
+					xaxis = list(
+						title = "",
+						tickangle = -45
+					),
+					yaxis = list(
+						title = "Palabras",
+						tickformat = ",.0f",
+						rangemode = "tozero"
+					),
+					showlegend = FALSE,
+					margin = list(b = 100)
+				)
+		}
+		
+		p %>%
 			apply_plotly_style()
 	})
 	

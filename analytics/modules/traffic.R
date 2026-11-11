@@ -10,8 +10,8 @@
 traffic_ui <- nav_panel(
 	"Tráfico",
 	
-	layout_column_wrap(
-		width = 1/2,
+	div(
+		class = "traffic-grid",
 		
 		card(
 			card_header("Visitas diarias — GoatCounter"),
@@ -21,22 +21,30 @@ traffic_ui <- nav_panel(
 		card(
 			card_header("Visitas mensuales — GoatCounter"),
 			plotlyOutput("monthly_traffic", height = "350px")
-		)
-	),
-	
-	card(
-		card_header("Visitas anuales — todas las plataformas"),
-		plotlyOutput("yearly_traffic", height = "400px")
-	),
-	
-	conditionalPanel(
-		condition = "!input.include_wordpress",
+		),
 		
-		accordion(
-			open = FALSE,
-			accordion_panel(
-				"Distribución de visitas por día y hora",
+		card(
+			card_header("Visitas anuales — todas las plataformas"),
+			plotlyOutput("yearly_traffic", height = "400px")
+		),
+		
+		card(
+			card_header("Distribución de visitas por día y hora"),
+			
+			conditionalPanel(
+				condition = "!input.include_wordpress",
 				plotlyOutput("traffic_heatmap", height = "400px")
+			),
+			
+			conditionalPanel(
+				condition = "input.include_wordpress",
+				div(
+					class = "text-center p-3",
+					style = "color: var(--tertiary-color);",
+					"Este gráfico no está disponible al incluir WordPress, ",
+					"ya que sus datos no ofrecen el mismo nivel de detalle horario ",
+					"que GoatCounter."
+				)
 			)
 		)
 	)
@@ -319,7 +327,8 @@ traffic_server <- function(
 					title = "",
 					autorange = "reversed"
 				)
-			)
+			) %>%
+			apply_plotly_style()
 		
 	})
 	
