@@ -74,7 +74,7 @@ summary_ui <- nav_panel(
 	)
 )
 
-summary_server <- function(input, output, session, goatcounter, goatcounter_normalized, wordpress_monthly_visits, wordpress_yearly_countries) {
+summary_server <- function(input, output, session, goatcounter, goatcounter_normalized, wordpress_monthly_visits, wordpress_yearly_countries, posts_languages) {
 	
 	editorial_data <- load_editorial_data()
 	current <- editorial_data$current
@@ -659,12 +659,16 @@ summary_server <- function(input, output, session, goatcounter, goatcounter_norm
 			select(article_id, article_title)
 		
 		# Identificar los idiomas disponibles
-		article_languages <- data %>%
-			distinct(article_id, article_language) %>%
+		article_languages <- posts_languages %>%
+			transmute(
+				article_id = number,
+				article_language = language
+			) %>%
+			distinct() %>%
 			group_by(article_id) %>%
 			summarise(
 				languages = paste(
-					vapply(article_language, function(lang) {
+					vapply(sort(article_language), function(lang) {
 						
 						label <- if (lang %in% names(LANGUAGE_LABELS)) {
 							unname(LANGUAGE_LABELS[lang])
@@ -709,11 +713,8 @@ summary_server <- function(input, output, session, goatcounter, goatcounter_norm
 			arrange(desc(visits), as.integer(article_id)) %>%
 			slice_head(n = 5) %>%
 			transmute(
-				Artículo = paste0(
-					article_id,
-					": ",
-					article_title
-				),
+				ID = article_id,
+				Artículo = article_title,
 				Idiomas = languages,
 				Visitas = visits
 			)

@@ -240,6 +240,23 @@ ui <- page_sidebar(
 	
 	shinyjs::useShinyjs(),
 	
+	# Pantalla de carga
+	tags$div(
+		id = "dashboard_loading",
+		class = "dashboard-loading",
+		
+		tags$img(
+			src = "project-svg/logo-dashboard.svg",
+			class = "dashboard-loading-logo",
+			alt = "Lastaj Neŭronoj"
+		),
+		
+		tags$div(
+			class = "dashboard-loading-message",
+			"Cargando estadísticas..."
+		)
+	),
+	
 	title = tags$div(
 		style = "display: flex; align-items: center; gap: 8px;",
 		
@@ -277,52 +294,15 @@ ui <- page_sidebar(
 			href = "https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,400..800&display=swap"
 		),
 		
-		# Estilos CSS
-		tags$style(HTML("
-
-        .navbar {
-            background-color: #000000 !important;
-            --bs-navbar-color: #ffffff;
-            --bs-navbar-brand-color: #ffffff;
-        }
-
-        .navbar .navbar-brand {
-            color: #ffffff !important;
-        }
-
-        .traffic-transition {
-            transition: opacity 120ms ease-in-out;
-        }
-
-        .traffic-transition.transitioning {
-            opacity: 0;
-        }
-
-        /* Tarjetas de la cronología editorial */
-        .editorial-value-box .value-box-showcase {
-            padding-top: 0.75rem;
-        }
-
-    ")),
+		# Cargar estilos y scripts
+		tags$link(
+			rel = "stylesheet",
+			href = "dashboard.css"
+		),
 		
-		# Script de transición
-		tags$script(HTML("
-        $(document).on('shiny:inputchanged', function(event) {
-            if (event.name !== 'include_wordpress') return;
-
-            const container = document.getElementById(
-                'daily_traffic_container'
-            );
-
-            if (!container) return;
-
-            container.classList.add('transitioning');
-
-            setTimeout(function() {
-                container.classList.remove('transitioning');
-            }, 140);
-        });
-    "))
+		tags$script(
+			src = "dashboard.js"
+		)
 	),
 	
 	sidebar = sidebar(
@@ -975,7 +955,8 @@ server <- function(input, output, session) {
 		goatcounter = goatcounter_data,
 		goatcounter_normalized = goatcounter_normalized_data,
 		wordpress_monthly_visits = wordpress_monthly_visits,
-		wordpress_yearly_countries = wordpress_yearly_countries
+		wordpress_yearly_countries = wordpress_yearly_countries,
+		posts_languages = posts_languages
 	)
 	
 	output$refresh_status <- renderUI({
