@@ -222,7 +222,8 @@ traffic_server <- function(
 				xaxis = list(title = "Fecha"),
 				yaxis = list(title = "Visitas"),
 				hovermode = "x unified"
-			)
+			) %>%
+			apply_plotly_style()
 		
 	})
 	
@@ -251,7 +252,8 @@ traffic_server <- function(
 				xaxis = list(title = "Mes"),
 				yaxis = list(title = "Visitas"),
 				hovermode = "x unified"
-			)
+			) %>%
+			apply_plotly_style()
 		
 	})
 	
@@ -279,7 +281,8 @@ traffic_server <- function(
 				xaxis = list(title = "Año"),
 				yaxis = list(title = "Visitas"),
 				hovermode = "x"
-			)
+			) %>%
+			apply_plotly_style()
 		
 	})
 	

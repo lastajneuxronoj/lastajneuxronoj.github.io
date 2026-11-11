@@ -241,7 +241,8 @@ sources_server <- function(
 				y = 0.5
 			),
 			margin = list(r = 160)
-		)
+		) %>%
+			apply_plotly_style()
 		
 		event_register(p, "plotly_click")
 	}) %>% bindCache(sources_combined_data())
@@ -323,7 +324,8 @@ sources_server <- function(
 				),
 				yaxis = list(title = ""),
 				showlegend = FALSE
-			)
+			) %>%
+			apply_plotly_style()
 	}) %>% bindCache(sources_combined_data(), selected_source())
 	
 	# Evolución temporal de las fuentes
@@ -386,7 +388,8 @@ sources_server <- function(
                     y = -0.25
                 ),
                 hovermode = "x unified"
-            )
+            ) %>%
+        	apply_plotly_style()
     })  %>%
     	bindCache(
     		filtered_referrer_data(),

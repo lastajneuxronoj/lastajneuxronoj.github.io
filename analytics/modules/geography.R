@@ -12,45 +12,72 @@ geography_ui <- nav_panel(
 	"Geografía",
 	
 	layout_columns(
-		value_box(
-			title = "Visitas",
-			value = textOutput("total_visits"),
-			showcase = bsicons::bs_icon("eye")
+		div(
+			class = "geo-indicator",
+			value_box(
+				title = "Visitas",
+				value = textOutput("total_visits"),
+				showcase = bsicons::bs_icon("eye")
+			)
 		),
 		
-		value_box(
-			title = "Países identificados",
-			value = textOutput("total_countries"),
-			showcase = bsicons::bs_icon("globe")
+		div(
+			class = "geo-indicator",
+			value_box(
+				title = "Países identificados",
+				value = textOutput("total_countries"),
+				showcase = bsicons::bs_icon("globe")
+			)
 		),
 		
-		value_box(
-			title = "País seleccionado",
-			value = textOutput("selected_country"),
-			showcase = bsicons::bs_icon("geo-alt")
-		)
+		div(
+			class = "geo-indicator",
+			value_box(
+				title = "País seleccionado",
+				value = textOutput("selected_country"),
+				showcase = bsicons::bs_icon("geo-alt")
+			)
+		),
+		
+		fill = FALSE
 	),
 	
 	layout_columns(
-		card(
-			card_header("Distribución geográfica"),
-			leafletOutput("country_map", height = "550px")
-		),
+		col_widths = c(7, 5),
 		
-		card(
-			card_header("Visitas por país"),
-			plotlyOutput("country_chart", height = "550px")
-		),
-		
-		accordion(
-			open = FALSE,
-			accordion_panel(
-				"Detalle de visitas por país",
+		div(
+			id = "country_left_column",
+			class = "country-left-column",
+			
+			card(
+				id = "country_map_card",
+				card_header("Distribución geográfica"),
+				leafletOutput("country_map", height = "300px")
+			),
+			
+			card(
+				id = "country_table_card",
+				card_header(
+					div(
+						class = "d-flex justify-content-between align-items-center",
+						"Detalle de visitas por país",
+						actionButton(
+							"country_table_toggle",
+							"Maximizar / restaurar",
+							icon = icon("expand"),
+							class = "btn-sm"
+						)
+					)
+				),
 				DT::DTOutput("country_table")
 			)
 		),
 		
-		col_widths = c(7, 5)
+		card(
+			id = "country_chart_card",
+			card_header("Visitas por país"),
+			plotlyOutput("country_chart", height = "550px")
+		)
 	)
 )
 
@@ -179,6 +206,7 @@ geography_server <- function(
 		format(
 			total,
 			big.mark = ".",
+			decimal.mark = ",",
 			scientific = FALSE
 		)
 	})
@@ -502,7 +530,8 @@ geography_server <- function(
 				yaxis = list(title = ""),
 				margin = list(l = 110),
 				showlegend = FALSE
-			)
+			) %>%
+			apply_plotly_style()
 		
 		plot
 		

@@ -177,7 +177,8 @@ articles_server <- function(input, output, filtered_combined_data) {
 				legend = list(
 					title = list(text = "Idioma")
 				)
-			)
+			) %>%
+			apply_plotly_style()
 	}) %>%
 		bindCache(
 			filtered_combined_data(),

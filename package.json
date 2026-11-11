@@ -10,7 +10,8 @@
 		"fetch:goatcounter": "node scripts/fetch-goatcounter.js",
 		"newsletter": "node scripts/build-newsletter.js",
 		"all": " npm run build && npm run stats",
-		"test": "echo \"Error: no test specified\" && exit 1"
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"dashboard": "Rscript -e \"shiny::runApp('analytics', launch.browser=TRUE)\""
 	},
 	"repository": {
 		"type": "git",

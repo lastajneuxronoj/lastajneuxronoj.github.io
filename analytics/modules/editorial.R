@@ -708,7 +708,8 @@ editorial_server <- function(input, output) {
 					xanchor = "center"
 				),
 				hovermode = "x unified"
-			)
+			) %>%
+			apply_plotly_style()
 	})
 	
 	
@@ -763,7 +764,8 @@ editorial_server <- function(input, output) {
 				margin = list(
 					l = 100
 				)
-			)
+			) %>%
+			apply_plotly_style()
 	})
 	
 	# Gráfico de actividad editorial trimestral
@@ -810,6 +812,7 @@ editorial_server <- function(input, output) {
 				legend = list(
 					title = list(text = "Tipo de evento")
 				)
-			)
+			) %>%
+			apply_plotly_style()
 	})
 }

@@ -1,6 +1,5 @@
-
 .navbar {
-    background-color: #000000 !important;
+    background-color: #222831 !important;
     --bs-navbar-color: #ffffff;
     --bs-navbar-brand-color: #ffffff;
 }
@@ -32,7 +31,7 @@
     align-items: center;
     justify-content: center;
     gap: 1rem;
-    background: #ffffff;
+    background: #F4F1EC;
     opacity: 1;
     visibility: visible;
     transition: opacity 300ms ease, visibility 300ms ease;
@@ -47,8 +46,8 @@
 .dashboard-loading-spinner {
     width: 42px;
     height: 42px;
-    border: 4px solid #e5e5e5;
-    border-top-color: #333333;
+    border: 4px solid rgba(220, 211, 197, 0.50);
+    border-top-color: #222831;
     border-radius: 50%;
     animation: dashboard-spin 0.8s linear infinite;
 }
@@ -69,3 +68,166 @@
         transform: rotate(360deg);
     }
 }
+
+/* ==========================================
+   FONDO GENERAL DEL DASHBOARD
+   ========================================== */
+
+body,
+html,
+.main,
+.content-wrapper,
+.bslib-page-fill,
+.bslib-sidebar-layout,
+.bslib-sidebar-layout > .main,
+.tab-content {
+    background-color: #F4F1EC !important;
+}
+
+/* ==========================================
+   TARJETAS Y CONTENEDORES
+   ========================================== */
+
+.card,
+.bslib-card,
+.nav-tabs,
+.tab-content {
+    border-color: #222831 !important;
+}
+
+.card,
+.bslib-card {
+    background-color: var(--card-background) !important;
+    border-radius: var(--card-corner-radius) !important;
+}
+
+.plotly.html-widget {
+    border-radius: var(--plot-corner-radius);
+    overflow: hidden;
+}
+
+/* ==========================================
+   TABLAS — DATATABLES
+   ========================================== */
+
+table.dataTable {
+    width: 100% !important;
+    color: #222831 !important;
+    background-color: #F4F1EC !important;
+    border: 1px solid #222831 !important;
+    border-radius: 10px !important;
+    border-collapse: separate !important;
+    border-spacing: 0 !important;
+    overflow: hidden;
+}
+
+/* Encabezados */
+table.dataTable thead th {
+    color: #222831 !important;
+    background-color: rgba(220, 211, 197, 0.50) !important;
+    border-bottom: 1px solid #222831 !important;
+}
+
+/* Celdas */
+table.dataTable tbody td {
+    background-color: #F4F1EC !important;
+    color: #222831 !important;
+    border-top: 1px solid rgba(220, 211, 197, 0.50) !important;
+}
+
+/* Resaltado al pasar el cursor */
+table.dataTable tbody tr:hover td {
+    background-color: #DFD0B8 !important;
+}
+
+/* Eliminar bordes inferiores adicionales */
+table.dataTable.no-footer {
+    border-bottom: 1px solid #222831 !important;
+}
+
+/* Espaciado vertical de las tablas */
+.dataTables_wrapper {
+    padding-top: 0.25rem;
+    padding-bottom: 0.75rem;
+}
+
+table.dataTable {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+}
+
+/* Centrar verticalmente la tabla de artículos */
+.top-articles-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.top-articles-card .card-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.top-articles-card #summary_top_articles {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
+.top-articles-card #summary_top_articles .dataTables_wrapper {
+    margin-block: auto;
+}
+
+/* Esquinas redondeadas de los gráficos */
+.plotly.html-widget {
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+
+/* ==========================================
+   GEOGRAFÍA: DISTRIBUCIÓN DE TARJETAS
+   ========================================== */
+
+/* Primera columna: dos tarjetas apiladas */
+.country-left-column {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    min-width: 0;
+    height: 100%;
+}
+
+/* Las tarjetas ocupan todo el ancho de la columna */
+.country-left-column > .card {
+    width: 100%;
+    min-width: 0;
+}
+
+/* Al expandir la tabla, minimizar el mapa */
+#country_map_card.card-collapsed {
+    flex: 0 0 auto;
+    height: auto;
+    min-height: 0;
+}
+
+#country_map_card.card-collapsed .card-body {
+    display: none;
+}
+
+/* La tabla aprovecha el espacio vertical liberado */
+#country_table_card.table-expanded {
+    display: flex;
+    flex: 1 1 0%;
+    flex-direction: column;
+    min-height: 0;
+}
+
+#country_table_card.table-expanded .card-body {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow: auto;
+}
+

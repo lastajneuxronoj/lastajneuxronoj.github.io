@@ -9,23 +9,56 @@
 languages_ui <- nav_panel(
 	"Idiomas",
 	
-	layout_columns(
-		col_widths = c(6, 6),
+	# Estado normal: tarjetas con gráficos
+	conditionalPanel(
+		condition = "input.language_table_toggle % 2 === 0",
 		
-		card(
-			card_header("Distribución de visitas por idioma"),
-			plotlyOutput("language_chart", height = "400px")
-		),
+		layout_columns(
+			col_widths = c(6, 6),
+			
+			card(
+				card_header("Distribución de visitas por idioma"),
+				plotlyOutput("language_chart", height = "27vh")
+			),
+			
+			card(
+				card_header("Cobertura de publicaciones por idioma"),
+				plotlyOutput("language_coverage_chart", height = "27vh")
+			)
+		)
+	),
+	
+	# Estado maximizado: tarjetas compactas
+	conditionalPanel(
+		condition = "input.language_table_toggle % 2 === 1",
 		
-		card(
-			card_header("Cobertura de publicaciones por idioma"),
-			plotlyOutput("language_coverage_chart", height = "400px")
+		layout_columns(
+			col_widths = c(6, 6),
+			
+			card(
+				card_header("Distribución de visitas por idioma")
+			),
+			
+			card(
+				card_header("Cobertura de publicaciones por idioma")
+			)
 		)
 	),
 	
 	card(
-		card_header("Idiomas disponibles por publicación"),
-		uiOutput("language_coverage_table")
+		card_header(
+			div(
+				class = "d-flex justify-content-between align-items-center",
+				"Idiomas disponibles por publicación",
+				actionButton(
+					"language_table_toggle",
+					"Maximizar / restaurar",
+					icon = icon("expand"),
+					class = "btn-sm"
+				)
+			)
+		),
+		DT::DTOutput("language_coverage_table")
 	)
 )
 
@@ -97,7 +130,8 @@ languages_server <- function(
 					xanchor = "center",
 					y = -0.15
 				)
-			)
+			) %>%
+			apply_plotly_style()
 		
 	}) %>%
 		bindCache(filtered_combined_data())
@@ -154,7 +188,8 @@ languages_server <- function(
 				),
 				yaxis = list(title = ""),
 				showlegend = FALSE
-			)
+			) %>%
+			apply_plotly_style()
 		
 	})
 	
@@ -163,7 +198,7 @@ languages_server <- function(
 	# TABLA DE COBERTURA POR PUBLICACIÓN
 	# ----------------------------------------
 	
-	output$language_coverage_table <- renderUI({
+	output$language_coverage_table <- DT::renderDT({
 		
 		data <- posts_languages %>%
 			group_by(number, title) %>%
@@ -173,46 +208,30 @@ languages_server <- function(
 			) %>%
 			arrange(desc(as.integer(number)))
 		
-		tags$table(
-			class = "table table-striped",
-			
-			tags$thead(
-				tags$tr(
-					tags$th("N.º"),
-					tags$th("Publicación"),
-					tags$th("Idiomas")
-				)
-			),
-			
-			tags$tbody(
-				lapply(seq_len(nrow(data)), function(i) {
+		data <- data %>%
+			mutate(
+				languages_html = vapply(languages, function(langs) {
 					
-					languages <- data$languages[[i]]
-					
-					tags$tr(
-						tags$td(data$number[i]),
-						tags$td(data$title[i]),
-						tags$td(
-							lapply(languages, function(lang) {
-								
-								flag_file <- file.path(
-									APP_DIR,
-									"..",
-									"svg",
-									paste0("flag_", lang, ".svg")
-								)
-								
-								label <- if (lang %in% names(LANGUAGE_LABELS)) {
-									unname(LANGUAGE_LABELS[lang])
-								} else {
-									lang
-								}
-								
-								if (file.exists(flag_file)) {
-									tags$img(
-										src = paste0(
-											"svg/flag_", lang, ".svg"
-										),
+					paste(
+						vapply(langs, function(lang) {
+							
+							flag_file <- file.path(
+								APP_DIR,
+								"..",
+								"svg",
+								paste0("flag_", lang, ".svg")
+							)
+							
+							label <- if (lang %in% names(LANGUAGE_LABELS)) {
+								unname(LANGUAGE_LABELS[lang])
+							} else {
+								lang
+							}
+							
+							if (file.exists(flag_file)) {
+								as.character(
+									htmltools::tags$img(
+										src = paste0("svg/flag_", lang, ".svg"),
 										alt = label,
 										title = label,
 										style = paste(
@@ -222,16 +241,36 @@ languages_server <- function(
 											"border-radius: 3px;"
 										)
 									)
-								} else {
-									tags$span(
+								)
+							} else {
+								as.character(
+									htmltools::tags$span(
 										title = label,
 										label
 									)
-								}
-							})
-						)
+								)
+							}
+							
+						}, character(1)),
+						collapse = " "
 					)
-				})
+					
+				}, character(1))
+			) %>%
+			transmute(
+				`N.º` = number,
+				Publicación = title,
+				Idiomas = languages_html
+			)
+		
+		DT::datatable(
+			data,
+			rownames = FALSE,
+			escape = FALSE,
+			options = list(
+				dom = "t<'row align-items-center mt-2'<'col-md-4'l><'col-md-4'f><'col-md-4'p>>",
+				pageLength = 10,
+				autoWidth = FALSE
 			)
 		)
 	})

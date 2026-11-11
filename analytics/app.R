@@ -18,23 +18,29 @@ library(shinyjs)
 # 1. CARGAR DATOS Y FUNCIONES
 # ==========================================
 
-APP_DIR <- if (!is.null(sys.frame(1)$ofile)) {
-	dirname(
-		normalizePath(
-			sys.frame(1)$ofile,
-			winslash = "/",
-			mustWork = TRUE
-		)
-	)
-} else {
-	normalizePath(
-		getwd(),
+APP_DIR <- local({
+	
+	candidates <- normalizePath(
+		c(
+			getwd(),
+			file.path(getwd(), "analytics")
+		),
 		winslash = "/",
-		mustWork = TRUE
+		mustWork = FALSE
 	)
-}
+	
+	valid <- candidates[
+		file.exists(file.path(candidates, "config.R"))
+	]
+	
+	if (length(valid) == 0) {
+		stop("No se pudo encontrar el directorio de la aplicación.")
+	}
+	
+	valid[[1]]
+})
 
-source(file.path(APP_DIR, "config.R"))
+source(file.path(APP_DIR, "config.R"), local = TRUE)
 
 # Cargar publicaciones
 posts <- jsonlite::fromJSON(
@@ -74,11 +80,9 @@ posts_languages <- bind_rows(
 )
 
 # Cargar funciones reutilizables
-source(file.path(APP_DIR, "goatcounter_functions.R"))
-
-# Cargar y preparar datos
-source(file.path(APP_DIR, "goatcounter_data.R"))
-source(file.path(APP_DIR, "wordpress_data.R"))
+source(file.path(APP_DIR, "goatcounter_functions.R"), local = TRUE)
+source(file.path(APP_DIR, "goatcounter_data.R"), local = TRUE)
+source(file.path(APP_DIR, "wordpress_data.R"), local = TRUE)
 
 goatcounter <- add_country_names(goatcounter)
 
@@ -104,7 +108,7 @@ load_goatcounter_data <- function() {
 }
 
 # Cargar funciones para combinar las fuentes
-source(file.path(APP_DIR, "combined_data.R"))
+source(file.path(APP_DIR, "combined_data.R"), local = TRUE)
 
 # Normalizar datos
 wordpress_normalized <- normalize_wordpress(traffic_wp, wordpress_articles)
@@ -218,14 +222,13 @@ world <- rnaturalearth::ne_countries(
 	sf::st_transform(4326)
 
 # Cargar módulos
-
-source(file.path(APP_DIR, "modules", "summary.R"))
-source(file.path(APP_DIR, "modules", "geography.R"))
-source(file.path(APP_DIR, "modules", "traffic.R"))
-source(file.path(APP_DIR, "modules", "languages.R"))
-source(file.path(APP_DIR, "modules", "articles.R"))
-source(file.path(APP_DIR, "modules", "sources.R"))
-source(file.path(APP_DIR, "modules", "editorial.R"))
+source(file.path(APP_DIR, "modules", "summary.R"), local = TRUE)
+source(file.path(APP_DIR, "modules", "geography.R"), local = TRUE)
+source(file.path(APP_DIR, "modules", "traffic.R"), local = TRUE)
+source(file.path(APP_DIR, "modules", "languages.R"), local = TRUE)
+source(file.path(APP_DIR, "modules", "articles.R"), local = TRUE)
+source(file.path(APP_DIR, "modules", "sources.R"), local = TRUE)
+source(file.path(APP_DIR, "modules", "editorial.R"), local = TRUE)
 
 # ==========================================
 # 2. INTERFAZ
@@ -237,6 +240,8 @@ addResourcePath(
 )
 
 ui <- page_sidebar(
+	
+	page_title = "Estadísticas — Lastaj Neŭronoj",
 	
 	shinyjs::useShinyjs(),
 	
@@ -283,10 +288,30 @@ ui <- page_sidebar(
 	
 	theme = bs_theme(
 		version = 5,
-		bootswatch = "flatly"
+		bootswatch = "flatly",
+		bg = BACKGROUND_COLOR,
+		fg = PRIMARY_COLOR,
+		primary = PRIMARY_COLOR,
+		secondary = SECONDARY_COLOR,
+		border = BASE_COLOR_SOLID
 	),
 	
 	tags$head(
+		
+		tags$style(
+			sprintf(
+				":root {
+            --card-background: %s;
+            --plot-background: %s;
+            --card-corner-radius: %s;
+            --plot-corner-radius: %s;
+        }",
+				CARD_BACKGROUND,
+				PLOT_BACKGROUND,
+				CARD_CORNER_RADIUS,
+				PLOT_CORNER_RADIUS
+			)
+		),
 		
 		# Cargar Playfair Display
 		tags$link(
@@ -912,7 +937,7 @@ server <- function(input, output, session) {
 		output = output,
 		filtered_data = filtered_data,
 		filtered_combined_data = filtered_combined_data,
-		yearly_countries_wp = yearly_countries_wp,
+		yearly_countries_wp = wordpress_yearly_countries,
 		wordpress_monthly_visits = wordpress_monthly_visits,
 		world = world
 	)

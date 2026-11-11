@@ -68,8 +68,12 @@ summary_ui <- nav_panel(
 		),
 		
 		card(
+			class = "top-articles-card",
 			card_header("Artículos más visitados"),
-			DT::DTOutput("summary_top_articles")
+			DT::DTOutput(
+				"summary_top_articles",
+				height = "auto"
+			)
 		)
 	)
 )
@@ -235,6 +239,7 @@ summary_server <- function(input, output, session, goatcounter, goatcounter_norm
 		format(
 			total_visits,
 			big.mark = ".",
+			decimal.mark = ",",
 			scientific = FALSE
 		)
 	})
@@ -284,7 +289,7 @@ summary_server <- function(input, output, session, goatcounter, goatcounter_norm
 			distinct(country) %>%
 			nrow()
 		
-		format(total_countries, big.mark = ".", scientific = FALSE)
+		format(total_countries, big.mark = ".", decimal.mark = ",", scientific = FALSE)
 	})
 	
 	# Distribución geográfica de visitas
@@ -424,6 +429,7 @@ summary_server <- function(input, output, session, goatcounter, goatcounter_norm
 					format(
 						visits,
 						big.mark = ".",
+						decimal.mark = ",",
 						scientific = FALSE
 					),
 					" visitas"
@@ -503,7 +509,7 @@ summary_server <- function(input, output, session, goatcounter, goatcounter_norm
 			options = list(
 				dom = "t",
 				ordering = FALSE,
-				autoWidth = TRUE,
+				autoWidth = FALSE,
 				pageLength = 15
 			)
 		)
@@ -587,7 +593,8 @@ summary_server <- function(input, output, session, goatcounter, goatcounter_norm
 					xanchor = "center",
 					y = -0.15
 				)
-			)
+			) %>%
+			apply_plotly_style()
 		
 	})
 	
