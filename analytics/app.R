@@ -36,6 +36,43 @@ APP_DIR <- if (!is.null(sys.frame(1)$ofile)) {
 
 source(file.path(APP_DIR, "config.R"))
 
+# Cargar publicaciones
+posts <- jsonlite::fromJSON(
+	file.path(APP_DIR, "..", "json", "posts.json"),
+	simplifyVector = FALSE
+)
+
+# Preparar disponibilidad de idiomas por publicación
+posts_languages <- bind_rows(
+	lapply(posts, function(post) {
+		
+		languages <- names(post$file)
+		
+		languages <- languages[
+			vapply(
+				post$file[languages],
+				function(file) {
+					!is.null(file) && nzchar(file)
+				},
+				logical(1)
+			)
+		]
+		
+		title <- if ("eo" %in% names(post$title)) {
+			post$title[["eo"]]
+		} else {
+			post$title[[1]]
+		}
+		
+		data.frame(
+			number = post$number,
+			title = title,
+			language = languages,
+			stringsAsFactors = FALSE
+		)
+	})
+)
+
 # Cargar funciones reutilizables
 source(file.path(APP_DIR, "goatcounter_functions.R"))
 
@@ -44,6 +81,27 @@ source(file.path(APP_DIR, "goatcounter_data.R"))
 source(file.path(APP_DIR, "wordpress_data.R"))
 
 goatcounter <- add_country_names(goatcounter)
+
+load_goatcounter_data <- function() {
+	env <- new.env(parent = globalenv())
+	
+	sys.source(
+		file.path(APP_DIR, "goatcounter_data.R"),
+		envir = env
+	)
+	
+	gc <- add_country_names(env$goatcounter)
+	gc_normalized <- normalize_goatcounter(gc)
+	
+	list(
+		goatcounter = gc,
+		goatcounter_normalized = gc_normalized,
+		combined_data = combine_traffic_data(
+			wordpress_normalized,
+			gc_normalized
+		)
+	)
+}
 
 # Cargar funciones para combinar las fuentes
 source(file.path(APP_DIR, "combined_data.R"))
@@ -58,6 +116,99 @@ combined_data <- combine_traffic_data(
 	wordpress_normalized,
 	goatcounter_normalized
 )
+
+
+# Registro de la última actualización de GoatCounter
+LAST_REFRESH_FILE <- file.path(
+	PROCESSED_DATA_DIR,
+	"last_goatcounter_refresh.txt"
+)
+
+read_last_refresh <- function() {
+	
+	if (!file.exists(LAST_REFRESH_FILE)) {
+		return(NULL)
+	}
+	
+	value <- readLines(
+		LAST_REFRESH_FILE,
+		n = 1,
+		warn = FALSE
+	)
+	
+	if (length(value) == 0 || !nzchar(value)) {
+		return(NULL)
+	}
+	
+	as.POSIXct(
+		value,
+		format = "%Y-%m-%dT%H:%M:%S",
+		tz = "UTC"
+	)
+}
+
+save_last_refresh <- function(time = Sys.time()) {
+	
+	dir.create(
+		PROCESSED_DATA_DIR,
+		recursive = TRUE,
+		showWarnings = FALSE
+	)
+	
+	writeLines(
+		format(
+			time,
+			"%Y-%m-%dT%H:%M:%S",
+			tz = "UTC"
+		),
+		LAST_REFRESH_FILE
+	)
+}
+
+RATE_LIMIT_FILE <- file.path(
+	PROCESSED_DATA_DIR,
+	"goatcounter_rate_limit.txt"
+)
+
+read_rate_limit <- function() {
+	if (!file.exists(RATE_LIMIT_FILE)) {
+		return(NULL)
+	}
+	
+	value <- readLines(
+		RATE_LIMIT_FILE,
+		n = 1,
+		warn = FALSE
+	)
+	
+	if (length(value) == 0 || !nzchar(value)) {
+		return(NULL)
+	}
+	
+	as.POSIXct(
+		value,
+		format = "%Y-%m-%dT%H:%M:%S",
+		tz = "UTC"
+	)
+}
+
+save_rate_limit <- function(time) {
+	dir.create(
+		PROCESSED_DATA_DIR,
+		recursive = TRUE,
+		showWarnings = FALSE
+	)
+	
+	writeLines(
+		format(
+			time,
+			"%Y-%m-%dT%H:%M:%S",
+			tz = "UTC"
+		),
+		RATE_LIMIT_FILE
+	)
+}
+
 
 # Cargar geometrías de los países
 world <- rnaturalearth::ne_countries(
@@ -80,11 +231,38 @@ source(file.path(APP_DIR, "modules", "editorial.R"))
 # 2. INTERFAZ
 # ==========================================
 
+addResourcePath(
+	"project-svg",
+	file.path(PROJECT_ROOT, "svg")
+)
+
 ui <- page_sidebar(
 	
 	shinyjs::useShinyjs(),
 	
-	title = "Lastaj Neŭronoj — Estadísticas",
+	title = tags$div(
+		style = "display: flex; align-items: center; gap: 8px;",
+		
+		tags$img(
+			src = "project-svg/logo-dashboard.svg",
+			style = "height: 30px; width: auto; filter: invert(1);"
+		),
+		
+		tags$span(
+			style = "
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-weight: 600;
+            font-size: 1.5rem
+        ",
+			"Lastaj Neŭronoj"
+		),
+		
+		tags$span(
+			style = "font-size: 1.2rem; font-weight: normal;",
+			"— Estadísticas"
+		)
+	),
 	
 	theme = bs_theme(
 		version = 5,
@@ -92,39 +270,59 @@ ui <- page_sidebar(
 	),
 	
 	tags$head(
-		tags$style(HTML("
-			.traffic-transition {
-				transition: opacity 120ms ease-in-out;
-			}
-
-			.traffic-transition.transitioning {
-				opacity: 0;
-			}
-
-			/* Tarjetas de la cronología editorial */
-			.editorial-value-box .value-box-showcase {
-				padding-top: 0.75rem;
-			}
-			
-		")),
 		
+		# Cargar Playfair Display
+		tags$link(
+			rel = "stylesheet",
+			href = "https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,400..800&display=swap"
+		),
+		
+		# Estilos CSS
+		tags$style(HTML("
+
+        .navbar {
+            background-color: #000000 !important;
+            --bs-navbar-color: #ffffff;
+            --bs-navbar-brand-color: #ffffff;
+        }
+
+        .navbar .navbar-brand {
+            color: #ffffff !important;
+        }
+
+        .traffic-transition {
+            transition: opacity 120ms ease-in-out;
+        }
+
+        .traffic-transition.transitioning {
+            opacity: 0;
+        }
+
+        /* Tarjetas de la cronología editorial */
+        .editorial-value-box .value-box-showcase {
+            padding-top: 0.75rem;
+        }
+
+    ")),
+		
+		# Script de transición
 		tags$script(HTML("
-    $(document).on('shiny:inputchanged', function(event) {
-        if (event.name !== 'include_wordpress') return;
+        $(document).on('shiny:inputchanged', function(event) {
+            if (event.name !== 'include_wordpress') return;
 
-        const container = document.getElementById(
-            'daily_traffic_container'
-        );
+            const container = document.getElementById(
+                'daily_traffic_container'
+            );
 
-        if (!container) return;
+            if (!container) return;
 
-        container.classList.add('transitioning');
+            container.classList.add('transitioning');
 
-        setTimeout(function() {
-            container.classList.remove('transitioning');
-        }, 140);
-    });
-"))
+            setTimeout(function() {
+                container.classList.remove('transitioning');
+            }, 140);
+        });
+    "))
 	),
 	
 	sidebar = sidebar(
@@ -160,10 +358,6 @@ ui <- page_sidebar(
 		),
 		
 		hr(),
-		
-		helpText(
-			"Selecciona un país en el mapa o en el gráfico para destacarlo."
-		),
 		
 		
 		selectizeInput(
@@ -204,7 +398,19 @@ ui <- page_sidebar(
 			inputId = "include_wordpress",
 			label = "Incluir WordPress",
 			value = TRUE
-		)
+		),
+		
+		hr(),
+		
+		actionButton(
+			inputId = "refresh_goatcounter",
+			label = "Actualizar datos",
+			icon = icon("refresh"),
+			width = "100%"
+		),
+		
+		uiOutput("refresh_status")
+		
 		
 	),
 	
@@ -226,6 +432,36 @@ ui <- page_sidebar(
 # ==========================================
 
 server <- function(input, output, session) {
+	
+	goatcounter_state <- reactiveVal(list(
+		goatcounter = goatcounter,
+		goatcounter_normalized = goatcounter_normalized,
+		combined_data = combined_data
+	))
+	
+	goatcounter_data <- reactive({
+		goatcounter_state()$goatcounter
+	})
+	
+	goatcounter_normalized_data <- reactive({
+		goatcounter_state()$goatcounter_normalized
+	})
+	
+	combined_data_reactive <- reactive({
+		goatcounter_state()$combined_data
+	})
+	
+	
+	# Estado de actualización de GoatCounter
+	last_refresh <- reactiveVal(read_last_refresh())
+	rate_limit_until <- reactiveVal(read_rate_limit())
+	refresh_running <- reactiveVal(FALSE)
+	refresh_status <- reactiveVal("")
+	refresh_process <- reactiveVal(NULL)
+	refresh_output <- reactiveVal(character())
+	refresh_error <- reactiveVal(character())
+	
+	
 	
 	# Ocultar el sidebar en la pestaña Resumen
 	observeEvent(input$main_tabs, {
@@ -257,54 +493,11 @@ server <- function(input, output, session) {
 		
 	}, ignoreInit = FALSE)
 	
-	# Controlar disponibilidad de pestañas según la fuente de datos
-	observeEvent(input$include_wordpress, {
-		
-		wordpress_enabled <- isTRUE(input$include_wordpress)
-		
-		# Si se activa WordPress estando en una pestaña
-		# que quedará deshabilitada, cambiar primero a Tráfico.
-		if (
-			wordpress_enabled &&
-			input$main_tabs %in% c("Geografía")
-		) {
-			nav_select("main_tabs", "Tráfico")
-		}
-		
-		# Deshabilitar o habilitar las pestañas mediante JavaScript.
-		disabled_js <- if (wordpress_enabled) "true" else "false"
-		
-		shinyjs::runjs(sprintf("
-        (function() {
-            const root = document.getElementById('main_tabs');
-            if (!root) return;
-
-            ['Geografía'].forEach(function(value) {
-                const tab = root.querySelector(
-                    '.nav-link[data-value=\"' + value + '\"]'
-                );
-
-                if (!tab) return;
-
-                tab.classList.toggle('disabled', %s);
-
-                if (%s) {
-                    tab.setAttribute('aria-disabled', 'true');
-                    tab.setAttribute('tabindex', '-1');
-                } else {
-                    tab.removeAttribute('aria-disabled');
-                    tab.removeAttribute('tabindex');
-                }
-            });
-        })();
-    ", disabled_js, disabled_js))
-		
-	}, ignoreInit = FALSE)
 	
 	# Datos filtrados
 	filtered_data <- reactive({
 		
-		data <- goatcounter
+		data <- goatcounter_data()
 		
 		# Filtrar por período
 		if (!is.null(input$summary_year) &&
@@ -349,12 +542,10 @@ server <- function(input, output, session) {
 	
 	# Datos combinados para gráficos compatibles
 	filtered_combined_data <- reactive({
-		
-		# Elegir la fuente de datos
-		data <- if (isTRUE(input$include_wordpress)) {
-			combined_data
+		data <- if (input$include_wordpress) {
+			combined_data_reactive()
 		} else {
-			goatcounter_normalized
+			goatcounter_normalized_data()
 		}
 		
 		# Filtrar por período
@@ -379,6 +570,14 @@ server <- function(input, output, session) {
 			
 		}
 		
+		# Excluir países de GoatCounter
+		if (length(input$exclude_countries) > 0) {
+			data <- filter_goatcounter(
+				data,
+				exclude_countries = input$exclude_countries
+			)
+		}
+		
 		data
 	})
 	
@@ -387,13 +586,343 @@ server <- function(input, output, session) {
 		filtered_data()
 	})
 	
+	# Confirmación y control de frecuencia de actualización
+	observeEvent(input$refresh_goatcounter, {
+		
+		if (isTRUE(refresh_running())) {
+			return()
+		}
+		
+		now <- Sys.time()
+		
+		# Comprobar el límite informado por GoatCounter
+		server_limit <- rate_limit_until()
+		
+		if (!is.null(server_limit)) {
+			
+			if (now < server_limit) {
+				
+				remaining <- ceiling(
+					as.numeric(difftime(server_limit, now, units = "secs")) / 60
+				)
+				
+				refresh_status(
+					paste(
+						"GoatCounter permitirá otra exportación en",
+						remaining,
+						"minutos."
+					)
+				)
+				
+				return()
+				
+			} else {
+				
+				rate_limit_until(NULL)
+				
+				if (file.exists(RATE_LIMIT_FILE)) {
+					file.remove(RATE_LIMIT_FILE)
+				}
+				
+			}
+		}
+		
+		# Comprobar el intervalo desde la última actualización exitosa
+		previous_refresh <- last_refresh()
+		
+		if (!is.null(previous_refresh)) {
+			
+			elapsed <- as.numeric(
+				difftime(now, previous_refresh, units = "secs")
+			)
+			
+			if (elapsed < 3600) {
+				
+				remaining <- ceiling((3600 - elapsed) / 60)
+				
+				refresh_status(
+					paste(
+						"Podrás actualizar nuevamente en",
+						remaining,
+						"minutos."
+					)
+				)
+				
+				return()
+			}
+		}
+		
+		# Comprobar el intervalo desde la última actualización exitosa
+		previous_refresh <- last_refresh()
+		
+		if (!is.null(previous_refresh)) {
+			
+			elapsed <- as.numeric(
+				difftime(now, previous_refresh, units = "secs")
+			)
+			
+			if (elapsed < 3600) {
+				
+				remaining <- ceiling((3600 - elapsed) / 60)
+				
+				refresh_status(
+					paste(
+						"Podrás actualizar nuevamente en",
+						remaining,
+						"minutos."
+					)
+				)
+				
+				return()
+			}
+		} else if (!is.null(server_limit)) {
+			
+			rate_limit_until(NULL)
+			
+			if (file.exists(RATE_LIMIT_FILE)) {
+				file.remove(RATE_LIMIT_FILE)
+			}
+			
+		}
+		
+		showModal(
+			modalDialog(
+				title = "Actualizar datos de GoatCounter",
+				
+				paste(
+					"Esta acción descargará nuevamente las estadísticas",
+					"de GoatCounter y actualizará los gráficos.",
+					"Solo se permite una actualización cada 60 minutos.",
+					"¿Deseas continuar?"
+				),
+				
+				easyClose = FALSE,
+				
+				footer = tagList(
+					modalButton("Cancelar"),
+					actionButton(
+						inputId = "confirm_refresh",
+						label = "Actualizar",
+						class = "btn-primary"
+					)
+				)
+			)
+		)
+		
+	})
+	
+	
+	# Iniciar descarga de GoatCounter
+	observeEvent(input$confirm_refresh, {
+		
+		removeModal()
+		
+		if (isTRUE(refresh_running())) {
+			return()
+		}
+		
+		refresh_running(TRUE)
+		refresh_output(character())
+		refresh_error(character())
+		refresh_status("Descargando datos de GoatCounter...")
+		
+		tryCatch({
+			
+			command <- if (.Platform$OS.type == "windows") {
+				Sys.getenv("COMSPEC", unset = "cmd.exe")
+			} else {
+				"npm"
+			}
+			
+			args <- if (.Platform$OS.type == "windows") {
+				c("/c", "npm", "run", "fetch:goatcounter")
+			} else {
+				c("run", "fetch:goatcounter")
+			}
+			
+			proc <- processx::process$new(
+				command = command,
+				args = args,
+				wd = PROJECT_ROOT,
+				stdout = "|",
+				stderr = "|", 
+				cleanup = TRUE
+			)
+			
+			refresh_process(proc)
+			
+		}, error = function(e) {
+			
+			refresh_process(NULL)
+			refresh_running(FALSE)
+			
+			refresh_status(
+				paste("No se pudo iniciar la descarga:", conditionMessage(e))
+			)
+			
+		})
+		
+	}, ignoreInit = TRUE)
+	
+	
+	# Supervisar el proceso de actualización
+	observe({
+		
+		proc <- refresh_process()
+		
+		req(!is.null(proc))
+		
+		invalidateLater(500, session)
+		
+		# Leer y acumular la salida del proceso
+		new_output <- proc$read_output_lines()
+		new_error <- proc$read_error_lines()
+		
+		if (length(new_output) > 0) {
+			refresh_output(c(refresh_output(), new_output))
+		}
+		
+		if (length(new_error) > 0) {
+			refresh_error(c(refresh_error(), new_error))
+		}
+		
+		if (!proc$is_alive()) {
+			
+			exit_code <- proc$get_exit_status()
+			
+			refresh_process(NULL)
+			
+			if (!is.null(exit_code) && exit_code == 0) {
+				
+				tryCatch({
+					
+					# Recargar los datos
+					new_data <- load_goatcounter_data()
+					
+					# Registrar la actualización exitosa
+					now <- Sys.time()
+					save_last_refresh(now)
+					
+					# Limpiar cualquier límite horario anterior
+					rate_limit_until(NULL)
+					
+					if (file.exists(RATE_LIMIT_FILE)) {
+						file.remove(RATE_LIMIT_FILE)
+					}
+					
+					# Actualizar los datos reactivos
+					goatcounter_state(new_data)
+					last_refresh(now)
+					
+					# Actualizar las opciones del filtro de países
+					countries <- sort(unique(
+						new_data$goatcounter$country[
+							!is.na(new_data$goatcounter$country) &
+								new_data$goatcounter$country != "País no identificado"
+						]
+					))
+					
+					updateSelectizeInput(
+						session,
+						"exclude_countries",
+						choices = countries,
+						selected = intersect(input$exclude_countries, countries),
+						server = TRUE
+					)
+					
+					refresh_status(
+						"Actualización completada. Podrás actualizar nuevamente en 60 minutos."
+					)
+					
+				}, error = function(e) {
+					
+					refresh_status(
+						paste(
+							"La descarga terminó, pero no se pudieron recargar los datos:",
+							conditionMessage(e)
+						)
+					)
+					
+				})
+				
+			} else {
+				
+				error_text <- paste(refresh_error(), collapse = "\n")
+				
+				# Intentar obtener el tiempo de espera indicado por GoatCounter
+				match <- regexec(
+					"Tiempo indicado por el servidor:\\s*([0-9]+)",
+					error_text
+				)
+				
+				parts <- regmatches(error_text, match)[[1]]
+				
+				if (length(parts) >= 2) {
+					
+					remaining_seconds <- as.numeric(parts[2])
+					
+					# Registrar cuándo volverá a estar disponible la exportación
+					limit_time <- Sys.time() + remaining_seconds
+					
+					rate_limit_until(limit_time)
+					save_rate_limit(limit_time)
+					
+					remaining_minutes <- ceiling(remaining_seconds / 60)
+					
+					refresh_status(
+						paste(
+							"GoatCounter no permite otra exportación todavía.",
+							"Inténtalo nuevamente en",
+							remaining_minutes,
+							"minutos."
+						)
+					)
+					
+				} else {
+					
+					failure_message <- paste(
+						"La descarga de GoatCounter falló. Código de salida:",
+						exit_code
+					)
+					
+					if (nzchar(error_text)) {
+						failure_message <- paste(failure_message, "-", error_text)
+					}
+					
+					refresh_status(failure_message)
+					
+				}
+				
+			}
+			
+			refresh_running(FALSE)
+		}
+		
+	})
+	
+	
+	# Controlar disponibilidad del botón de actualización
+	observe({
+		
+		if (isTRUE(refresh_running())) {
+			
+			shinyjs::disable("refresh_goatcounter")
+			
+		} else {
+			
+			shinyjs::enable("refresh_goatcounter")
+			
+		}
+		
+	})
+	
 	# Servidor del módulo de Tráfico
 	traffic_server(
 		input = input,
 		output = output,
 		filtered_data = filtered_data,
 		filtered_combined_data = filtered_combined_data,
-		goatcounter = goatcounter,
+		goatcounter=goatcounter_data,
 		wordpress_monthly_visits = wordpress_monthly_visits
 	)
 	
@@ -402,6 +931,9 @@ server <- function(input, output, session) {
 		input = input,
 		output = output,
 		filtered_data = filtered_data,
+		filtered_combined_data = filtered_combined_data,
+		yearly_countries_wp = yearly_countries_wp,
+		wordpress_monthly_visits = wordpress_monthly_visits,
 		world = world
 	)
 	
@@ -409,7 +941,8 @@ server <- function(input, output, session) {
 	# Servidor del módulo de Idiomas
 	languages_server(
 		output = output,
-		filtered_combined_data = filtered_combined_data
+		filtered_combined_data = filtered_combined_data,
+		posts_languages = posts_languages
 	)
 	
 	# Servidor del módulo de Artículos
@@ -439,11 +972,84 @@ server <- function(input, output, session) {
 		input = input,
 		output = output,
 		session = session,
-		goatcounter = goatcounter,
-		goatcounter_normalized = goatcounter_normalized,
+		goatcounter = goatcounter_data,
+		goatcounter_normalized = goatcounter_normalized_data,
 		wordpress_monthly_visits = wordpress_monthly_visits,
 		wordpress_yearly_countries = wordpress_yearly_countries
 	)
+	
+	output$refresh_status <- renderUI({
+		
+		invalidateLater(1000, session)
+		
+		now <- Sys.time()
+		status <- refresh_status()
+		
+		# Mientras se descarga, mostrar el estado del proceso
+		if (isTRUE(refresh_running())) {
+			return(
+				helpText(
+					style = "display: block; margin-top: 10px;",
+					status
+				)
+			)
+		}
+		
+		# Determinar cuándo estará disponible la próxima actualización
+		deadline <- NULL
+		
+		server_limit <- rate_limit_until()
+		
+		if (!is.null(server_limit) && now < server_limit) {
+			deadline <- server_limit
+		}
+		
+		previous_refresh <- last_refresh()
+		
+		if (!is.null(previous_refresh)) {
+			
+			local_limit <- previous_refresh + 3600
+			
+			if (
+				now < local_limit &&
+				(is.null(deadline) || local_limit > deadline)
+			) {
+				deadline <- local_limit
+			}
+		}
+		
+		# Mostrar una cuenta regresiva dinámica
+		if (!is.null(deadline)) {
+			
+			remaining <- ceiling(
+				as.numeric(difftime(deadline, now, units = "secs"))
+			)
+			
+			minutes <- remaining %/% 60
+			seconds <- remaining %% 60
+			
+			return(
+				helpText(
+					style = "display: block; margin-top: 10px;",
+					paste(
+						"Próxima actualización disponible en",
+						sprintf("%d min %02d s.", minutes, seconds)
+					)
+				)
+			)
+		}
+		
+		if (!nzchar(status)) {
+			return(NULL)
+		}
+		
+		helpText(
+			paste(
+				"Próxima actualización disponible en",
+				sprintf("%d min %02d s.", minutes, seconds)
+			)
+		)
+	})
 	
 }
 

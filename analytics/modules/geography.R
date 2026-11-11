@@ -59,16 +59,51 @@ geography_ui <- nav_panel(
 # 2. SERVIDOR
 # ------------------------------------------
 
-geography_server <- function(input, output, filtered_data, world) {
+geography_server <- function(
+		input,
+		output,
+		filtered_data,
+		filtered_combined_data,
+		yearly_countries_wp,
+		wordpress_monthly_visits,
+		world
+) {
 	
 	# Resumen por país
 	country_data <- reactive({
 		
-		filtered_data() %>%
+		data <- filtered_data() %>%
 			filter(country != "País no identificado") %>%
-			count(country, name = "visits") %>%
-			arrange(desc(visits))
+			count(country, name = "visits")
 		
+		if (isTRUE(input$include_wordpress)) {
+			
+			wp <- yearly_countries_wp %>%
+				filter(
+					year %in% c(2024, 2025, 2026)
+				)
+			
+			if (!is.null(input$summary_year) &&
+				input$summary_year != "all") {
+				wp <- wp %>%
+					filter(year == as.numeric(input$summary_year))
+			}
+			
+			if (length(input$exclude_countries) > 0) {
+				wp <- wp %>%
+					filter(!country %in% input$exclude_countries)
+			}
+			
+			wp <- wp %>%
+				group_by(country) %>%
+				summarise(visits = sum(visits), .groups = "drop")
+			
+			data <- bind_rows(data, wp) %>%
+				group_by(country) %>%
+				summarise(visits = sum(visits), .groups = "drop")
+		}
+		
+		arrange(data, desc(visits))
 	})
 	
 	
@@ -80,7 +115,72 @@ geography_server <- function(input, output, filtered_data, world) {
 	
 	# Total de visitas
 	output$total_visits <- renderText({
-		nrow(filtered_data())
+		
+		# Visitas históricas de WordPress
+		wp_data <- wordpress_monthly_visits %>%
+			filter(
+				date <= as.Date("2026-07-01")
+			)
+		
+		# Visitas de GoatCounter
+		gc_data <- filtered_data() %>%
+			filter(
+				as.Date(Date, tz = "UTC") >= as.Date("2026-08-01")
+			)
+		
+		# Aplicar año seleccionado
+		if (!is.null(input$summary_year) &&
+			input$summary_year != "all") {
+			
+			wp_data <- wp_data %>%
+				filter(
+					format(date, "%Y") == input$summary_year
+				)
+			
+			gc_data <- gc_data %>%
+				filter(
+					format(Date, "%Y", tz = "UTC") == input$summary_year
+				)
+		}
+		
+		# Excluir WordPress si está desactivado
+		wp_visits <- if (isTRUE(input$include_wordpress)) {
+			sum(wp_data$visits, na.rm = TRUE)
+		} else {
+			0
+		}
+		
+		# Descontar países excluidos de WordPress
+		if (isTRUE(input$include_wordpress) &&
+			length(input$exclude_countries) > 0) {
+			
+			excluded_wp_visits <- yearly_countries_wp %>%
+				filter(
+					country %in% input$exclude_countries
+				) %>%
+				{ 
+					if (!is.null(input$summary_year) &&
+						input$summary_year != "all") {
+						filter(., year == as.integer(input$summary_year))
+					} else {
+						.
+					}
+				} %>%
+				summarise(
+					visits = sum(visits, na.rm = TRUE)
+				) %>%
+				pull(visits)
+			
+			wp_visits <- wp_visits - excluded_wp_visits
+		}
+		
+		total <- wp_visits + nrow(gc_data)
+		
+		format(
+			total,
+			big.mark = ".",
+			scientific = FALSE
+		)
 	})
 	
 	
@@ -108,7 +208,8 @@ geography_server <- function(input, output, filtered_data, world) {
 	
 	map_data <- reactive({
 		
-		visits <- filtered_data() %>%
+		# Visitas geográficas de GoatCounter
+		gc_visits <- filtered_data() %>%
 			mutate(
 				iso3c = countrycode::countrycode(
 					Location,
@@ -120,6 +221,51 @@ geography_server <- function(input, output, filtered_data, world) {
 			filter(!is.na(iso3c)) %>%
 			count(iso3c, name = "visits")
 		
+		# Visitas geográficas de WordPress
+		if (isTRUE(input$include_wordpress)) {
+			
+			wp <- yearly_countries_wp %>%
+				filter(year %in% c(2024, 2025, 2026))
+			
+			if (!is.null(input$summary_year) &&
+				input$summary_year != "all") {
+				wp <- wp %>%
+					filter(year == as.integer(input$summary_year))
+			}
+			
+			if (length(input$exclude_countries) > 0) {
+				wp <- wp %>%
+					filter(!country %in% input$exclude_countries)
+			}
+			
+			wp_visits <- wp %>%
+				mutate(
+					iso3c = countrycode::countrycode(
+						country,
+						origin = "country.name.es",
+						destination = "iso3c",
+						warn = FALSE
+					)
+				) %>%
+				filter(!is.na(iso3c)) %>%
+				group_by(iso3c) %>%
+				summarise(
+					visits = sum(visits, na.rm = TRUE),
+					.groups = "drop"
+				)
+			
+			visits <- bind_rows(gc_visits, wp_visits) %>%
+				group_by(iso3c) %>%
+				summarise(
+					visits = sum(visits, na.rm = TRUE),
+					.groups = "drop"
+				)
+			
+		} else {
+			visits <- gc_visits
+		}
+		
+		# Unir con el mapa mundial
 		world %>%
 			left_join(
 				visits,
@@ -159,11 +305,38 @@ geography_server <- function(input, output, filtered_data, world) {
 		
 		data <- map_data()
 		
-		pal <- colorNumeric(
-			palette = "YlOrRd",
-			domain = data$visits
+		max_visits <- if (length(data$visits) > 0) {
+			max(data$visits, na.rm = TRUE)
+		} else {
+			0
+		}
+		
+		if (!is.finite(max_visits) || max_visits == 0) {
+			max_visits <- 1
+		}
+		
+		positive_pal <- leaflet::colorNumeric(
+			palette = MAP_VISITS_PALETTE,
+			domain = c(0, log1p(max_visits))
 		)
 		
+		# Valores de referencia para la leyenda
+		legend_values <- unique(round(pretty(
+			c(1, max_visits),
+			n = 5
+		)))
+		
+		legend_values <- legend_values[
+			legend_values >= 1 & legend_values <= max_visits
+		]
+		
+		legend_values <- sort(unique(c(
+			legend_values,
+			1,
+			max_visits
+		)))
+		
+		# Construcción del mapa
 		leaflet(data = data) %>%
 			addTiles(
 				urlTemplate = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
@@ -173,7 +346,12 @@ geography_server <- function(input, output, filtered_data, world) {
 				)
 			) %>%
 			addPolygons(
-				fillColor = ~pal(visits),
+				fillColor = ~ifelse(
+					visits == 0,
+					"#E5E7EB",
+					positive_pal(log1p(visits))
+				),
+				
 				fillOpacity = ~ifelse(is_selected, 0.95, 0.8),
 				
 				color = ~ifelse(
@@ -204,10 +382,13 @@ geography_server <- function(input, output, filtered_data, world) {
 				)
 			) %>%
 			addLegend(
-				pal = pal,
-				values = ~visits,
+				pal = positive_pal,
+				values = log1p(legend_values),
 				title = "Visitas",
-				position = "bottomright"
+				position = "bottomright",
+				labFormat = labelFormat(
+					transform = function(x) round(expm1(x))
+				)
 			)
 		
 	})
@@ -335,14 +516,37 @@ geography_server <- function(input, output, filtered_data, world) {
 	output$country_table <- DT::renderDT({
 		
 		data <- country_data() %>%
-			rename(
-				País = country,
+			mutate(
+				country_iso = countrycode::countrycode(
+					country,
+					origin = "country.name.es",
+					destination = "iso2c",
+					warn = FALSE
+				),
+				country_label = ifelse(
+					!is.na(country_iso),
+					paste0(
+						'<img src="https://flagcdn.com/',
+						tolower(country_iso),
+						'.svg" ',
+						'alt="" ',
+						'style="height:15px; width:20px; ',
+						'object-fit:cover; border-radius:3px; ',
+						'margin-right:6px; vertical-align:middle;">',
+						htmltools::htmlEscape(country)
+					),
+					htmltools::htmlEscape(country)
+				)
+			) %>%
+			transmute(
+				País = country_label,
 				Visitas = visits
 			)
 		
 		DT::datatable(
 			data,
 			rownames = FALSE,
+			escape = FALSE,
 			selection = "single",
 			options = list(
 				pageLength = 10,
@@ -361,7 +565,6 @@ geography_server <- function(input, output, filtered_data, world) {
 				)
 			)
 		)
-		
 	})
 	
 	

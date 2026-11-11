@@ -23,6 +23,12 @@ LANGUAGE_COLORS_BY_LABEL <- setNames(
 	LANGUAGE_LABELS[names(LANGUAGE_COLORS)]
 )
 
+# Recursos estáticos
+addResourcePath(
+	"svg",
+	file.path(APP_DIR, "..", "svg")
+)
+
 # ==========================================
 # COLORES DE LAS FUENTES DE TRÁFICO
 # ==========================================
@@ -37,6 +43,20 @@ SOURCE_COLORS <- c(
 	"Herramientas de IA" = "#56B4E9",
 	"Otros sitios externos" = "#D55E00"
 )
+
+# ==========================================
+# PALETAS DE MAPAS
+# ==========================================
+
+MAP_VISITS_PALETTE <- c(
+	"#FFFFE5",
+	"#FFF7BC",
+	"#FEC44F",
+	"#EC7014",
+	"#8C2D04"
+)
+
+
 
 # ==========================================
 # RUTAS DEL PROYECTO
@@ -66,4 +86,9 @@ HISTORY_JSON_PATH <- file.path(
 	PROJECT_ROOT,
 	"stats",
 	"history.json"
+	)
+
+MANUAL_EVENTS_PATH <- file.path(
+	dirname(HISTORY_JSON_PATH),
+	"manual-events.json"
 )

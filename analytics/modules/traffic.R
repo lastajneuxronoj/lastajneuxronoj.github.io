@@ -109,14 +109,10 @@ traffic_server <- function(
 			)
 		
 		# Visitas de GoatCounter
-		gc_data <- goatcounter %>%
-			filter(
-				as.Date(Date, tz = "UTC") >= as.Date("2026-07-31")
-			) %>%
-			mutate(
-				year = format(Date, "%Y", tz = "UTC")
-			) %>%
-			count(year, name = "visits")
+		gc_data <- goatcounter() %>%
+			filter(as.Date(Date, tz = "UTC") >= as.Date("2026-08-01")) %>%
+			mutate(year=format(Date,"%Y",tz="UTC")) %>%
+			count(year,name="visits")
 		
 		# Aplicar el año seleccionado
 		if (

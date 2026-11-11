@@ -37,28 +37,33 @@ goatcounter_raw <- read_csv(
 )
 
 # 3. Limpiar y transformar
-goatcounter <- goatcounter_raw %>%
-  rename(path = `2Path`) %>%
-  mutate(
-    Date = ymd_hms(Date, tz = "UTC"),
-    date = as_date(Date),
-    year = year(Date),
-    month = month(Date),
-    hour = hour(Date),
-    
-    language = case_when(
-      grepl("-eo\\.html$", path) ~ "eo",
-      grepl("-es\\.html$", path) ~ "es",
-      TRUE ~ NA_character_
-    ),
-    
-    page_type = case_when(
-      path == "/" ~ "Inicio",
-      grepl("^/blog/[0-9]+-(eo|es)\\.html$", path) ~ "Artículo",
-      grepl("^/about-(eo|es)\\.html$", path) ~ "Página informativa",
-      TRUE ~ "Otras"
+ggoatcounter <- goatcounter_raw %>%
+    rename(path = `2Path`) %>%
+    mutate(
+        Date = ymd_hms(Date, tz = "UTC"),
+        date = as_date(Date),
+        year = year(Date),
+        month = month(Date),
+        hour = hour(Date),
+
+        language = stringr::str_match(
+            path,
+            "^/(?:blog/[0-9]+|about)-([[:alpha:]]{2,8}(?:-[[:alnum:]]{1,8})*)\\.html$"
+        )[, 2],
+
+        page_type = case_when(
+            path == "/" ~ "Inicio",
+            grepl(
+                "^/blog/[0-9]+-[[:alpha:]]{2,8}(?:-[[:alnum:]]{1,8})*\\.html$",
+                path
+            ) ~ "Artículo",
+            grepl(
+                "^/about-[[:alpha:]]{2,8}(?:-[[:alnum:]]{1,8})*\\.html$",
+                path
+            ) ~ "Página informativa",
+            TRUE ~ "Otras"
+        )
     )
-  )
 
 
 # 4. Crear directorio de datos procesados

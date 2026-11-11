@@ -79,25 +79,42 @@ summary_server <- function(input, output, session, goatcounter, goatcounter_norm
 	editorial_data <- load_editorial_data()
 	current <- editorial_data$current
 	
+	# Datos de GoatCounter con países excluidos
+	goatcounter_filtered <- reactive({
+		filter_goatcounter(
+			goatcounter(),
+			exclude_countries = input$exclude_countries
+		)
+	})
+	
+	goatcounter_normalized_filtered <- reactive({
+		filter_goatcounter(
+			goatcounter_normalized(),
+			exclude_countries = input$exclude_countries
+		)
+	})
+	
 	# Años disponibles en los datos
-	years <- sort(
-		unique(c(
-			format(
-				goatcounter$Date[!is.na(goatcounter$Date)],
-				"%Y",
-				tz = "UTC"
-			),
-			format(
-				wordpress_monthly_visits$date,
-				"%Y"
-			),
-			format(
-				editorial_data$snapshots$date,
-				"%Y"
-			)
-		)),
-		decreasing = TRUE
-	)
+	years <- reactive({
+		sort(
+			unique(c(
+				format(
+					goatcounter()$Date[!is.na(goatcounter()$Date)],
+					"%Y",
+					tz = "UTC"
+				),
+				format(
+					wordpress_monthly_visits$date,
+					"%Y"
+				),
+				format(
+					editorial_data$snapshots$date,
+					"%Y"
+				)
+			)),
+			decreasing = TRUE
+		)
+	})
 	
 	# Seleccionar el año actual por defecto
 	selected_year <- "all"
@@ -107,7 +124,7 @@ summary_server <- function(input, output, session, goatcounter, goatcounter_norm
 		updateSelectInput(
 			session,
 			"summary_year",
-			choices = c("Todos" = "all", setNames(years, years)),
+			choices = c("Todos" = "all", setNames(years(), years())),
 			selected = selected_year
 		)
 	})
@@ -115,7 +132,7 @@ summary_server <- function(input, output, session, goatcounter, goatcounter_norm
 	# Datos filtrados por año
 	summary_data <- reactive({
 		
-		data <- goatcounter %>%
+		data <- goatcounter_filtered() %>%
 			mutate(
 				year = format(Date, "%Y", tz = "UTC")
 			)
@@ -163,10 +180,13 @@ summary_server <- function(input, output, session, goatcounter, goatcounter_norm
 				date <= as.Date("2026-07-01")
 			)
 		
+		# Desglose geográfico de WordPress
+		wp_countries <- wordpress_yearly_countries
+		
 		# Visitas de GoatCounter
-		gc_data <- goatcounter %>%
+		gc_data <- goatcounter_filtered() %>%
 			filter(
-				as.Date(Date, tz = "UTC") >= as.Date("2026-07-31")
+				as.Date(Date, tz = "UTC") >= as.Date("2026-08-01")
 			)
 		
 		# Aplicar año seleccionado
@@ -178,31 +198,45 @@ summary_server <- function(input, output, session, goatcounter, goatcounter_norm
 					format(date, "%Y") == input$summary_year
 				)
 			
+			wp_countries <- wp_countries %>%
+				filter(
+					year == as.integer(input$summary_year)
+				)
+			
 			gc_data <- gc_data %>%
 				filter(
 					format(Date, "%Y", tz = "UTC") == input$summary_year
 				)
-			
 		}
 		
-		# WordPress de 2026 es opcional
-		if (!isTRUE(input$include_wordpress)) {
-			
-			wp_data <- wp_data %>%
-				filter(
-					format(date, "%Y") != "2026"
-				)
-			
+		# Excluir WordPress si está desactivado
+		wp_visits <- if (isTRUE(input$include_wordpress)) {
+			sum(wp_data$visits, na.rm = TRUE)
+		} else {
+			0
 		}
 		
-		total_visits <- sum(wp_data$visits) + nrow(gc_data)
+		# Descontar países excluidos de WordPress
+		if (isTRUE(input$include_wordpress) &&
+			length(input$exclude_countries) > 0) {
+			
+			excluded_wp_visits <- wp_countries %>%
+				filter(country %in% input$exclude_countries) %>%
+				summarise(
+					visits = sum(visits, na.rm = TRUE)
+				) %>%
+				pull(visits)
+			
+			wp_visits <- wp_visits - excluded_wp_visits
+		}
+		
+		total_visits <- wp_visits + nrow(gc_data)
 		
 		format(
 			total_visits,
 			big.mark = ".",
 			scientific = FALSE
 		)
-		
 	})
 	
 	# Países alcanzados acumulados
@@ -210,7 +244,10 @@ summary_server <- function(input, output, session, goatcounter, goatcounter_norm
 		
 		wp_data <- wordpress_yearly_countries
 		
-		gc_data <- goatcounter %>%
+		gc_data <- goatcounter_filtered() %>%
+			filter(
+				as.Date(Date, tz = "UTC") >= as.Date("2026-08-01")
+			) %>%
 			mutate(year = format(Date, "%Y", tz = "UTC"))
 		
 		if (!is.null(input$summary_year) && input$summary_year != "all") {
@@ -256,8 +293,23 @@ summary_server <- function(input, output, session, goatcounter, goatcounter_norm
 		# Visitas históricas de WordPress
 		wp_data <- wordpress_yearly_countries
 		
+		# Incluir o excluir WordPress completo
+		if (!isTRUE(input$include_wordpress)) {
+			wp_data <- wp_data %>%
+				slice(0)
+		}
+		
+		# Excluir países seleccionados
+		if (length(input$exclude_countries) > 0) {
+			wp_data <- wp_data %>%
+				filter(!country %in% input$exclude_countries)
+		}
+		
 		# Visitas individuales de GoatCounter
-		gc_data <- goatcounter %>%
+		gc_data <- goatcounter_filtered() %>%
+			filter(
+				as.Date(Date, tz = "UTC") >= as.Date("2026-08-01")
+			) %>%
 			mutate(
 				year = format(Date, "%Y", tz = "UTC")
 			) %>%
@@ -274,12 +326,6 @@ summary_server <- function(input, output, session, goatcounter, goatcounter_norm
 			
 			gc_data <- gc_data %>%
 				filter(as.integer(year) == selected_year)
-		}
-		
-		# WordPress de 2026 es opcional
-		if (!isTRUE(input$include_wordpress)) {
-			wp_data <- wp_data %>%
-				filter(year != 2026)
 		}
 		
 		# Combinar ambas fuentes
@@ -338,23 +384,36 @@ summary_server <- function(input, output, session, goatcounter, goatcounter_norm
 		
 		data <- summary_country_map_data()
 		
+		max_visits <- if (length(data$visits) > 0) {
+			max(data$visits, na.rm = TRUE)
+		} else {
+			0
+		}
+		
+		if (!is.finite(max_visits) || max_visits == 0) {
+			max_visits <- 1
+		}
+		
 		# Escala de colores
-		pal <- leaflet::colorNumeric(
-			palette = "YlOrRd",
-			domain = data$visits,
-			na.color = "#eeeeee"
+		positive_pal <- leaflet::colorNumeric(
+			palette = MAP_VISITS_PALETTE,
+			domain = c(0, log1p(max_visits))
 		)
 		
 		leaflet(data = data) %>%
 			addTiles(
-			    urlTemplate = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-			    attribution = paste(
-			        "&copy; <a href='https://www.openstreetmap.org/copyright'>",
-			        "OpenStreetMap</a> contributors"
-			    )
+				urlTemplate = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+				attribution = paste(
+					"&copy; <a href='https://www.openstreetmap.org/copyright'>",
+					"OpenStreetMap</a> contributors"
+				)
 			) %>%
 			addPolygons(
-				fillColor = ~pal(visits),
+				fillColor = ~ifelse(
+					visits == 0,
+					"#E5E7EB",
+					positive_pal(log1p(visits))
+				),
 				fillOpacity = 0.8,
 				color = "#777777",
 				weight = 0.4,
@@ -378,12 +437,17 @@ summary_server <- function(input, output, session, goatcounter, goatcounter_norm
 			) %>%
 			addLegend(
 				position = "bottomright",
-				pal = pal,
-				values = ~visits,
+				pal = positive_pal,
+				values = log1p(data$visits[data$visits > 0]),
 				title = "Visitas",
-				labFormat = labelFormat(
-					big.mark = "."
-				),
+				labFormat = function(type, cuts, p) {
+					format(
+						round(expm1(cuts)),
+						big.mark = ".",
+						decimal.mark = ",",
+						scientific = FALSE
+					)
+				},
 				opacity = 0.8
 			) %>%
 			setView(
@@ -397,15 +461,37 @@ summary_server <- function(input, output, session, goatcounter, goatcounter_norm
 	output$summary_top_countries <- DT::renderDT({
 		
 		data <- summary_country_data() %>%
-			slice_head(n = 15) %>%
+			slice_head(n = 15)
+		
+		data <- data %>%
 			mutate(
 				Porcentaje = round(
 					visits / sum(summary_country_data()$visits) * 100,
 					1
+				),
+				country_iso = countrycode::countrycode(
+					country,
+					origin = "country.name.es",
+					destination = "iso2c",
+					warn = FALSE
+				),
+				country_label = ifelse(
+					!is.na(country_iso),
+					paste0(
+						'<img src="https://flagcdn.com/',
+						tolower(country_iso),
+						'.svg" ',
+						'alt="" ',
+						'style="height:15px; width:20px; ',
+						'object-fit:cover; border-radius:3px; ',
+						'margin-right:6px; vertical-align:middle;">',
+						htmltools::htmlEscape(country)
+					),
+					htmltools::htmlEscape(country)
 				)
 			) %>%
 			transmute(
-				País = country,
+				País = country_label,
 				Visitas = visits,
 				`Porcentaje (%)` = Porcentaje
 			)
@@ -413,6 +499,7 @@ summary_server <- function(input, output, session, goatcounter, goatcounter_norm
 		DT::datatable(
 			data,
 			rownames = FALSE,
+			escape = FALSE,
 			options = list(
 				dom = "t",
 				ordering = FALSE,
@@ -423,30 +510,54 @@ summary_server <- function(input, output, session, goatcounter, goatcounter_norm
 	})
 	
 	# Distribución de visitas por idioma
+	
 	output$summary_language_chart <- renderPlotly({
 		
-		if (!is.null(input$summary_year) &&
-			input$summary_year %in% c("2024", "2025")) {
-			
-			data <- data.frame(
-				language_label = "Esperanto",
-				visits = 100
+		# Visitas de GoatCounter
+		gc_data <- summary_data() %>%
+			mutate(
+				language_label = case_when(
+					is.na(language) ~ "Sin identificar",
+					language %in% names(LANGUAGE_LABELS) ~
+						unname(LANGUAGE_LABELS[language]),
+					TRUE ~ "Sin identificar"
+				)
+			) %>%
+			count(language_label, name = "visits")
+		
+		# Visitas históricas de WordPress (todo en Esperanto)
+		wp_data <- wordpress_monthly_visits %>%
+			filter(
+				date <= as.Date("2026-07-01")
 			)
+		
+		if (!is.null(input$summary_year) &&
+			input$summary_year != "all") {
 			
-		} else {
-			
-			data <- summary_data() %>%
-				mutate(
-					language_label = case_when(
-						is.na(language) ~ "Sin identificar",
-						language %in% names(LANGUAGE_LABELS) ~
-							unname(LANGUAGE_LABELS[language]),
-						TRUE ~ "Sin identificar"
-					)
-				) %>%
-				count(language_label, name = "visits") %>%
-				arrange(desc(visits))
+			wp_data <- wp_data %>%
+				filter(
+					format(date, "%Y") == input$summary_year
+				)
 		}
+		
+		# WordPress de 2026 es opcional
+		if (!isTRUE(input$include_wordpress)) {
+			wp_data <- wp_data %>%
+				filter(format(date, "%Y") != "2026")
+		}
+		
+		wp_data <- wp_data %>%
+			summarise(visits = sum(visits, na.rm = TRUE)) %>%
+			mutate(language_label = "Esperanto")
+		
+		# Combinar ambas fuentes
+		data <- bind_rows(gc_data, wp_data) %>%
+			group_by(language_label) %>%
+			summarise(
+				visits = sum(visits, na.rm = TRUE),
+				.groups = "drop"
+			) %>%
+			arrange(desc(visits))
 		
 		colors <- c(
 			LANGUAGE_COLORS_BY_LABEL,
@@ -480,6 +591,7 @@ summary_server <- function(input, output, session, goatcounter, goatcounter_norm
 		
 	})
 	
+	
 	# Preparar datos de artículos destacados
 	summary_articles_data <- reactive({
 		
@@ -497,7 +609,7 @@ summary_server <- function(input, output, session, goatcounter, goatcounter_norm
 			)
 		
 		# Estadísticas de GoatCounter
-		gc_data <- goatcounter_normalized %>%
+		gc_data <- goatcounter_normalized_filtered() %>%
 			filter(
 				type == "Artículo",
 				date >= as.Date("2026-08-01")
@@ -552,8 +664,35 @@ summary_server <- function(input, output, session, goatcounter, goatcounter_norm
 			group_by(article_id) %>%
 			summarise(
 				languages = paste(
-					unname(LANGUAGE_LABELS[article_language]),
-					collapse = ", "
+					vapply(article_language, function(lang) {
+						
+						label <- if (lang %in% names(LANGUAGE_LABELS)) {
+							unname(LANGUAGE_LABELS[lang])
+						} else {
+							lang
+						}
+						
+						flag_file <- file.path(
+							APP_DIR,
+							"..",
+							"svg",
+							paste0("flag_", lang, ".svg")
+						)
+						
+						if (file.exists(flag_file)) {
+							paste0(
+								'<img src="svg/flag_', lang, '.svg"',
+								' alt="', label, '"',
+								' title="', label, '"',
+								' style="height:20px; width:auto;',
+								' margin-right:6px; border-radius:3px;">'
+							)
+						} else {
+							label
+						}
+						
+					}, character(1)),
+					collapse = " "
 				),
 				.groups = "drop"
 			)
@@ -583,16 +722,16 @@ summary_server <- function(input, output, session, goatcounter, goatcounter_norm
 	# Tabla de los cinco artículos más visitados
 	output$summary_top_articles <- DT::renderDT({
 		
+		data <- summary_articles_data()
+		
 		DT::datatable(
-			summary_articles_data(),
+			data,
 			rownames = FALSE,
+			escape = FALSE,
 			options = list(
-				dom = "t",
-				ordering = FALSE,
-				autoWidth = TRUE
+				dom = "t"
 			)
 		)
-		
 	})
 	
 	# Indicadores editoriales

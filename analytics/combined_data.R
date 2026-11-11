@@ -65,11 +65,11 @@ normalize_wordpress <- function(data, historical_articles) {
 # ------------------------------------------
 
 normalize_goatcounter <- function(data) {
-	
+
 	data %>%
 		transmute(
 			date = date,
-			
+
 			content_id = if_else(
 				page_type == "Artículo",
 				paste0(
@@ -82,24 +82,25 @@ normalize_goatcounter <- function(data) {
 				),
 				paste0("gc-", path)
 			),
-			
+
 			title = Title,
 			type_original = page_type,
-			
+
 			type = case_when(
 				page_type == "Artículo" ~ "Artículo",
 				page_type == "Página informativa" ~ "Página informativa",
 				page_type == "Inicio" ~ "Índice",
 				TRUE ~ "Otras"
 			),
-			
+
 			language = language,
+			country = country,
 			platform = "GoatCounter",
 			visits = 1,
 			source_category = source_category,
 			source_platform = source_platform
 		)
-	
+
 }
 
 # ------------------------------------------

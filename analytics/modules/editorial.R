@@ -7,6 +7,8 @@
 # 1. CARGA Y TRANSFORMACIÓN DE DATOS
 # ------------------------------------------
 
+
+
 load_editorial_data <- function() {
 	
 	# Leer el historial editorial
@@ -43,6 +45,9 @@ load_editorial_data <- function() {
 		snapshot_data <- data.frame(
 			snapshot = i,
 			date = as.Date(substr(snapshot[["date"]], 1, 10)),
+			estimated_retrospective = isTRUE(
+				snapshot[["estimatedRetrospective"]]
+			),
 			versions = length(snapshot[["posts"]]),
 			articles = length(unique(vapply(
 				snapshot[["posts"]],
@@ -94,7 +99,7 @@ load_editorial_data <- function() {
 	
 	# Cargar eventos editoriales manuales
 	manual_events <- jsonlite::fromJSON(
-		file.path(dirname(HISTORY_JSON_PATH), "manual-events.json"),
+		MANUAL_EVENTS_PATH,
 		simplifyVector = TRUE
 	)
 	
@@ -218,21 +223,54 @@ editorial_server <- function(input, output) {
 	
 	editorial_data <- load_editorial_data()
 	
-	current <- editorial_data$current
+	# Snapshot correspondiente al período seleccionado
+	selected_snapshot <- reactive({
+		
+		snapshots <- editorial_data$snapshots
+		
+		if (is.null(input$summary_year) ||
+			input$summary_year == "all") {
+			
+			return(snapshots[nrow(snapshots), , drop = FALSE])
+		}
+		
+		snapshots <- snapshots %>%
+			filter(format(date, "%Y") == input$summary_year)
+		
+		if (nrow(snapshots) == 0) {
+			return(NULL)
+		}
+		
+		snapshots[nrow(snapshots), , drop = FALSE]
+	})
 	
-	# Preparar distribución actual de palabras por idioma
-	language_distribution <- current %>%
-		select(starts_with("words_")) %>%
-		pivot_longer(
-			cols = everything(),
-			names_to = "language",
-			names_prefix = "words_",
-			values_to = "words"
-		) %>%
-		mutate(
-			language_label = unname(LANGUAGE_LABELS[language]),
-			color = unname(LANGUAGE_COLORS[language])
-		)
+	# Preparar distribución de palabras por idioma
+	language_distribution <- reactive({
+		
+		snapshot <- selected_snapshot()
+		
+		if (is.null(snapshot)) {
+			return(tibble(
+				language = character(),
+				words = integer(),
+				language_label = character(),
+				color = character()
+			))
+		}
+		
+		snapshot %>%
+			select(starts_with("words_")) %>%
+			pivot_longer(
+				cols = everything(),
+				names_to = "language",
+				names_prefix = "words_",
+				values_to = "words"
+			) %>%
+			mutate(
+				language_label = unname(LANGUAGE_LABELS[language]),
+				color = unname(LANGUAGE_COLORS[language])
+			)
+	})
 	
 	# Preparar marcadores de eventos lingüísticos
 	event_markers <- editorial_data$events %>%
@@ -307,59 +345,87 @@ editorial_server <- function(input, output) {
 			)
 		)
 	
+	
 	# Preparar actividad editorial trimestral
-	activity_data <- editorial_data$events %>%
-		filter(
-			type %in% c(
-				"publication",
-				"translation",
-				"edition",
-				"deletion",
-				"restoration",
-				"site_launch",
-				"new_language",
-				"work_release"
-			)
-		) %>%
-		mutate(
-			quarter_number = ceiling(
-				as.integer(format(date, "%m")) / 3
-			),
-			quarter_date = as.Date(
-				sprintf(
-					"%s-%02d-01",
-					format(date, "%Y"),
-					(quarter_number - 1) * 3 + 1
+	activity_data <- reactive({
+		
+		data <- editorial_data$events
+		
+		# Aplicar el año seleccionado
+		if (!is.null(input$summary_year) &&
+			input$summary_year != "all") {
+			
+			data <- data %>%
+				filter(
+					format(date, "%Y") == input$summary_year
+				)
+		}
+		
+		data <- data %>%
+			filter(
+				type %in% c(
+					"publication",
+					"translation",
+					"edition",
+					"deletion",
+					"restoration",
+					"site_launch",
+					"new_language",
+					"work_release"
 				)
 			)
-		) %>%
-		count(quarter_date, type, name = "events") %>%
-		tidyr::complete(
-			quarter_date = seq(
-				min(quarter_date),
-				max(quarter_date),
-				by = "3 months"
-			),
-			type = c(
-				"publication",
-				"translation",
-				"edition",
-				"deletion",
-				"restoration",
-				"site_launch",
-				"new_language",
-				"work_release"
-			),
-			fill = list(events = 0)
-		) %>%
-		mutate(
-			quarter = paste0(
-				format(quarter_date, "%Y"),
-				" T",
-				ceiling(as.integer(format(quarter_date, "%m")) / 3)
-			)
-		) %>%
-		arrange(quarter_date, type)
+		
+		if (nrow(data) == 0) {
+			return(tibble(
+				quarter_date = as.Date(character()),
+				type = character(),
+				events = integer(),
+				quarter = character()
+			))
+		}
+		
+		data %>%
+			mutate(
+				quarter_number = ceiling(
+					as.integer(format(date, "%m")) / 3
+				),
+				quarter_date = as.Date(
+					sprintf(
+						"%s-%02d-01",
+						format(date, "%Y"),
+						(quarter_number - 1) * 3 + 1
+					)
+				)
+			) %>%
+			count(quarter_date, type, name = "events") %>%
+			tidyr::complete(
+				quarter_date = seq(
+					min(quarter_date),
+					max(quarter_date),
+					by = "3 months"
+				),
+				type = c(
+					"publication",
+					"translation",
+					"edition",
+					"deletion",
+					"restoration",
+					"site_launch",
+					"new_language",
+					"work_release"
+				),
+				fill = list(events = 0)
+			) %>%
+			mutate(
+				quarter = paste0(
+					format(quarter_date, "%Y"),
+					" T",
+					ceiling(as.integer(format(quarter_date, "%m")) / 3)
+				)
+			) %>%
+			arrange(quarter_date, type)
+	})
+	
 	
 	# Preparar producción de palabras por trimestre
 	production_data <- editorial_data$events %>%
@@ -419,23 +485,38 @@ editorial_server <- function(input, output) {
 		ungroup()
 	
 	output$editorial_versions <- renderText({
-		format(current$versions, big.mark = ".", decimal.mark = ",")
+		data <- selected_snapshot()
+		if (is.null(data)) return("—")
+		
+		format(data$versions, big.mark = ".", decimal.mark = ",")
 	})
 	
 	output$editorial_words <- renderText({
-		format(current$words, big.mark = ".", decimal.mark = ",")
+		data <- selected_snapshot()
+		if (is.null(data)) return("—")
+		
+		format(data$words, big.mark = ".", decimal.mark = ",")
 	})
 	
 	output$editorial_words_eo <- renderText({
-		format(current$words_eo, big.mark = ".", decimal.mark = ",")
+		data <- selected_snapshot()
+		if (is.null(data)) return("—")
+		
+		format(data$words_eo, big.mark = ".", decimal.mark = ",")
 	})
 	
 	output$editorial_words_es <- renderText({
-		format(current$words_es, big.mark = ".", decimal.mark = ",")
+		data <- selected_snapshot()
+		if (is.null(data)) return("—")
+		
+		format(data$words_es, big.mark = ".", decimal.mark = ",")
 	})
 	
 	output$editorial_reading <- renderText({
-		paste(current$reading_minutes, "min")
+		data <- selected_snapshot()
+		if (is.null(data)) return("—")
+		
+		paste(data$reading_minutes, "min")
 	})
 	
 	
@@ -638,9 +719,19 @@ editorial_server <- function(input, output) {
 			return(NULL)
 		}
 		
-		data <- language_distribution %>%
+		data <- language_distribution() %>%
 			filter(words > 0) %>%
 			arrange(words)
+		
+		if (nrow(data) == 0) {
+			return(plotly_empty() %>%
+				   	layout(
+				   		annotations = list(
+				   			text = "No hay snapshots para el período seleccionado",
+				   			showarrow = FALSE
+				   		)
+				   	))
+		}
 		
 		plot_ly(
 			data = data,
@@ -689,7 +780,7 @@ editorial_server <- function(input, output) {
 			work_release = "Lanzamientos"
 		)
 		
-		activity_data <- activity_data %>%
+		data <- activity_data() %>%
 			mutate(
 				event_label = factor(
 					unname(event_labels[type]),
@@ -698,7 +789,7 @@ editorial_server <- function(input, output) {
 			)
 		
 		plot_ly(
-			data = activity_data,
+			data = data,
 			x = ~quarter,
 			y = ~events,
 			color = ~event_label,
@@ -709,7 +800,7 @@ editorial_server <- function(input, output) {
 				xaxis = list(
 					title = "Trimestre",
 					categoryorder = "array",
-					categoryarray = unique(activity_data$quarter)
+					categoryarray = unique(data$quarter)
 				),
 				yaxis = list(
 					title = "Número de eventos",
