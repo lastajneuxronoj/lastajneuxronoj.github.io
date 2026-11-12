@@ -136,12 +136,12 @@ traffic_server <- function(
 			
 		}
 		
-		# WordPress de 2026 es opcional
+		# WordPress es opcional
 		if (!isTRUE(input$include_wordpress)) {
-			
+		
 			wp_data <- wp_data %>%
-				filter(year != "2026")
-			
+				filter(FALSE)
+		
 		}
 		
 		# Combinar y sumar las visitas
