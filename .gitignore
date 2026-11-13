@@ -33,8 +33,12 @@ stats-report.txt
 data/goatcounter/
 data/processed/
 
-#newsletter
+# newsletter
 blog/newsletter/*.html
 
 # Cloudflare Wrangler
 push-worker/.wrangler/
+
+# Análisis
+/graph.svg
+analytics/graph.pdf

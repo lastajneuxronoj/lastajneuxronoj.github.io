@@ -11,6 +11,8 @@
 		"newsletter": "node scripts/build-newsletter.js",
 		"all": " npm run build && npm run stats",
 		"test": "echo \"Error: no test specified\" && exit 1",
+		"graph": "madge --image graph.svg scripts",
+		"graph:r": "Rscript -e \"flow::flow_view_source_calls('analytics', recursive=TRUE, out='analytics/graph.pdf')\"",
 		"dashboard": "Rscript -e \"shiny::runApp('analytics', launch.browser=TRUE)\""
 	},
 	"repository": {
