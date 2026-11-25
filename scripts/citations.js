@@ -92,7 +92,7 @@ function renderApaCitations(html, { warn = console.warn } = {}) {
 
 	const layout = $('<div class="apa-citation-layout"></div>').append(content, sidebar);
 	$("body").empty().append(layout);
-	return $.root().html();
+	return $("body").html();
 }
 
 module.exports = { preprocessApaBibliography, renderApaCitations };
