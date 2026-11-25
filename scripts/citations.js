@@ -60,6 +60,7 @@ function renderApaCitations(html, { warn = console.warn } = {}) {
 			const links = p.find(`a[href="#cite:${key}"]`);
 			links.attr("href", `#bib-${key}`).addClass("apa-citation-link")
 				.attr("aria-label", `Bibliografia referenco: ${key}`);
+			main.find(`a[href="#cite:${key}"]`).attr("href", `#bib-${key}`).addClass("apa-citation-link");
 
 			const card = $('<div class="apa-citation-card"></div>');
 			const cardLink = $('<a class="apa-citation-card-link"></a>')
