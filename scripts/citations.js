@@ -35,6 +35,11 @@ function renderApaCitations(html, { warn = console.warn } = {}) {
 	});
 
 	$(".apa-citation-row, .apa-citation-layout").remove();
+
+	// Sin citas en el artículo: conserva el flujo y el aspecto anteriores.
+	if (!$("a[href^=\"#cite:\"]").length) {
+		return `<div class="post-content">${$("body").html()}</div>`;
+	}
 	const content = $("<div class=\"post-content apa-citation-content\"></div>");
 	const sidebar = $('<aside class="apa-citation-sidebar" aria-label="Referencoj"></aside>');
 	let paragraphIndex = 0;
