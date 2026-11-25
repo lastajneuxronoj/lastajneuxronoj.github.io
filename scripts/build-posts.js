@@ -39,6 +39,7 @@ const cheerio = require("cheerio");
 const hljs = require("highlight.js");
 const slugify = require('slugify');
 const { preprocessCallouts } = require("./callouts");
+const { preprocessApaBibliography, renderApaCitations } = require("./citations");
 const { buildSitemap } = require("./build-sitemap");
 const buildRSS = require("./build-rss");
 const { LANGUAGE_NAMES } = require("./config");
@@ -665,6 +666,7 @@ function renderMarkdownContent(md, lang, translations, pageTitle = "") {
 
 	// Extensiones Markdown propias
 	let processedMarkdown = preprocessCallouts(md, translations[lang]);
+	processedMarkdown = preprocessApaBibliography(processedMarkdown);
 
 	const {
 		markdown,
@@ -721,6 +723,8 @@ function renderMarkdownContent(md, lang, translations, pageTitle = "") {
 	html = addLineNumbers(html);
 
 	html = processHeadings(html, lang, translations, pageTitle);
+
+	html = renderApaCitations(html);
 
 	return html;
 }
