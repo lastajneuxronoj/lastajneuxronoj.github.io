@@ -15,7 +15,11 @@ const markdown = [
 const processed = preprocessApaBibliography(markdown);
 const html = renderApaCitations(require("marked").marked.parse(processed), { warn: () => {} });
 
-assert.match(html, /class="apa-citation-row"/);
+assert.match(html, /class="apa-citation-layout"/);
+assert.match(html, /class="post-content apa-citation-content"/);
+assert.match(html, /class="apa-citation-sidebar"/);
+assert.doesNotMatch(html, /apa-citation-main/);
+assert.doesNotMatch(html, /apa-citation-row/);
 assert.match(html, /class="apa-citation-notes"/);
 assert.match(html, /id="bib-xu-garcia-2008"/);
 // Regression: bibliography marker is removed without discarding the entry text.
@@ -23,7 +27,10 @@ assert.doesNotMatch(html, /apa-bibliography-key/);
 assert.match(html, /Intuitive statistics/);
 assert.match(html, /href="#bib-xu-garcia-2008"/);
 assert.match(html, /href="#bib-gomberoff-2024"/);
-assert.equal((html.match(/class="apa-citation-card"/g) || []).length, 2);
+assert.equal((html.match(/class="apa-citation-card"/g) || []).length, 1);
+assert.equal((html.match(/class="apa-citation-entry"/g) || []).length, 2);
+assert.match(html, /Paragrafo kun/);
+assert.match(html, /<p id="apa-paragraph-1" class="apa-cited-paragraph">/);
 
 const legacy = renderApaCitations("<p>Un párrafo antiguo, sin marcas.</p>");
 assert.equal(legacy, "<html><head></head><body><p>Un párrafo antiguo, sin marcas.</p></body></html>");
