@@ -1067,7 +1067,7 @@ document.querySelectorAll(".copy-button").forEach((btn) => {
   });
 });
 
-//Incializa TOC y media sidebar
+// Inicializa TOC y media sidebar
 function initializeTOC() {
 
 	const headings = document.querySelectorAll(
@@ -1078,6 +1078,70 @@ function initializeTOC() {
 		".toc-item"
 	);
 
+	// Unificar sidebar multimedia e índice
+	const mediaSidebar =
+		document.querySelector(".media-sidebar");
+
+	const tocSidebar =
+		document.querySelector(".toc-sidebar");
+
+	if (mediaSidebar || tocSidebar) {
+
+		const sidebar = document.createElement("aside");
+		sidebar.className = "post-sidebar";
+
+		const firstElement =
+			mediaSidebar || tocSidebar;
+
+		firstElement.parentNode.insertBefore(
+			sidebar,
+			firstElement
+		);
+
+		if (mediaSidebar) {
+			sidebar.appendChild(mediaSidebar);
+		}
+
+		if (tocSidebar) {
+			sidebar.appendChild(tocSidebar);
+		}
+
+		// Mover el control de citas al sidebar izquierdo
+		const citationControls = document.querySelector(
+			".apa-citation-controls"
+		);
+		
+		if (citationControls) {
+			sidebar.appendChild(citationControls);
+		}
+
+		const citationToggle = document.querySelector(".apa-citation-toggle");
+		const citationLayout = document.querySelector(".apa-citation-layout");
+			
+		if (citationToggle && citationLayout) {
+		    citationToggle.addEventListener("click", () => {
+		        const citationsVisible =
+		            citationToggle.getAttribute("aria-expanded") !== "false";
+			
+		        const nextVisible = !citationsVisible;
+			
+		        citationToggle.setAttribute(
+		            "aria-expanded",
+		            String(nextVisible)
+		        );
+			
+		        citationLayout.classList.toggle(
+		            "apa-citations-hidden",
+		            !nextVisible
+		        );
+			
+		        applyTranslations();
+		    });
+		}
+
+	}
+
+	// Si no hay índice o encabezados, no se inicializa el observer
 	if (!headings.length || !tocItems.length) {
 		return;
 	}
@@ -1119,22 +1183,6 @@ function initializeTOC() {
 	headings.forEach(heading => {
 		observer.observe(heading);
 	});
-
-	const mediaSidebar =
-		document.querySelector(".media-sidebar");
-
-	const tocSidebar =
-		document.querySelector(".toc-sidebar");
-
-	if (mediaSidebar && tocSidebar) {
-
-		const mediaHeight =
-			mediaSidebar.offsetHeight;
-
-		tocSidebar.style.top =
-			`${150 + mediaHeight + 5}px`;
-
-	}
 
 }
 

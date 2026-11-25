@@ -91,6 +91,19 @@ async function applyTranslations() {
 			`${t.ui.toc.play}: ${mediaTitle}`;
 
 	});
+
+	const citationToggle = document.querySelector(
+	    ".apa-citation-toggle"
+	);
+
+	if (citationToggle) {
+	    const citationsVisible =
+	        citationToggle.getAttribute("aria-expanded") !== "false";
+	
+	    citationToggle.textContent = citationsVisible
+	        ? t.ui.toc.hideCitations
+	        : t.ui.toc.showCitations;
+	}
 }
 
 

@@ -1345,7 +1345,35 @@ tbody tr:hover {
 	margin-bottom: 0;
 }
 
+/* Sidebar izquierdo unificado */
 
+.post-sidebar {
+	position: fixed;
+	left: 2rem;
+	top: 100px;
+	z-index: 1000;
+
+	display: flex;
+	flex-direction: column;
+	gap: 1.5rem;
+
+	
+	padding: 0.5rem 1.2rem;
+	border-radius: 12px;
+
+	background: var(--base-color);
+	border: 1px solid var(--tertiary-color);
+}
+
+/* Los sidebars internos ya no se posicionan por separado */
+
+.post-sidebar .media-sidebar,
+.post-sidebar .toc-sidebar {
+	position: static;
+	left: auto;
+	top: auto;
+	transform: none;
+}
 
 /*TOC de encabezados*/
 .toc-sidebar {
@@ -1641,8 +1669,6 @@ tbody tr:hover {
 	border-bottom: 0 !important;
 
 }
-
-
 
 /* Menú desplegable */
 .header-dropdown {
@@ -2377,4 +2403,12 @@ tbody tr:hover {
 		grid-template-columns: 1fr;
 		gap: 0.2rem;
 	}
+}
+
+/* Mantener el color del tema en los enlaces del índice */
+.toc-sidebar a,
+.toc-sidebar a:hover,
+.toc-sidebar a:focus,
+.toc-sidebar a:visited {
+    color: var(--primary-color);
 }

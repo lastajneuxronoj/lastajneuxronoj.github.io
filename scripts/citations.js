@@ -40,18 +40,19 @@ function renderApaCitations(html, { warn = console.warn } = {}) {
 	if (!$("a[href^=\"#cite:\"]").length) {
 		return `<div class="post-content">${$("body").html()}</div>`;
 	}
-	const content = $("<div class=\"post-content apa-citation-content\"></div>");
-	const sidebar = $('<aside class="apa-citation-sidebar" aria-label="Referencoj"></aside>');
+	const content = $("<div class=\"post-content apa-citation-content apa-citation-layout\"></div>");
 	let paragraphIndex = 0;
 
 	// Trabajamos sobre los párrafos del contenido original, excluyendo la
 	// bibliografía y cualquier contenido ya situado en una nota.
-	$("body > p, body > h1, body > h2, body > h3, body > h4, body > ul, body > ol, body > blockquote, body > figure, body > pre, body > table, body > div").each((_, node) => {
+	$("body").children().each((_, node) => {
 		const element = $(node);
-		if (element.closest(".apa-citation-sidebar").length) return;
+
 		if (element.hasClass("apa-citation-layout")) return;
+
 		content.append(element);
 	});
+
 
 	// Si Cheerio no encontró elementos directos (por ejemplo, HTML fragmentado),
 	// conserva el contenido íntegro en el contenedor principal.
@@ -68,35 +69,59 @@ function renderApaCitations(html, { warn = console.warn } = {}) {
 
 		const paragraphId = `apa-paragraph-${++paragraphIndex}`;
 		p.attr("id", paragraphId).addClass("apa-cited-paragraph");
+
+		// Conservamos el texto original de cada cita.
+		const citationLabels = new Map();
 		links.each((_, link) => {
 			const anchor = $(link);
 			const key = anchor.attr("href").slice("#cite:".length);
-			anchor.attr("href", `#bib-${key}`).addClass("apa-citation-link")
-				.attr("aria-label", `Bibliografia referenco: ${key}`);
+			citationLabels.set(key, anchor.text().trim());
 		});
+
+		// La cita se traslada al margen y desaparece del párrafo.
+		links.remove();
 
 		const card = $('<div class="apa-citation-card"></div>').attr("data-apa-target", paragraphId);
 		const entries = $('<div class="apa-citation-entries"></div>');
 		for (const key of keys) {
 			const reference = bibliography.get(key);
 			const entry = $('<div class="apa-citation-entry"></div>');
-			const link = $('<a class="apa-citation-card-link"></a>').attr("href", `#bib-${key}`);
+			const link = $('<a class="apa-citation-card-link"></a>')
+				.attr("href", `#bib-${key}`);
+
 			if (reference) {
-				link.append(reference.contents().clone());
+				link.text(citationLabels.get(key) || key);
 			} else {
 				entry.addClass("apa-citation-missing");
-				link.text(`Mankas bibliografia enskribo: ${key}`);
+				link.text(citationLabels.get(key) || `Mankas bibliografia enskribo: ${key}`);
 				warn(`[APA] Ne troviĝis bibliografia enskribo por "${key}".`);
 			}
 			entry.append(link);
 			entries.append(entry);
 		}
 		card.append(entries);
-		sidebar.append(card);
+		p.after(card);
 	});
 
-	const layout = $('<div class="apa-citation-layout"></div>').append(content, sidebar);
-	$("body").empty().append(layout);
+	// Botón para mostrar u ocultar las citas
+	if (content.find(".apa-citation-card").length > 0) {
+		const controls = $(`
+			<div class="apa-citation-controls">
+				<button
+					type="button"
+					id="apa-citation-toggle"
+					class="apa-citation-toggle"
+					aria-expanded="true"
+				>
+					Ocultar citas
+				</button>
+			</div>
+		`);
+		
+		content.prepend(controls);
+	}
+
+	$("body").empty().append(content);
 	return $("body").html();
 }
 

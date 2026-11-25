@@ -665,14 +665,57 @@ html:not(.dark) .contact img {
     }
 }
 
+
+
 /* ==========================================
    CITAS APA: CONTENIDO + MARGEN LATERAL
 ========================================== */
 
+
+/* Control de citas APA */
+
+.apa-citation-controls {
+	margin-top: 0.5rem;
+	padding-top: 0.8rem;
+	border-top: 1px solid var(--tertiary-color);
+}
+
+.apa-citation-toggle {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+
+	padding: 0.4rem 0;
+
+	background: transparent;
+	border: 0;
+
+	font-family: var(--font-ui);
+	font-size: 0.7rem;
+	font-weight: 600;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+
+	color: var(--tertiary-color);
+	opacity: 0.8;
+
+	cursor: pointer;
+	transition: opacity 0.2s ease;
+}
+
+.apa-citation-toggle:hover {
+	opacity: 1;
+	color: var(--secondary-color);
+}
+
+.post-content.apa-citations-hidden .apa-citation-card {
+    display: none;
+}
+
 .apa-citation-layout {
 	display: grid;
-	grid-template-columns: minmax(0, 1fr) minmax(190px, 28%);
-	gap: clamp(1.25rem, 3vw, 3rem);
+	/*grid-template-columns: minmax(0, 1fr) minmax(150px, 22%);*/
+	column-gap: clamp(1rem, 2vw, 2rem);
 	align-items: start;
 }
 
@@ -680,70 +723,85 @@ html:not(.dark) .contact img {
 	min-width: 0;
 }
 
-.apa-citation-sidebar {
+.apa-citation-layout > * {
+	grid-column: 1;
+}
+
+
+.apa-citation-card {
+	grid-column: 2;
+	align-self: center;
+	transform: translateY(-0.4em);
+	margin-top: 1rem;	
+	justify-self: start;
 	min-width: 0;
+	position: relative;
+	padding: .45rem .75rem;
+	border: 1px solid var(--tertiary-color);
+	border-radius: 8px;
+	background: var(--base-color);
+
 	font-family: var(--font-ui);
 	font-size: .82rem;
 	line-height: 1.45;
 	text-align: left;
 	color: var(--secondary-color);
+
+	margin: .25rem 0;
 }
 
-.apa-citation-card {
-	padding: .75rem .9rem;
-	border-left: 2px solid var(--tertiary-color);
-	background: var(--base-color);
-	border-radius: 0 6px 6px 0;
-	margin: .1rem 0 .65rem;
+/* Conector punteado hacia el párrafo */
+.apa-citation-card::before {
+	content: "";
+	position: absolute;
+	top: 50%;
+	left: calc(-1 * clamp(1.25rem, 3vw, 3rem));
+	width: clamp(1.25rem, 3vw, 3rem);
+	border-top: 1px dotted var(--tertiary-color);
+	opacity: .65;
 }
 
-.apa-citation-entry + .apa-citation-entry {
-	margin-top: .6rem;
-	padding-top: .6rem;
-	border-top: 1px solid var(--border-color, rgba(120,120,120,.25));
+/* Punta de flecha orientada hacia la cita */
+.apa-citation-card::after {
+	content: "";
+	position: absolute;
+	top: 50%;
+	left: -5px;
+	transform: translateY(-50%);
+	border-top: 4px solid transparent;
+	border-bottom: 4px solid transparent;
+	border-left: 5px solid var(--tertiary-color);
+	opacity: .65;
 }
 
-.apa-citation-card-link {
-	color: inherit !important;
-	border: 0 !important;
-	text-decoration: none !important;
-}
-
-.apa-citation-card-link:hover {
-	text-decoration: underline !important;
-}
-
-.apa-citation-card em {
-	font-style: italic;
-}
-
-.apa-citation-missing {
-	border-left-color: #b45b45;
-}
-
-.apa-citation-link {
-	color: var(--secondary-color) !important;
-	border-bottom: 1px dotted var(--tertiary-color) !important;
-	text-decoration: none;
-}
-
-.apa-bibliography-key {
-	display: none;
-}
-
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
 	.apa-citation-layout {
 		grid-template-columns: minmax(0, 1fr);
-		gap: 0;
-	}
-
-	.apa-citation-sidebar {
-		margin: -.5rem 0 1.25rem .25rem;
-		font-size: .78rem;
+		column-gap: 0;
 	}
 
 	.apa-citation-card {
 		padding: .55rem .75rem;
-		margin-bottom: .4rem;
+		font-size: .78rem;
+		grid-column: 1;
+		justify-self: start;
+		margin: -.25rem 0 1rem .25rem;
 	}
+
+	.apa-citation-card::before,
+	.apa-citation-card::after {
+	display: none;
+}
+}
+
+/* ==========================================
+   CITAS APA: MARGEN DERECHO EN PC
+========================================== */
+
+@media (min-width: 1024px) {
+    .apa-citation-card {
+        position: relative;
+        left: 2rem;
+        width: min(10vw, 300px);
+    }
 }
