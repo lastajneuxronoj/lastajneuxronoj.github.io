@@ -664,3 +664,93 @@ html:not(.dark) .contact img {
         transform: none;
     }
 }
+
+/* ==========================================
+   CITAS APA: NOTAS AL MARGEN
+========================================== */
+
+body:has(.apa-citation-row) > main {
+	width: min(94%, 1200px);
+}
+
+.apa-citation-row {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) minmax(190px, 28%);
+	gap: clamp(1.25rem, 3vw, 3rem);
+	align-items: start;
+	margin: 0 0 1rem;
+}
+
+.apa-citation-main {
+	min-width: 0;
+}
+
+.apa-citation-main > p {
+	margin-bottom: 0;
+}
+
+.apa-citation-link {
+	color: var(--secondary-color) !important;
+	border-bottom: 1px dotted var(--tertiary-color) !important;
+	text-decoration: none;
+}
+
+.apa-citation-notes {
+	font-family: var(--font-ui);
+	font-size: .82rem;
+	line-height: 1.45;
+	text-align: left;
+	color: var(--secondary-color);
+}
+
+.apa-citation-card {
+	padding: .75rem .9rem;
+	border-left: 2px solid var(--tertiary-color);
+	background: var(--base-color);
+	border-radius: 0 6px 6px 0;
+	margin: .1rem 0 .65rem;
+}
+
+.apa-citation-card-link {
+	color: inherit !important;
+	border: 0 !important;
+	text-decoration: none !important;
+}
+
+.apa-citation-card-link:hover {
+	text-decoration: underline !important;
+}
+
+.apa-citation-card em {
+	font-style: italic;
+}
+
+.apa-citation-missing {
+	border-left-color: #b45b45;
+}
+
+.apa-bibliography-key {
+	display: none;
+}
+
+@media (max-width: 768px) {
+	body:has(.apa-citation-row) > main {
+		width: 90%;
+	}
+
+	.apa-citation-row {
+		grid-template-columns: minmax(0, 1fr);
+		gap: .35rem;
+		margin-bottom: 1.5rem;
+	}
+
+	.apa-citation-notes {
+		margin: 0 0 0 .25rem;
+		font-size: .78rem;
+	}
+
+	.apa-citation-card {
+		padding: .55rem .75rem;
+		margin-bottom: .4rem;
+	}
+}
