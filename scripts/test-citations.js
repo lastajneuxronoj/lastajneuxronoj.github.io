@@ -33,6 +33,6 @@ assert.match(html, /Paragrafo kun/);
 assert.match(html, /<p id="apa-paragraph-1" class="apa-cited-paragraph">/);
 
 const legacy = renderApaCitations("<p>Un párrafo antiguo, sin marcas.</p>");
-assert.equal(legacy, "<html><head></head><body><p>Un párrafo antiguo, sin marcas.</p></body></html>");
+assert.equal(legacy, "<p>Un párrafo antiguo, sin marcas.</p>");
 
 console.log("✔ Pruebas de citas APA superadas.");
