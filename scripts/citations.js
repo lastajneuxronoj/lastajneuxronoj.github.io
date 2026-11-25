@@ -34,7 +34,9 @@ function renderApaCitations(html, { warn = console.warn } = {}) {
 			return;
 		}
 		item.attr("id", `bib-${key}`);
-		marker.remove();
+		// Cheerio .each() entrega el nodo DOM, no un objeto Cheerio.
+		// Envolverlo con $ permite usar la API de eliminación de Cheerio.
+		$(marker).remove();
 		bibliography.set(key, item);
 	});
 
