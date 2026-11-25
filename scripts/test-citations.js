@@ -18,6 +18,9 @@ const html = renderApaCitations(require("marked").marked.parse(processed), { war
 assert.match(html, /class="apa-citation-row"/);
 assert.match(html, /class="apa-citation-notes"/);
 assert.match(html, /id="bib-xu-garcia-2008"/);
+// Regression: bibliography marker is removed without discarding the entry text.
+assert.doesNotMatch(html, /apa-bibliography-key/);
+assert.match(html, /Intuitive statistics/);
 assert.match(html, /href="#bib-xu-garcia-2008"/);
 assert.match(html, /href="#bib-gomberoff-2024"/);
 assert.equal((html.match(/class="apa-citation-card"/g) || []).length, 2);
