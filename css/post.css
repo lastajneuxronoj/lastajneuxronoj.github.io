@@ -670,7 +670,48 @@ html:not(.dark) .contact img {
 /* ==========================================
    CITAS APA: CONTENIDO + MARGEN LATERAL
 ========================================== */
+/* Flecha para regresar desde la bibliografía */
+.apa-return-button {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    z-index: 1100;
 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 2.8rem;
+    height: 2.8rem;
+
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+
+    background: var(--primary-color);
+    color: var(--background-color);
+
+    cursor: pointer;
+
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+
+    transition:
+        transform 0.2s ease,
+        opacity 0.2s ease;
+}
+
+.apa-return-button i {
+    font-size: 1.3rem;
+}
+
+.apa-return-button:hover {
+    transform: translateY(-3px);
+}
+
+/* Respeta el atributo hidden */
+.apa-return-button[hidden] {
+    display: none !important;
+}
 
 /* Control de citas APA */
 

@@ -13,7 +13,13 @@
 				"title": "Contenido",
 				"music": "Música",
 				"podcast": "Podcast",
-				"play": "Escuchar"
+				"play": "Escuchar",
+				"podcastLabel": "Escuchar podcast",
+				"videoLabel": "Ver vídeo",
+				"video": "Video",
+				"attachments": "Contenido adicional",
+				"hideCitations": "Ocultar citas",
+				"showCitations": "Mostrar citas"
 			},
 			"push": {
 				"notifications": "Activar notificaciones",
@@ -166,7 +172,13 @@
 				"title": "Enhavo",
 				"music": "Muziko",
 				"podcast": "Podkastaĵo",
-				"play": "Aŭskulti"
+				"video": "Filmeto",
+				"attachments": "Aldonaĵoj",
+				"play": "Aŭskulti",
+				"podcastLabel": "Aŭskulti podkastaĵon",
+				"videoLabel": "Spekti filmeton",
+				"hideCitations": "Kaŝi citaĵojn",
+				"showCitations": "Montri citaĵojn"
 			},
 			"push": {
 				"notifications": "Aktivigi sciigojn",

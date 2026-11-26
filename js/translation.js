@@ -79,18 +79,24 @@ async function applyTranslations() {
 	applyText("footer-text", t.footer_text);
 
 	document
-	.querySelectorAll(".media-item")
-	.forEach(el => {
+	    .querySelectorAll(".media-item")
+	    .forEach(el => {
+	        const mediaTitle = el.dataset.mediaTitle;
 
-		const mediaTitle =
-			el.dataset.mediaTitle;
+	        if (!mediaTitle) return;
 
-		if (!mediaTitle) return;
+	        const mediaType = el.dataset.mediaType;
 
-		el.dataset.title =
-			`${t.ui.toc.play}: ${mediaTitle}`;
+	        let label = t.ui.toc.play;
 
-	});
+	        if (mediaType === "podcast") {
+	            label = t.ui.toc.podcastLabel;
+	        } else if (mediaType === "video") {
+	            label = t.ui.toc.videoLabel;
+	        }
+
+	        el.dataset.title = `${label}: ${mediaTitle}`;
+	    });
 
 	const citationToggle = document.querySelector(
 	    ".apa-citation-toggle"
@@ -99,7 +105,7 @@ async function applyTranslations() {
 	if (citationToggle) {
 	    const citationsVisible =
 	        citationToggle.getAttribute("aria-expanded") !== "false";
-	
+
 	    citationToggle.textContent = citationsVisible
 	        ? t.ui.toc.hideCitations
 	        : t.ui.toc.showCitations;

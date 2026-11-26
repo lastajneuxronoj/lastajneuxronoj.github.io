@@ -1463,7 +1463,7 @@ tbody tr:hover {
 .toc-item::after {
 	content: attr(data-title);
 	position: absolute;
-	left: calc(100% + 12px);
+	left: calc(100% + 25px);
 	top: 50%;
 	padding: 0.4rem 0.7rem;
 	border-radius: 8px;
@@ -1541,6 +1541,56 @@ tbody tr:hover {
 
 }
 
+.media-attachments .media-subsection {
+    display: inline-flex;
+    align-items: center;
+    margin: 0 0.3rem 0 0;
+    padding: 0;
+    width: auto;
+}
+
+.media-attachments .media-icon-item {
+    margin: 0;
+    padding: 0;
+    width: auto;
+}
+
+/* Iconos de Aldonaĵoj */
+
+.media-icon-item {
+    width: auto;
+    height: auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 0.7rem;
+    transform: none;
+}
+
+.media-icon-item::before {
+    display: none;
+}
+
+.media-icon-item::after {
+    /* Conserva el tooltip existente */
+}
+
+.media-icon-item i {
+    font-size: 1.2rem;
+    color: var(--primary-color);
+    opacity: 0.7;
+    transition:
+        opacity 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.media-icon-item:hover i {
+    color: var(--secondary-color);
+    opacity: 1;
+    transform: translateY(-2px);
+}
+
 .media-section {
 	margin-bottom: 1rem;
 	margin-top: 1rem;
@@ -1569,7 +1619,7 @@ tbody tr:hover {
 
 	position: absolute;
 
-	left: calc(100% + 12px);
+	left: calc(100% + 30px);
 	top: 50%;
 
 	padding: 0.4rem 0.7rem;
@@ -2411,4 +2461,11 @@ tbody tr:hover {
 .toc-sidebar a:focus,
 .toc-sidebar a:visited {
     color: var(--primary-color);
+}
+
+/* Ocultar sidebar en pantallas pequeñas */
+@media (max-width: 950px) {
+    .post-sidebar {
+        display: none;
+    }
 }

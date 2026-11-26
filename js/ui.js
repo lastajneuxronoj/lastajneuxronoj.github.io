@@ -1184,6 +1184,59 @@ function initializeTOC() {
 		observer.observe(heading);
 	});
 
+	// Retorno desde la bibliografía al párrafo de origen
+const apaReturnButton = document.getElementById(
+    "apa-return-button"
+);
+
+if (apaReturnButton) {
+    let returnParagraphId = null;
+
+    // Guardar el párrafo al pulsar una cita bibliográfica
+    document.addEventListener("click", event => {
+        const citationLink = event.target.closest(
+            ".apa-citation-card-link"
+        );
+
+        if (!citationLink) return;
+
+        const citationCard = citationLink.closest(
+            ".apa-citation-card"
+        );
+
+        if (!citationCard) return;
+
+        const paragraphId = citationCard.dataset.apaTarget;
+
+        if (!paragraphId) return;
+
+        const paragraph = document.getElementById(paragraphId);
+
+        if (!paragraph) return;
+
+        returnParagraphId = paragraphId;
+        apaReturnButton.hidden = false;
+    });
+
+    // Regresar al párrafo
+    apaReturnButton.addEventListener("click", () => {
+        if (!returnParagraphId) return;
+
+        const paragraph = document.getElementById(
+            returnParagraphId
+        );
+
+        if (!paragraph) return;
+
+        paragraph.scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+        });
+
+        apaReturnButton.hidden = true;
+    });
+}
+
 }
 
 //Menú desplegable genérico

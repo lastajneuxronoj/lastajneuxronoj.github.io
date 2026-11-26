@@ -1065,56 +1065,100 @@ async function renderPage({ type, data }) {
 				emoji: data.post.emoji,
 			});
 
-			// Media sidebar
+
 			const listenLabel =
-				data.translations[data.lang]?.ui?.toc?.listen ||
-				"Escuchar";
-
+			    data.translations[data.lang]?.ui?.toc?.listen ||
+			    "Escuchar";
+					
 			const musicList =
-				(data.post.music || [])
-					.filter(item => item.url);
-
+			    (data.post.music || [])
+			        .filter(item => item.url);
+					
 			const podcastList =
-				(data.post.podcast || [])
-					.filter(item => item.url);
+			    (data.post.podcast || [])
+			        .filter(item => item.url);
 					
+			const videoList =
+			    (data.post.video || [])
+			        .filter(item => item.url);
+					
+			// Menú multimedia
 			const mediaMenu = `
-				<div class="media-sidebar">
+    <div class="media-sidebar">
 
-					${musicList.length ? `
-						<div class="media-section">
-					
-							<div class="media-title" data-type="music">
-								${data.translations[data.lang].ui.toc.music}
-							</div>
-					
-							${musicList.map(track => `
-								<a class="media-item" href="${track.url}" target="_blank" rel="noopener noreferrer" data-media-title="${track.title}" data-title="${listenLabel}: ${track.title}" ></a>
-							`).join("")}
-							
-						</div>
-					` : ""}
-							
-					${podcastList.length ? `
-						<div class="media-section" data-type="podcast">
-					
-							<div class="media-title">
-								${data.translations[data.lang].ui.toc.podcast}
-							</div>
-					
-							${podcastList.map(episode => `
-								<a class="media-item" href="${episode.url}" target="_blank" rel="noopener noreferrer" 	data-media-title="${episode.title}" data-title="${listenLabel}: ${episode.title}"></a>
-							`).join("")}
-							
-						</div>
-					` : ""}
-							
-				</div>
-			`;
+        ${musicList.length ? `
+            <div class="media-section">
+
+                <div class="media-title" data-type="music">
+                    ${data.translations[data.lang].ui.toc.music}
+                </div>
+
+                ${musicList.map(track => `
+                    <a class="media-item"
+                        href="${track.url}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+						data-media-type="music"
+                        data-media-title="${track.title}"
+                        data-title="${listenLabel}: ${track.title}">
+                    </a>
+                `).join("")}
+
+            </div>
+        ` : ""}
+
+        ${(podcastList.length || videoList.length) ? `
+            <div class="media-section media-attachments">
+
+                <div class="media-title">
+                    ${data.translations[data.lang].ui.toc.attachments}
+                </div>
+
+                ${podcastList.length ? `
+                    <div class="media-subsection">
+
+					${podcastList.map(episode => `
+					    <a class="media-item media-icon-item"
+					        href="${episode.url}"
+					        target="_blank"
+					        rel="noopener noreferrer"
+							data-media-type="podcast"
+					        data-media-title="${episode.title}"
+					        data-title="${data.translations[data.lang].ui.toc.podcastLabel}: ${episode.title}">
+					        <i class="ti ti-microphone"></i>
+					    </a>
+					`).join("")}
+                    </div>
+                ` : ""}
+
+                ${videoList.length ? `
+                    <div class="media-subsection">
+
+				${videoList.map(video => `
+				    <a class="media-item media-icon-item"
+				        href="${video.url}"
+				        target="_blank"
+				        rel="noopener noreferrer"
+						data-media-type="video"
+				        data-media-title="${video.title}"
+						data-title="${data.translations[data.lang].ui.toc.videoLabel}: ${video.title}">
+				        <i class="ti ti-video"></i>
+				    </a>
+				`).join("")}
+                    </div>
+                ` : ""}
+
+            </div>
+        ` : ""}
+
+    </div>
+`;
 
 			const hasMedia =
-				musicList.length > 0 ||
-				podcastList.length > 0;
+			    musicList.length > 0 ||
+			    podcastList.length > 0 ||
+			    videoList.length > 0;
+
 
 			return renderTemplate(template, {
 				lang: data.lang,
