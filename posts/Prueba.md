@@ -23,7 +23,7 @@ flowchart TD
 
 :::
 
-Maecenas in eleifend tortor. Fusce suscipit sapien ut euismod ultrices. Nam nec accumsan eros. Ut sed facilisis eros. Ut eget purus consequat nibh fermentum tempus ac sit amet neque. Proin vitae vulputate tellus. Nulla ac venenatis augue. Nam ac dolor nibh. Morbi at auctor ipsum, in tincidunt ipsum. 
+Maecenas in eleifend tortor. Fusce suscipit sapien ut euismod ultrices. Nam nec accumsan eros. Ut sed facilisis eros. Ut eget purus consequat nibh fermentum tempus ac sit amet neque. Proin vitae vulputate tellus. Nulla ac venenatis augue. Nam ac dolor nibh. Morbi at auctor ipsum, in tincidunt ipsum. [Xu & Garcia, 2008](#cite:xu-garcia-2008)
 
 Aquí hay varios emojis para prueba de renderizado: 🤔😡🤌🏻👀🪑.
 
@@ -139,5 +139,7 @@ mi kama sona e toki pona.
 <iframe class="youtube" src="https://www.youtube.com/embed/gsweYWCtvgU" title="Los Blenders - Ha Sido" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 {#media:haSido title="Ha Sido - Los Blenders"}
+
+- [bib:xu-garcia-2008] Cita:
 
 <div class="post-signature">—Tomĉjo (·𐑑𐑩𐑫𐑗𐑢𐑩).</div>

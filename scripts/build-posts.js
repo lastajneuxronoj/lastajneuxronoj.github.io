@@ -428,6 +428,52 @@ async function main() {
 	const translations = JSON.parse(await fs.readFile(TRANSLATIONS_JSON_PATH, "utf-8"));
 	const pages = JSON.parse(await fs.readFile(PAGES_JSON_PATH, "utf-8"));
 
+		// =========================
+	// ARGUMENTOS DE COMPILACIÓN
+	// =========================
+
+	const args = process.argv.slice(2);
+	let selectedPostNumber = null;
+
+	if (args.includes("--last")) {
+		const latestPost = posts.reduce((latest, post) => {
+			return Number(post.number) > Number(latest.number)
+				? post
+				: latest;
+		});
+
+		selectedPostNumber = Number(latestPost.number);
+
+		console.log(
+			`Compilación parcial: último post (${latestPost.number})`
+		);
+	} else if (args.includes("--post")) {
+		const postIndex = args.indexOf("--post");
+		const requestedNumber = args[postIndex + 1];
+
+		if (!requestedNumber || !/^\d+$/.test(requestedNumber)) {
+			throw new Error(
+				"Uso correcto: npm run build -- --post 123"
+			);
+		}
+
+		selectedPostNumber = Number(requestedNumber);
+
+		const selectedPost = posts.find(
+			(post) => Number(post.number) === selectedPostNumber
+		);
+
+		if (!selectedPost) {
+			throw new Error(
+				`No existe el post ${requestedNumber}`
+			);
+		}
+
+		console.log(
+			`Compilación parcial: post ${selectedPost.number}`
+		);
+	}
+
 	await fs.mkdir(OUTPUT_DIR, { recursive: true });
 
 	// agrupar por idioma
@@ -448,9 +494,19 @@ async function main() {
 	// =========================
 	// POSTS
 	// =========================
-	for (const [lang, langPosts] of Object.entries(byLang)) {
+		for (const [lang, langPosts] of Object.entries(byLang)) {
 		for (let i = 0; i < langPosts.length; i++) {
 			const post = langPosts[i];
+
+			// Si se solicitó un post específico,
+			// omitir los demás.
+			if (
+				selectedPostNumber !== null &&
+				Number(post.number) !== selectedPostNumber
+			) {
+				continue;
+			}
+			
 			const prevPost = langPosts[i + 1];
 			const nextPost = langPosts[i - 1];
 
